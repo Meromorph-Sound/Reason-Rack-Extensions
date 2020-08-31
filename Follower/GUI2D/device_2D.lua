@@ -37,23 +37,63 @@ front = {
 		offset = { 185, 215},
 		{ path = "Tape_Horizontal_1frames", frames = 1 },
 	},
-	learningRate = {
-		offset = { 700, 80 },
-		{ path = "Knob_01_63frames", frames = 63 },
-	},
-	threshold = {
-		offset = { 900, 80 },
-		{ path = "Knob_01_63frames", frames = 63 },
-	},
-	rectification = {
-		offset = { 1100, 100 },
-		{ path = "Button_23_2frames", frames = 2},
-	},
-	rectificationDisplay =
 	{
-		offset = { 1260, 100 },
-		{ path = "Lamp_18_3frames", frames = 3},
-	}
+	 learningRate1 = {
+      offset = { 700, 80 },
+      { path = "Knob_01_63frames", frames = 63 },
+    },
+  	threshold1 = {
+  		offset = { 900, 80 },
+  		{ path = "Knob_01_63frames", frames = 63 },
+  	},
+  	rectification1 = {
+  		offset = { 1100, 100 },
+  		{ path = "Button_23_2frames", frames = 2},
+  	},
+  	rectificationDisplay1 =
+  	{
+  		offset = { 1260, 100 },
+  		{ path = "Lamp_18_3frames", frames = 3},
+  	}
+	},
+	{
+   learningRate2 = {
+      offset = { 1500, 80 },
+      { path = "Knob_01_63frames", frames = 63 },
+    },
+    threshold2 = {
+      offset = { 1700, 80 },
+      { path = "Knob_01_63frames", frames = 63 },
+    },
+    rectification2 = {
+      offset = { 1900, 100 },
+      { path = "Button_23_2frames", frames = 2},
+    },
+    rectificationDisplay2 =
+    {
+      offset = { 2060, 100 },
+      { path = "Lamp_18_3frames", frames = 3},
+    }
+  },
+  {
+   learningRate3 = {
+      offset = { 2300, 80 },
+      { path = "Knob_01_63frames", frames = 63 },
+    },
+    threshold3 = {
+      offset = { 2500, 80 },
+      { path = "Knob_01_63frames", frames = 63 },
+    },
+    rectification3 = {
+      offset = { 2700, 100 },
+      { path = "Button_23_2frames", frames = 2},
+    },
+    rectificationDisplay3 =
+    {
+      offset = { 2860, 100 },
+      { path = "Lamp_18_3frames", frames = 3},
+    }
+  }
 }
 back = { 
 	Bg = {
@@ -63,15 +103,15 @@ back = {
 		offset = { 100, 100 },
 		{ path = "Placeholder" },
 	},
-	SignalInputSocket = {
+	SignalInputSocket1 = {
 		offset = {1000,100},
 		{ path = "SharedAudioJack", frames = 3},
 	},
-	EnvelopeOutputSocket = {
+	EnvelopeOutputSocket1 = {
 		offset = {1200,100},
 		{ path = "SharedAudioJack", frames = 3},
 	},
-	GateOutputSocket = {
+	GateOutputSocket1 = {
 		offset = {1400,100},
 		{ path = "SharedCVJack", frames = 3},
 	}

@@ -31,20 +31,17 @@
 *.out
 *.app
 
-Follower/.settings/
+# eclipse things
+
+.plist
+.project
+.cproject
+.settings
+
+# plugin-specific
 
 Follower/Intermediate-llvm/
-
-Follower/.cproject
-
-Follower/.project
-
-*.plist
-
 Follower/panel.svg.2020_08_24_16_16_44.0.svg
-
 Follower/Panel_Front_1U.xcf
 
-Follower/panel.svg
-
-.project
+*.plist

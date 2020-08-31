@@ -63,15 +63,15 @@ back = {
 		offset = { 100, 100 },
 		{ path = "Placeholder" },
 	},
-	SignalInputSocket = {
+	SignalInputSocket1 = {
 		offset = {1000,100},
 		{ path = "SharedAudioJack", frames = 3},
 	},
-	EnvelopeOutputSocket = {
+	EnvelopeOutputSocket1 = {
 		offset = {1200,100},
 		{ path = "SharedAudioJack", frames = 3},
 	},
-	GateOutputSocket = {
+	GateOutputSocket1 = {
 		offset = {1400,100},
 		{ path = "SharedAudioJack", frames = 3},
 	}

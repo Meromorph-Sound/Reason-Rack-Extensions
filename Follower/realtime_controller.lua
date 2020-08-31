@@ -26,6 +26,8 @@ native = {
 
 rt_input_setup = { 
 	notify = {
-		"/custom_properties/rectification",
+		"/custom_properties/rectification1",
+		"/custom_properties/rectification2",
+		"/custom_properties/rectification3",
 	}
 }

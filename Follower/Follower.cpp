@@ -3,11 +3,13 @@
 
 const TJBox_Int64 CFollower::BUFFER_SIZE = 64;
 
-const TJBox_Int32 CFollower::buttonTag = 13;
-const TJBox_Int32 CFollower::modeOutputBase = 14;
+const TJBox_Int32 CFollower::button1Tag = 13;
+const TJBox_Int32 CFollower::modeOutput1Base = 14;
 const unsigned CFollower::NModes = 3;
-const TJBox_Int32 CFollower::LRTag = 11;
-const TJBox_Int32 CFollower::THTag = 12;
+const TJBox_Int32 CFollower::LR1Tag = 11;
+const TJBox_Int32 CFollower::TH1Tag = 12;
+
+
 
 
 TJBox_Float64 clamp(const TJBox_Float64 lo,const TJBox_Float64 hi,const TJBox_Float64 value) {
@@ -17,9 +19,9 @@ TJBox_Float64 clamp(const TJBox_Float64 lo,const TJBox_Float64 hi,const TJBox_Fl
 
 CFollower::CFollower() : mode(0), state(State::Off), last(0), size(0)  {
 		customProps = JBox_GetMotherboardObjectRef("/custom_properties");
-		audioInput = JBox_GetMotherboardObjectRef("/audio_inputs/signal");
-		envelopeOutput = JBox_GetMotherboardObjectRef("/audio_outputs/envelope");
-		gateOutput = JBox_GetMotherboardObjectRef("/cv_outputs/gate");
+		audioInput = JBox_GetMotherboardObjectRef("/audio_inputs/signal1");
+		envelopeOutput = JBox_GetMotherboardObjectRef("/audio_outputs/envelope1");
+		gateOutput = JBox_GetMotherboardObjectRef("/cv_outputs/gate1");
 
 		audio = new TJBox_AudioSample[BUFFER_SIZE];
 
@@ -102,14 +104,14 @@ void CFollower::updateButtonState() {
 }
 
 void CFollower::handleButtonStates() {
-	JBox_StoreMOMPropertyByTag(customProps,modeOutputBase,JBox_MakeNumber(mode));
+	JBox_StoreMOMPropertyByTag(customProps,modeOutput1Base,JBox_MakeNumber(mode));
 }
 
 void CFollower::processButtons(const TJBox_PropertyDiff iPropertyDiffs[], TJBox_UInt32 iDiffCount) {
 	bool pressed=false;
 	for(auto i=0;i<iDiffCount;i++) {
 		auto diff=iPropertyDiffs[i];
-		if(diff.fPropertyTag == buttonTag) {
+		if(diff.fPropertyTag == button1Tag) {
 			pressed=true;
 		}
 	}
