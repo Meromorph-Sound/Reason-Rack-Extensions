@@ -1,0 +1,189 @@
+RE2DRender 1.6.5d2
+
+OS says system has 24 logical cores
+Deleting Intermediate folder
+Deleting Output folder
+
+Reading device_2D.lua
+Validating image files
+Progress: [###############]
+          [###############] - Done.
+    "FollowerFrontPanel.png"
+    "Lamp_18_3frames.png"
+    "Tape_Horizontal_1frames.png"
+    "Fader_Bypass_3frames.png"
+    "Knob_01_63frames.png"
+    "Button_23_2frames.png"
+    "Panel_Folded_Front.png"
+    "Placeholder.png"
+    "Panel_Back_1U.png"
+    "SharedAudioJack.png"
+    "SharedCVJack.png"
+    "Panel_Folded_Back.png"
+
+Panel 'front' uses background image 'FollowerFrontPanel'
+Panel 'folded_front' uses background image 'Panel_Folded_Front'
+Panel 'back' uses background image 'Panel_Back_1U'
+Panel 'folded_back' uses background image 'Panel_Folded_Back'
+
+Device is 1U rack units
+
+Panels in device scenegraph:
+
+---- Panel 'front':
+
+Node "Bg" is visual "FollowerFrontPanel" at offset = { 0, 0 } 
+Node "deviceName" is visual "Tape_Horizontal_1frames" at offset = { 185, 215 } 
+Node "learningRate" is visual "Knob_01_63frames" at offset = { 700, 80 } 
+Node "onoffbypass" is visual "Fader_Bypass_3frames" at offset = { 185, 45 } 
+Node "rectification" is visual "Button_23_2frames" at offset = { 1100, 100 } 
+Node "rectificationDisplay" is visual "Lamp_18_3frames" at offset = { 1260, 100 } 
+Node "threshold" is visual "Knob_01_63frames" at offset = { 900, 80 } 
+
+---- Panel 'folded_front':
+
+Node "Bg" is visual "Panel_Folded_Front" at offset = { 0, 0 } 
+
+---- Panel 'back':
+
+Node "Bg" is visual "Panel_Back_1U" at offset = { 0, 0 } 
+Node "EnvelopeOutputSocket" is visual "SharedAudioJack" at offset = { 1200, 100 } 
+Node "GateOutputSocket" is visual "SharedCVJack" at offset = { 1400, 100 } 
+Node "Placeholder" is visual "Placeholder" at offset = { 100, 100 } 
+Node "SignalInputSocket" is visual "SharedAudioJack" at offset = { 1000, 100 } 
+
+---- Panel 'folded_back':
+
+Node "Bg" is visual "Panel_Folded_Back" at offset = { 0, 0 } 
+
+Node "CableOrigin" is invisible
+
+-----------------------------------------------------------------------------
+
+Reading hdgui_2D.lua
+Reading widgets for panel 'front'
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for toggle_button
+        value: OK!
+    Checking settings for sequence_meter
+        value: OK!
+    Checking settings for device_name
+    Checking settings for sequence_fader
+        handle_size: OK!
+        value: OK!
+Reading widgets for panel 'folded_front'
+Reading widgets for panel 'back'
+    Checking settings for placeholder
+    Checking settings for audio_input_socket
+        socket: OK!
+    Checking settings for audio_output_socket
+        socket: OK!
+    Checking settings for cv_output_socket
+        socket: OK!
+Reading widgets for panel 'folded_back'
+
+Processing GUI definition
+
+    Panel 'front'
+    Detecting unsupported overlaps if any...
+    It was fine.
+    Checking if all nodes are contained in the panel bounds...
+    It was fine.
+
+    Panel 'folded_front'
+    Detecting unsupported overlaps if any...
+    It was fine.
+    Checking if all nodes are contained in the panel bounds...
+    It was fine.
+
+    Panel 'back'
+    Detecting unsupported overlaps if any...
+    It was fine.
+    Checking if all nodes are contained in the panel bounds...
+    It was fine.
+
+    Panel 'folded_back'
+    Detecting unsupported overlaps if any...
+    It was fine.
+    Checking if all nodes are contained in the panel bounds...
+    It was fine.
+
+Validating any custom_display backgrounds...
+None found.
+
+-----------------------------------------------------------------------------
+
+Exporting gui.lua
+
+Compositing background image for each panel
+
+Scaling images and filmstrips to target resolution
+'Knob_01_63frames.png'
+'Fader_Bypass_3frames.png'
+'Button_23_2frames.png'
+'Lamp_18_3frames.png'
+'FollowerFrontPanel.png'
+'Panel_Folded_Front.png'
+'Panel_Back_1U.png'
+'Panel_Folded_Back.png'
+Progress: [###############]
+          [###############] - Done.
+
+Gathering snapshots for navigator, icons, etc.
+No thumb snapshots supplied - generating...
+
+Generating full snapshot of panel 'front'
+cropping in first frame of filmstrip 'Lamp_18_3frames'
+cropping in first frame of filmstrip 'Fader_Bypass_3frames'
+cropping in first frame of filmstrip 'Knob_01_63frames'
+cropping in first frame of filmstrip 'Button_23_2frames'
+Progress: [###############]
+          [###############] - Done.
+compositing image 'Lamp_18_3frames' onto background image 'FollowerFrontPanel'
+compositing image 'Tape_Horizontal_1frames' onto background image 'FollowerFrontPanel'
+compositing image 'Fader_Bypass_3frames' onto background image 'FollowerFrontPanel'
+compositing image 'Knob_01_63frames' onto background image 'FollowerFrontPanel'
+compositing image 'Knob_01_63frames' onto background image 'FollowerFrontPanel'
+compositing image 'Button_23_2frames' onto background image 'FollowerFrontPanel'
+compositing, path is '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Intermediate/tmpdbed3wkn.png'
+
+Generating full snapshot of panel 'folded_front'
+path is '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI2D/Panel_Folded_Front.png'
+
+Copying GUI filmstrips from '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Intermediate/Filmstrips' to '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Output'
+Copying 'Reason_GUI_FollowerFrontPanel.png'
+Copying 'Reason_GUI_Lamp_18_3frames.png'
+Copying 'Reason_GUI_Panel_Back_1U.png'
+Copying 'Reason_GUI_Panel_Folded_Back.png'
+Copying 'Reason_GUI_Knob_01_63frames.png'
+Copying 'Reason_GUI_Button_23_2frames.png'
+Copying 'Reason_GUI_Fader_Bypass_3frames.png'
+Copying 'Reason_GUI_Panel_Folded_Front.png'
+Done.
+
+Copying panel snapshots from '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Intermediate/Filmstrips' to '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Output'
+Copying 'Reason_TrackListIcon_Snapshot_FollowerFrontPanel.png' to 'DeviceTrackListThumbnail.png'
+Copying 'Reason_Navigator_Snapshot_FollowerFrontPanel.png' to 'DeviceNavigator.png'
+Copying 'Reason_Navigator_Snapshot_Panel_Folded_Front.png' to 'DeviceNavigatorFolded.png'
+Copying 'Reason_Palette_Snapshot_FollowerFrontPanel.png' to 'DevicePaletteImage.png'
+Done.
+
+Making DeviceIcon.png ...
+/Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/GraphicsMagick/Mac/gm conjure -source128 /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Intermediate/Filmstrips/Reason_Icon128x128_Snapshot_FollowerFrontPanel.png /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/DeviceIcon.msl
+Done.
+
+Fitting Reason_GUI_FollowerFrontPanel.png onto rack rails ...
+/Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/GraphicsMagick/Mac/gm conjure -backdrop /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Intermediate/Filmstrips/Reason_GUI_FollowerFrontPanel.png -rail_L /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip01.png -rail_R /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip02.png -result /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Output/Reason_GUI_FollowerFrontPanel.png /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/RackRails.msl
+Done.
+Fitting Reason_GUI_Panel_Back_1U.png onto rack rails ...
+/Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/GraphicsMagick/Mac/gm conjure -backdrop /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Intermediate/Filmstrips/Reason_GUI_Panel_Back_1U.png -rail_L /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip06.png -rail_R /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip07.png -result /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Output/Reason_GUI_Panel_Back_1U.png /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/RackRails.msl
+Done.
+Fitting Reason_GUI_Panel_Folded_Front.png onto rack rails ...
+/Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/GraphicsMagick/Mac/gm conjure -backdrop /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Intermediate/Filmstrips/Reason_GUI_Panel_Folded_Front.png -rail_L /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip01.png -rail_R /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip02.png -result /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Output/Reason_GUI_Panel_Folded_Front.png /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/RackRails.msl
+Done.
+Fitting Reason_GUI_Panel_Folded_Back.png onto rack rails ...
+/Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/GraphicsMagick/Mac/gm conjure -backdrop /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Intermediate/Filmstrips/Reason_GUI_Panel_Folded_Back.png -rail_L /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip06.png -rail_R /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip07.png -result /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Output/Reason_GUI_Panel_Folded_Back.png /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/RackRails.msl
+Done.
