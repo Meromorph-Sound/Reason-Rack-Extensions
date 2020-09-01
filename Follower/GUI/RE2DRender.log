@@ -8,17 +8,17 @@ Reading device_2D.lua
 Validating image files
 Progress: [###############]
           [###############] - Done.
-    "FollowerFrontPanel.png"
     "Lamp_18_3frames.png"
-    "Tape_Horizontal_1frames.png"
-    "Fader_Bypass_3frames.png"
-    "Knob_01_63frames.png"
     "Button_23_2frames.png"
+    "Knob_01_63frames.png"
+    "Fader_Bypass_3frames.png"
+    "FollowerFrontPanel.png"
+    "Tape_Horizontal_1frames.png"
     "Panel_Folded_Front.png"
-    "Placeholder.png"
-    "Panel_Back_1U.png"
     "SharedAudioJack.png"
+    "Panel_Back_1U.png"
     "SharedCVJack.png"
+    "Placeholder.png"
     "Panel_Folded_Back.png"
 
 Panel 'front' uses background image 'FollowerFrontPanel'
@@ -34,11 +34,23 @@ Panels in device scenegraph:
 
 Node "Bg" is visual "FollowerFrontPanel" at offset = { 0, 0 } 
 Node "deviceName" is visual "Tape_Horizontal_1frames" at offset = { 185, 215 } 
-Node "learningRate" is visual "Knob_01_63frames" at offset = { 700, 80 } 
+Node "learningRate1" is visual "Knob_01_63frames" at offset = { 700, 80 } 
+Node "learningRate2" is visual "Knob_01_63frames" at offset = { 1500, 80 } 
+Node "learningRate3" is visual "Knob_01_63frames" at offset = { 2300, 80 } 
 Node "onoffbypass" is visual "Fader_Bypass_3frames" at offset = { 185, 45 } 
-Node "rectification" is visual "Button_23_2frames" at offset = { 1100, 100 } 
-Node "rectificationDisplay" is visual "Lamp_18_3frames" at offset = { 1260, 100 } 
-Node "threshold" is visual "Knob_01_63frames" at offset = { 900, 80 } 
+Node "rectification1" is visual "Button_23_2frames" at offset = { 1100, 100 } 
+Node "rectification2" is visual "Button_23_2frames" at offset = { 1900, 100 } 
+Node "rectification3" is visual "Button_23_2frames" at offset = { 2700, 100 } 
+Node "rectificationDisplay1" is visual "Lamp_18_3frames" at offset = { 1260, 100 } 
+Node "rectificationDisplay2" is visual "Lamp_18_3frames" at offset = { 2060, 100 } 
+Node "rectificationDisplay3" is visual "Lamp_18_3frames" at offset = { 2860, 100 } 
+Node "threshold1" is visual "Knob_01_63frames" at offset = { 900, 80 } 
+Node "threshold2" is visual "Knob_01_63frames" at offset = { 1700, 80 } 
+Node "threshold3" is visual "Knob_01_63frames" at offset = { 2500, 80 } 
+
+Unnamed node #1 is invisible
+Unnamed node #2 is invisible
+Unnamed node #3 is invisible
 
 ---- Panel 'folded_front':
 
@@ -47,10 +59,10 @@ Node "Bg" is visual "Panel_Folded_Front" at offset = { 0, 0 }
 ---- Panel 'back':
 
 Node "Bg" is visual "Panel_Back_1U" at offset = { 0, 0 } 
-Node "EnvelopeOutputSocket" is visual "SharedAudioJack" at offset = { 1200, 100 } 
-Node "GateOutputSocket" is visual "SharedCVJack" at offset = { 1400, 100 } 
+Node "EnvelopeOutputSocket1" is visual "SharedAudioJack" at offset = { 1200, 100 } 
+Node "GateOutputSocket1" is visual "SharedCVJack" at offset = { 1400, 100 } 
 Node "Placeholder" is visual "Placeholder" at offset = { 100, 100 } 
-Node "SignalInputSocket" is visual "SharedAudioJack" at offset = { 1000, 100 } 
+Node "SignalInputSocket1" is visual "SharedAudioJack" at offset = { 1000, 100 } 
 
 ---- Panel 'folded_back':
 
@@ -62,6 +74,22 @@ Node "CableOrigin" is invisible
 
 Reading hdgui_2D.lua
 Reading widgets for panel 'front'
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for toggle_button
+        value: OK!
+    Checking settings for sequence_meter
+        value: OK!
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for toggle_button
+        value: OK!
+    Checking settings for sequence_meter
+        value: OK!
     Checking settings for analog_knob
         value: OK!
     Checking settings for analog_knob
@@ -122,9 +150,9 @@ Compositing background image for each panel
 
 Scaling images and filmstrips to target resolution
 'Knob_01_63frames.png'
-'Fader_Bypass_3frames.png'
-'Button_23_2frames.png'
 'Lamp_18_3frames.png'
+'Button_23_2frames.png'
+'Fader_Bypass_3frames.png'
 'FollowerFrontPanel.png'
 'Panel_Folded_Front.png'
 'Panel_Back_1U.png'
@@ -137,18 +165,26 @@ No thumb snapshots supplied - generating...
 
 Generating full snapshot of panel 'front'
 cropping in first frame of filmstrip 'Lamp_18_3frames'
-cropping in first frame of filmstrip 'Fader_Bypass_3frames'
-cropping in first frame of filmstrip 'Knob_01_63frames'
 cropping in first frame of filmstrip 'Button_23_2frames'
+cropping in first frame of filmstrip 'Knob_01_63frames'
+cropping in first frame of filmstrip 'Fader_Bypass_3frames'
 Progress: [###############]
           [###############] - Done.
 compositing image 'Lamp_18_3frames' onto background image 'FollowerFrontPanel'
-compositing image 'Tape_Horizontal_1frames' onto background image 'FollowerFrontPanel'
-compositing image 'Fader_Bypass_3frames' onto background image 'FollowerFrontPanel'
+compositing image 'Button_23_2frames' onto background image 'FollowerFrontPanel'
 compositing image 'Knob_01_63frames' onto background image 'FollowerFrontPanel'
+compositing image 'Knob_01_63frames' onto background image 'FollowerFrontPanel'
+compositing image 'Knob_01_63frames' onto background image 'FollowerFrontPanel'
+compositing image 'Lamp_18_3frames' onto background image 'FollowerFrontPanel'
 compositing image 'Knob_01_63frames' onto background image 'FollowerFrontPanel'
 compositing image 'Button_23_2frames' onto background image 'FollowerFrontPanel'
-compositing, path is '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Intermediate/tmpdbed3wkn.png'
+compositing image 'Knob_01_63frames' onto background image 'FollowerFrontPanel'
+compositing image 'Lamp_18_3frames' onto background image 'FollowerFrontPanel'
+compositing image 'Knob_01_63frames' onto background image 'FollowerFrontPanel'
+compositing image 'Button_23_2frames' onto background image 'FollowerFrontPanel'
+compositing image 'Fader_Bypass_3frames' onto background image 'FollowerFrontPanel'
+compositing image 'Tape_Horizontal_1frames' onto background image 'FollowerFrontPanel'
+compositing, path is '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI/Intermediate/tmpso37z_s_.png'
 
 Generating full snapshot of panel 'folded_front'
 path is '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI2D/Panel_Folded_Front.png'

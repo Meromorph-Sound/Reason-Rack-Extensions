@@ -5,28 +5,80 @@ front = jbox.panel{
 		jbox.analog_knob{
 			transform = {140,16},
 			animation = jbox.image_sequence{path = "Reason_GUI_Knob_01_63frames", frames = 63},
-			value = "/custom_properties/learningRate",
+			value = "/custom_properties/learningRate1",
 			show_remote_box = true,
 			show_automation_rect = true,
 		},
 		jbox.analog_knob{
 			transform = {180,16},
 			animation = jbox.image_sequence{path = "Reason_GUI_Knob_01_63frames", frames = 63},
-			value = "/custom_properties/threshold",
+			value = "/custom_properties/threshold1",
 			show_remote_box = true,
 			show_automation_rect = true,
 		},
 		jbox.toggle_button{
 			transform = {220,20},
 			background = jbox.image_sequence{path = "Reason_GUI_Button_23_2frames", frames = 2},
-			value = "/custom_properties/rectification",
+			value = "/custom_properties/rectification1",
 			show_remote_box = true,
 			show_automation_rect = true,
 		},
 		jbox.sequence_meter{
 			transform = {252,20},
 			animation = jbox.image_sequence{path = "Reason_GUI_Lamp_18_3frames", frames = 3},
-			value = "/custom_properties/rectificationDisplay",
+			value = "/custom_properties/rectificationDisplay1",
+		},
+		jbox.analog_knob{
+			transform = {300,16},
+			animation = jbox.image_sequence{path = "Reason_GUI_Knob_01_63frames", frames = 63},
+			value = "/custom_properties/learningRate2",
+			show_remote_box = true,
+			show_automation_rect = true,
+		},
+		jbox.analog_knob{
+			transform = {340,16},
+			animation = jbox.image_sequence{path = "Reason_GUI_Knob_01_63frames", frames = 63},
+			value = "/custom_properties/threshold2",
+			show_remote_box = true,
+			show_automation_rect = true,
+		},
+		jbox.toggle_button{
+			transform = {380,20},
+			background = jbox.image_sequence{path = "Reason_GUI_Button_23_2frames", frames = 2},
+			value = "/custom_properties/rectification2",
+			show_remote_box = true,
+			show_automation_rect = true,
+		},
+		jbox.sequence_meter{
+			transform = {412,20},
+			animation = jbox.image_sequence{path = "Reason_GUI_Lamp_18_3frames", frames = 3},
+			value = "/custom_properties/rectificationDisplay2",
+		},
+		jbox.analog_knob{
+			transform = {460,16},
+			animation = jbox.image_sequence{path = "Reason_GUI_Knob_01_63frames", frames = 63},
+			value = "/custom_properties/learningRate3",
+			show_remote_box = true,
+			show_automation_rect = true,
+		},
+		jbox.analog_knob{
+			transform = {500,16},
+			animation = jbox.image_sequence{path = "Reason_GUI_Knob_01_63frames", frames = 63},
+			value = "/custom_properties/threshold3",
+			show_remote_box = true,
+			show_automation_rect = true,
+		},
+		jbox.toggle_button{
+			transform = {540,20},
+			background = jbox.image_sequence{path = "Reason_GUI_Button_23_2frames", frames = 2},
+			value = "/custom_properties/rectification3",
+			show_remote_box = true,
+			show_automation_rect = true,
+		},
+		jbox.sequence_meter{
+			transform = {572,20},
+			animation = jbox.image_sequence{path = "Reason_GUI_Lamp_18_3frames", frames = 3},
+			value = "/custom_properties/rectificationDisplay3",
 		},
 		jbox.device_name{
 			transform = {37,43},
@@ -60,15 +112,15 @@ back = jbox.panel{
 		},
 		jbox.audio_input_socket{
 			transform = {200,20},
-			socket = "/audio_inputs/signal",
+			socket = "/audio_inputs/signal1",
 		},
 		jbox.audio_output_socket{
 			transform = {240,20},
-			socket = "/audio_outputs/envelope",
+			socket = "/audio_outputs/envelope1",
 		},
 		jbox.cv_output_socket{
 			transform = {280,20},
-			socket = "/cv_outputs/gate",
+			socket = "/cv_outputs/gate1",
 		},
 	}
 }
