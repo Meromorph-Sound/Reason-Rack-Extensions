@@ -8,8 +8,12 @@
 #ifndef STATE_HPP_
 #define STATE_HPP_
 
+#include "Jukebox.h"
 #include <type_traits>
 #include <cmath>
+#include <algorithm>
+
+
 
 namespace follower {
 
@@ -37,21 +41,24 @@ rint32 toRaw(const E e) { return static_cast<rint32>(e); }
 
 class Data {
 private:
-	enum class Tags : rint32 {
-		LR=1,
-		TH=2,
-		BUTTON=3,
-		MODE=4
-	};
-	static const rint32 increment = 10;
 
-	rint32 n;
+	enum class Tags : ruint32 {
+			LR=1,
+			TH=2,
+			BUTTON=3,
+			MODE=4
+		};
+
+	static const ruint32 increment;
+	rint32 index(const Tags tag) const;
+
+
+	ruint32 n;
 	TJBox_ObjectRef props;
 	rfloat last;
 	rfloat threshold;
 	rfloat rho;
-
-	rint32 index(const Tags tag) const { return n*Data::increment + static_cast<rint32>(tag); }
+	rint32 mode;
 
 	template<typename T>
 	T get(const rint32 idx) {
@@ -65,36 +72,46 @@ private:
 	}
 
 public:
-	rint32 mode;
+
+	bool hits(const TJBox_PropertyDiff diff);
 
 
+	Data(const ruint32 n_);
+	void load();
+	State state();
+	rfloat update(const rfloat in);
+	bool exceedsThreshold() const;
+	void updateMode();
+	void rectify(rfloat *audio,const rint64 size);
 
-	Data(const rint32 n_) : n(n_), last(0), threshold(0), rho(0), mode(0) {
-		props = JBox_GetMotherboardObjectRef("/custom_properties");
-	}
 
-	void load() {
-		rho=get<rfloat>(Tags::LR);
-		auto t=std::max(0.0f,std::min(0.9999f,get<rfloat>(Tags::TH)));
-		threshold = -log2(1.0-t);
-	}
+};
 
-	State state() {
-		auto s = static_cast<State>(get<rint32>(kJBox_CustomPropertiesOnOffBypass));
-		if(s!=State::On) { last=0; }
-		return s;
-	}
+class Buffers {
+private:
 
-	rfloat update(const rfloat in) {
-		last = rho*in + (1.f-rho)*last;
-		return last;
-	}
-	bool exceedsThreshold() const { return last>=threshold; }
+	const static rint32 DATA_IN ;
+	const static rint32 DATA_OUT ;
+	const static rint32 CV_OUT ;
+	rint32 n;
 
-	void updateMode() {
-		mode=(mode+1) % 3;
-		set(Tags::MODE,mode);
-	}
+	TJBox_ObjectRef input;
+	TJBox_ObjectRef envelope;
+	TJBox_ObjectRef gate;
+
+	rint32 readBuffer(const TJBox_ObjectRef object,rfloat *buffer);
+		void writeBuffer(const TJBox_ObjectRef object,rfloat *buffer,const rint32 size);
+		void writeCV(const TJBox_ObjectRef object,const rfloat value);
+
+public:
+		const static rint64 BUFFER_SIZE ;
+
+	Buffers(const rint32);
+
+	rint32 readInput(rfloat *buffer);
+	void writeEnvelope(rfloat *buffer,const rint32 size);
+	void writeGate(const rfloat value);
+
 
 
 };

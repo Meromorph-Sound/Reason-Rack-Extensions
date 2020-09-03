@@ -13,7 +13,7 @@ INCLUDE_DIRS = [
 JUKEBOX_SDK_DIR = "../.."
 
 # Other compiler flags, for example warning flags like -Wconversion, or preprocessor defines like -DDEBUG=1
-OTHER_COMPILER_FLAGS = "-Wall"
+OTHER_COMPILER_FLAGS = "-Wall -std=c++17"
 
 # End of build configuration
 
