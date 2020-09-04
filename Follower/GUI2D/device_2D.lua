@@ -11,18 +11,6 @@ LAMP_HEIGHT=480
 
 MARGIN=50
 
-function centre(height)
-	return (PANEL_HEIGHT-height)//2
-end
-
-function fromBottom(height)
-  return PANEL_HEIGHT-(MARGIN+height)
-end
-
-
-function xOf(nKnobs,nMargins) 
-  return 1000+nKnobs*KNOB_WIDTH + nMargins*MARGIN
- end
 
 
 front = { 
