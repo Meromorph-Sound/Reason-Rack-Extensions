@@ -1,4 +1,5 @@
 format_version = "3.0"
+  
 
 custom_properties = jbox.property_set{	
 	document_owner = { 
@@ -68,6 +69,13 @@ custom_properties = jbox.property_set{
 				ui_name = jbox.ui_text("propertyname_RectificationDisplay"),
 				ui_type = jbox.ui_selector { jbox.ui_text("halfwave"), jbox.ui_text("fullwave"), jbox.ui_text("squared") },
 			},
+			thresholdLED1 = jbox.number {
+       property_tag=15,
+       default=1,
+       steps=3,
+       ui_name = jbox.ui_text("propertyname_GateDisplay"),
+       ui_type = jbox.ui_selector { jbox.ui_text("off"), jbox.ui_text("n/a"), jbox.ui_text("on") },
+      },
 			rectificationDisplay2 = jbox.number {
         property_tag = 24,
         default = 0.0,
@@ -75,12 +83,26 @@ custom_properties = jbox.property_set{
         ui_name = jbox.ui_text("propertyname_RectificationDisplay"),
         ui_type = jbox.ui_selector { jbox.ui_text("halfwave"), jbox.ui_text("fullwave"), jbox.ui_text("squared") },
       },
+      thresholdLED2 = jbox.number {
+       property_tag=25,
+       default=1,
+       steps=3,
+       ui_name = jbox.ui_text("propertyname_GateDisplay"),
+       ui_type = jbox.ui_selector { jbox.ui_text("off"), jbox.ui_text("n/a"), jbox.ui_text("on") },
+      },
       rectificationDisplay3 = jbox.number {
         property_tag = 34,
         default = 0.0,
         steps = 3,
         ui_name = jbox.ui_text("propertyname_RectificationDisplay"),
         ui_type = jbox.ui_selector { jbox.ui_text("halfwave"), jbox.ui_text("fullwave"), jbox.ui_text("squared") },
+      },
+      thresholdLED3 = jbox.number {
+       property_tag=35,
+       default=1,
+       steps=3,
+       ui_name = jbox.ui_text("propertyname_GateDisplay"),
+       ui_type = jbox.ui_selector { jbox.ui_text("off"), jbox.ui_text("n/a"), jbox.ui_text("on") },
       },
 		}
 	},
@@ -109,8 +131,5 @@ cv_outputs = {
   gate3 = jbox.cv_output{ ui_name = jbox.ui_text("gateOutput") },
 }
 
-jbox.set_effect_auto_bypass_routing {
-  {"/audio_inputs/signal", "/audio_outputs/envelope"}
-}
 
 

@@ -11,10 +11,12 @@ texts = {
 	["propertyname_RectificationDisplay"] = "Rectification mode",
 	["on"] = "On",
 	["off"] = "Off",
+	["n/a"] = "N/A",
 	["halfwave"] = "Half Wave",
 	["fullwave"] = "Full Wave",
 	["squared"] = "Squared",
 	["audioInput"] = "Audio Input",
 	["envelopeOutput"] = "Audio envelope out",
 	["gateOutput"] = "Gate CV out",
+	["propertyname_GateDisplay"] = "Gate"
 }

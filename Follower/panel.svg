@@ -10,7 +10,7 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    inkscape:export-ydpi="96"
    inkscape:export-xdpi="96"
-   inkscape:export-filename="/Users/julianporter/Reason/SDK/Examples/Follower/GUI2D/FollowerFrontPanel.png"
+   inkscape:export-filename="/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/Follower/GUI2D/front.png"
    sodipodi:docname="panel.svg"
    inkscape:version="1.0 (4035a4f, 2020-05-01)"
    id="panel"
@@ -22,10 +22,10 @@
      id="defs2" />
   <sodipodi:namedview
      inkscape:window-maximized="0"
-     inkscape:window-y="140"
-     inkscape:window-x="1963"
+     inkscape:window-y="316"
+     inkscape:window-x="3775"
      inkscape:window-height="1035"
-     inkscape:window-width="2388"
+     inkscape:window-width="2470"
      inkscape:object-nodes="false"
      inkscape:snap-to-guides="true"
      inkscape:snap-grids="true"
@@ -33,11 +33,11 @@
      inkscape:snap-nodes="false"
      showgrid="false"
      inkscape:document-rotation="0"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      inkscape:document-units="mm"
-     inkscape:cy="246.0299"
-     inkscape:cx="1545.6315"
-     inkscape:zoom="0.46100859"
+     inkscape:cy="133.57689"
+     inkscape:cx="774.52555"
+     inkscape:zoom="0.39802807"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -925,5 +925,29 @@
            sodipodi:role="line"
            id="tspan1638-8-1">threshold</tspan></text>
     </g>
+    <rect
+       ry="0"
+       y="20"
+       x="1100"
+       height="40"
+       width="40"
+       id="thresholdLED1"
+       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:3;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none" />
+    <rect
+       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:3;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+       id="thresholdLED2"
+       width="40"
+       height="40"
+       x="1900"
+       y="20"
+       ry="0" />
+    <rect
+       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:3;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
+       id="thresholdLED3"
+       width="40"
+       height="40"
+       x="2700"
+       y="20"
+       ry="0" />
   </g>
 </svg>

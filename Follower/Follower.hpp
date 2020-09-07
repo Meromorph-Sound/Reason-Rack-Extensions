@@ -3,9 +3,11 @@
 #include "Jukebox.h" 
 #include <vector>
 #include <cmath>
-#include "state.hpp"
+#include "envfollower.hpp"
 
 namespace follower {
+
+#define NFOLLOWERS 3
 
 class CFollower {
 
@@ -15,11 +17,7 @@ private:
 
 	static const TJBox_Int64 BUFFER_SIZE;
 
-	Data data;
-	Buffers buffers;
-
-
-	rfloat *audio;
+	EnvelopeFollower *follower[NFOLLOWERS];
 
 	void processButtons(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount);
 	void process();

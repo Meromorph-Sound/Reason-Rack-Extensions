@@ -14,60 +14,17 @@ TJBox_Float64 clamp(const TJBox_Float64 lo,const TJBox_Float64 hi,const TJBox_Fl
 }
 
 
-CFollower::CFollower() : data(1), buffers(1) {
-		audio = new rfloat[Buffers::BUFFER_SIZE];
+CFollower::CFollower() {
+	for(auto i=0;i<NFOLLOWERS;i++) follower[i]=new EnvelopeFollower(i+1);
+
 }
-
-
 
 void CFollower::process() {
-	auto state = data.state();
-
-	switch(state) {
-		case State::Off:
-		default:
-			break;
-		case State::Bypassed: {
-			auto size=buffers.readInput(audio);
-			if(size>0) {
-				buffers.writeEnvelope(audio,size);
-				buffers.writeGate(0);
-			}
-			break;
-		}
-		case State::On: {
-			auto size=buffers.readInput(audio);
-			if(size>0) {
-				data.load();
-				data.rectify(audio,size);
-				unsigned aboveThreshold=0;
-				for(auto i=0;i<size;i++) {
-					audio[i]=data.update(audio[i]);
-					if (data.exceedsThreshold()) aboveThreshold+=2;
-				}
-				buffers.writeEnvelope(audio,size);
-				rdouble gate = (aboveThreshold>size) ? 1.0 : 0.0;
-				buffers.writeGate(gate);
-			}
-			break;
-		}
-	}
+	for(auto i=0;i<NFOLLOWERS;i++) follower[i]->process();
 }
 
-
-
-
 void CFollower::processButtons(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount) {
-	bool pressed=false;
-	for(auto i=0;i<iDiffCount;i++) {
-		auto diff=iPropertyDiffs[i];
-		if(data.hits(diff)) {
-			pressed=true;
-		}
-	}
-	if(pressed) {
-		data.updateMode();
-	}
+	for(auto i=0;i<NFOLLOWERS;i++) follower[i]->processDiffs(iPropertyDiffs,iDiffCount);
 }
 
 

@@ -37,33 +37,17 @@ State Data::state() {
 	return s;
 }
 
-rfloat Data::update(const rfloat in) {
-	last = rho*in + (1.f-rho)*last;
-	return last;
+void Data::setGate(const rfloat g) {
+	rint32 gate = (g>0) ? 2 : (g<0) ? 0 : 1;
+	set(Tags::GATE,gate);
 }
-bool Data::exceedsThreshold() const { return last>=threshold; }
 
 void Data::updateMode() {
 	mode=(mode+1) % 3;
 	set(Tags::MODE,mode);
 }
 
-void Data::rectify(rfloat *audio,const rint64 size) {
-	auto start=audio;
-	auto end=audio+size;
-	switch(mode) {
-	case 0:
-	default:
-		std::transform(start,end,start,[](rfloat x) { return std::max(x,0.f); });
-		break;
-	case 1:
-		std::transform(start,end,start,[](rfloat x) { return fabs(x); });
-		break;
-	case 2:
-		std::transform(start,end,start,[](rfloat x) { return x*x; });
-		break;
-	}
-}
+
 
 const rint64 Buffers::BUFFER_SIZE = 64;
 const rint32 Buffers::DATA_IN = kJBox_AudioInputBuffer;

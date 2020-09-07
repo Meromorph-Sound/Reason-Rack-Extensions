@@ -46,7 +46,8 @@ private:
 		LR=1,
 				TH=2,
 				BUTTON=3,
-				MODE=4
+				MODE=4,
+				GATE=5
 	};
 
 	static const ruint32 increment;
@@ -54,10 +55,9 @@ private:
 
 	ruint32 n;
 	TJBox_ObjectRef props;
-	rfloat last;
-	rfloat threshold;
-	rfloat rho;
-	rint32 mode;
+
+
+
 
 	template<typename T>
 	T get(const rint32 idx) { return static_cast<T>(JBox_LoadMOMPropertyAsNumber(props,idx)); }
@@ -69,15 +69,20 @@ private:
 	}
 
 public:
+	rfloat last;
+		rfloat threshold;
+		rfloat rho;
+		rint32 mode;
 
 	Data(const ruint32 n_);
 
 	void load();
 	State state();
-	rfloat update(const rfloat in);
-	bool exceedsThreshold() const;
+
+
 	void updateMode();
-	void rectify(rfloat *audio,const rint64 size);
+	void setGate(const rfloat);
+
 	bool hits(const TJBox_PropertyDiff diff);
 
 };
@@ -94,9 +99,13 @@ private:
 	TJBox_ObjectRef envelope;
 	TJBox_ObjectRef gate;
 
+
+
 	rint32 readBuffer(const TJBox_ObjectRef object,rfloat *buffer);
 	void writeBuffer(const TJBox_ObjectRef object,rfloat *buffer,const rint32 size);
 	void writeCV(const TJBox_ObjectRef object,const rfloat value);
+
+
 
 public:
 	const static rint64 BUFFER_SIZE ;
@@ -105,7 +114,10 @@ public:
 	rint32 readInput(rfloat *buffer);
 	void writeEnvelope(rfloat *buffer,const rint32 size);
 	void writeGate(const rfloat value);
+
 };
+
+
 
 
 }
