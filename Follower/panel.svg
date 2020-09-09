@@ -22,8 +22,8 @@
      id="defs2" />
   <sodipodi:namedview
      inkscape:window-maximized="0"
-     inkscape:window-y="316"
-     inkscape:window-x="3775"
+     inkscape:window-y="23"
+     inkscape:window-x="2010"
      inkscape:window-height="1035"
      inkscape:window-width="2470"
      inkscape:object-nodes="false"
@@ -35,8 +35,8 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="layer2"
      inkscape:document-units="mm"
-     inkscape:cy="133.57689"
-     inkscape:cx="774.52555"
+     inkscape:cy="151.16359"
+     inkscape:cx="1721.6949"
      inkscape:zoom="0.39802807"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -507,88 +507,6 @@
        id="path2560-6-9"
        d="m 2278.3594,22.62009 v 315"
        style="fill:#fafafa;fill-opacity:1;stroke:#f9f9f9;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <g
-       transform="translate(1125.1778,8.5000059)"
-       id="g2502-0-5"
-       style="display:inline">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:condensed;font-size:32px;line-height:1.25;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Semi-Bold Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
-         x="1844.9489"
-         y="116.076"
-         id="text2464-6-4"><tspan
-           y="116.076"
-           x="1844.9489"
-           style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:condensed;font-size:26.6667px;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Medium Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
-           id="tspan2543-2-7"
-           sodipodi:role="line">half-wave</tspan></text>
-      <text
-         id="text2464-0-4-8"
-         y="183.87199"
-         x="1844.9489"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:32px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;display:inline;fill:#ffffff"
-         xml:space="preserve"><tspan
-           y="183.87199"
-           x="1844.9489"
-           style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:condensed;font-size:26.6667px;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Medium Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
-           id="tspan2545-0-3"
-           sodipodi:role="line">full-wave</tspan></text>
-      <text
-         id="text2464-5-1-0"
-         y="244.82001"
-         x="1846.6449"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:condensed;font-size:26.6667px;line-height:1.25;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Medium Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;display:inline;fill:#ffffff"
-         xml:space="preserve"><tspan
-           y="244.82001"
-           x="1846.6449"
-           id="tspan2547-7-4"
-           sodipodi:role="line">squaring</tspan></text>
-    </g>
-    <text
-       id="text2506-0-1"
-       y="290.57669"
-       x="2732.8296"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.6667px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;display:inline;fill:#ffffff"
-       xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:condensed;font-size:26.6667px;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Medium Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
-         y="290.57669"
-         x="2732.8296"
-         id="tspan2539-8-7"
-         sodipodi:role="line">rectification method</tspan></text>
-    <text
-       id="text2519-5-9"
-       y="49.999977"
-       x="2297.312"
-       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:condensed;font-size:37.3333px;line-height:1.25;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Semi-Bold Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
-       xml:space="preserve"><tspan
-         y="49.999977"
-         x="2297.312"
-         id="tspan2822"
-         sodipodi:role="line">Envelope Follower 3</tspan></text>
-    <text
-       id="text2527-7-3"
-       y="313.36337"
-       x="2390.0925"
-       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:condensed;font-size:26.6667px;line-height:1.25;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Medium Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ffffff"
-       xml:space="preserve"><tspan
-         y="313.36337"
-         x="2390.0925"
-         id="tspan2531-4-2"
-         sodipodi:role="line">learning rate</tspan></text>
-    <text
-       id="text2535-1-9"
-       y="313.36337"
-       x="2514.2034"
-       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:condensed;font-size:26.6667px;line-height:1.25;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Medium Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
-       xml:space="preserve"><tspan
-         y="313.36337"
-         x="2514.2034"
-         id="tspan2533-5-9"
-         sodipodi:role="line">threshold (gate)</tspan></text>
-    <path
-       style="fill:#fafafa;fill-opacity:1;stroke:#f9f9f9;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 3092.5105,31.59555 v 315"
-       id="path2560-6-9-8" />
   </g>
   <g
      style="display:none"
@@ -823,108 +741,6 @@
            x="1228.041"
            y="191.97984">threshold</tspan></text>
     </g>
-    <g
-       transform="translate(1300.5,8.5000059)"
-       id="learning rate knob-9-0"
-       style="display:inline">
-      <rect
-         style="fill:#ff0000;fill-opacity:1;stroke:#0c0c64;stroke-opacity:1"
-         id="rect1661-7-8"
-         width="180"
-         height="200"
-         x="1000"
-         y="72" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.3333px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke:#ffffff"
-         x="1026.2301"
-         y="180.34169"
-         id="lr-0-9"><tspan
-           sodipodi:role="line"
-           id="tspan1621-3-7"
-           x="1026.2301"
-           y="180.34169">learning</tspan><tspan
-           sodipodi:role="line"
-           x="1026.2301"
-           y="207.00832"
-           id="tspan1625-2-0">Rate</tspan></text>
-    </g>
-    <g
-       transform="translate(1200.5,8.5000059)"
-       id="rectification button-2-8"
-       style="display:inline">
-      <rect
-         y="92"
-         x="1500"
-         height="160"
-         width="160"
-         id="rect1663-3-8"
-         style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-opacity:1" />
-      <text
-         id="text1669-9-6"
-         y="167.46014"
-         x="1522.1697"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.3333px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
-         xml:space="preserve"><tspan
-           id="tspan1673-4-2"
-           sodipodi:role="line"
-           x="1522.1697"
-           y="167.46014">rectification</tspan><tspan
-           id="tspan1675-1-2"
-           sodipodi:role="line"
-           x="1522.1697"
-           y="194.12677">button</tspan></text>
-    </g>
-    <g
-       transform="translate(1200.5,8.5000059)"
-       id="rectification display lights-4-7"
-       style="display:inline">
-      <rect
-         style="fill:#ff0000;stroke:#000080"
-         id="rect2455-2-3"
-         width="98"
-         height="160"
-         x="1660"
-         y="92"
-         ry="1" />
-      <text
-         transform="rotate(-90)"
-         id="text1679-7-1"
-         y="1699.5002"
-         x="-201.87151"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.3333px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
-         xml:space="preserve"><tspan
-           y="1699.5002"
-           x="-201.87151"
-           id="tspan1677-4-1"
-           sodipodi:role="line">lights</tspan></text>
-    </g>
-    <g
-       transform="translate(1300.5,8.5000059)"
-       id="threshold knob-4-1"
-       style="display:inline">
-      <rect
-         y="72"
-         x="1200"
-         height="200"
-         width="180"
-         id="th-6-7"
-         style="display:inline;fill:#ff0000;fill-opacity:1;stroke:#0c0c64;stroke-opacity:1" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.3333px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
-         x="1228.041"
-         y="165.31322"
-         id="text1632-4-8"><tspan
-           y="165.31322"
-           x="1228.041"
-           sodipodi:role="line"
-           id="tspan1636-7-3">gate</tspan><tspan
-           y="191.97984"
-           x="1228.041"
-           sodipodi:role="line"
-           id="tspan1638-8-1">threshold</tspan></text>
-    </g>
     <rect
        ry="0"
        y="20"
@@ -939,14 +755,6 @@
        width="40"
        height="40"
        x="1900"
-       y="20"
-       ry="0" />
-    <rect
-       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:3;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
-       id="thresholdLED3"
-       width="40"
-       height="40"
-       x="2700"
        y="20"
        ry="0" />
   </g>

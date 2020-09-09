@@ -8,36 +8,14 @@
 #ifndef STATE_HPP_
 #define STATE_HPP_
 
-#include "Jukebox.h"
-#include <type_traits>
-#include <cmath>
-#include <algorithm>
+
+#include "defines.hpp"
+
+
 
 
 
 namespace follower {
-
-using rint32 = TJBox_Int32;
-using ruint32 = TJBox_UInt32;
-using rint64 = TJBox_Int64;
-using rdouble = TJBox_Float64;
-using rfloat = TJBox_AudioSample;
-
-enum class State : rint32 {
-	Off = 0, On = 1, Bypassed = 2
-};
-
-enum class Mode : rint32 {
-	HalfWave = 0, FullWave = 1, Squared = 2
-};
-
-template<typename E, class = typename std::enable_if<std::is_enum<E>::value>::type>
-E fromRaw(const rint32 r) { return static_cast<E>(r); }
-
-template<typename E, class = typename std::enable_if<std::is_enum<E>::value>::type>
-rint32 toRaw(const E e) { return static_cast<rint32>(e); }
-
-
 
 class Data {
 private:
@@ -56,9 +34,6 @@ private:
 	ruint32 n;
 	TJBox_ObjectRef props;
 
-
-
-
 	template<typename T>
 	T get(const rint32 idx) { return static_cast<T>(JBox_LoadMOMPropertyAsNumber(props,idx)); }
 	template<typename T>
@@ -70,9 +45,9 @@ private:
 
 public:
 	rfloat last;
-		rfloat threshold;
-		rfloat rho;
-		rint32 mode;
+	rfloat threshold;
+	rfloat rho;
+	rint32 mode;
 
 	Data(const ruint32 n_);
 
@@ -86,37 +61,6 @@ public:
 	bool hits(const TJBox_PropertyDiff diff);
 
 };
-
-class Buffers {
-private:
-
-	const static rint32 DATA_IN ;
-	const static rint32 DATA_OUT ;
-	const static rint32 CV_OUT ;
-	rint32 n;
-
-	TJBox_ObjectRef input;
-	TJBox_ObjectRef envelope;
-	TJBox_ObjectRef gate;
-
-
-
-	rint32 readBuffer(const TJBox_ObjectRef object,rfloat *buffer);
-	void writeBuffer(const TJBox_ObjectRef object,rfloat *buffer,const rint32 size);
-	void writeCV(const TJBox_ObjectRef object,const rfloat value);
-
-
-
-public:
-	const static rint64 BUFFER_SIZE ;
-
-	Buffers(const rint32);
-	rint32 readInput(rfloat *buffer);
-	void writeEnvelope(rfloat *buffer,const rint32 size);
-	void writeGate(const rfloat value);
-
-};
-
 
 
 

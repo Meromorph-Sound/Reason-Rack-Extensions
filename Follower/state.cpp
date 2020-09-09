@@ -14,6 +14,7 @@ namespace follower {
 const ruint32 Data::increment = 10;
 
 rint32 Data::index(const Data::Tags tag) const { return n*Data::increment + static_cast<rint32>(tag); }
+
 bool Data::hits(const TJBox_PropertyDiff diff) {
 	auto tag=diff.fPropertyTag;
 	auto b = tag % Data::increment;
@@ -26,9 +27,8 @@ Data::Data(const ruint32 n_) : n(n_), last(0), threshold(0), rho(0), mode(0) {
 }
 
 void Data::load() {
-	rho=get<rfloat>(Tags::LR);
-	auto t=std::max(0.0f,std::min(0.9999f,get<rfloat>(Tags::TH)));
-	threshold = -log2(1.0f-t);
+	rho=clamp<rfloat>(1,0,get<rfloat>(Tags::LR));
+	threshold = clamp<rfloat>(1,0,get<rfloat>(Tags::TH));
 }
 
 State Data::state() {
@@ -42,54 +42,18 @@ void Data::setGate(const rfloat g) {
 	set(Tags::GATE,gate);
 }
 
+
+
 void Data::updateMode() {
 	mode=(mode+1) % 3;
 	set(Tags::MODE,mode);
 }
-
-
-
-const rint64 Buffers::BUFFER_SIZE = 64;
-const rint32 Buffers::DATA_IN = kJBox_AudioInputBuffer;
-const rint32 Buffers::DATA_OUT = kJBox_AudioOutputBuffer;
-const rint32 Buffers::CV_OUT = kJBox_CVOutputValue;
-
-char * append(char *buffer,const char *text,const rint32 n) {
-	strcpy(buffer,text);
-	char s[2];
-	s[0]= '0'+static_cast<char>(n);
-	s[1]= '\0';
-	return strcat(buffer,s);
-}
-
-Buffers::Buffers(const rint32 n_) : n(n_) {
-	char b[40];
-	input=JBox_GetMotherboardObjectRef(append(b,"/audio_inputs/signal",n));
-	envelope=JBox_GetMotherboardObjectRef(append(b,"/audio_outputs/envelope",n));
-	gate=JBox_GetMotherboardObjectRef(append(b,"/cv_outputs/gate",n));
-}
-
-rint32 Buffers::readBuffer(const TJBox_ObjectRef object,rfloat *buffer) {
-	auto ref = JBox_LoadMOMPropertyByTag(object, DATA_IN);
-	rint32 size = std::min(JBox_GetDSPBufferInfo(ref).fSampleCount,BUFFER_SIZE);
-	if(size>0) {
-		JBox_GetDSPBufferData(ref, 0, size, buffer);
-	}
-	return size;
-}
-void Buffers::writeBuffer(const TJBox_ObjectRef object,rfloat *buffer,const rint32 size) {
-	auto ref = JBox_LoadMOMPropertyByTag(object, DATA_OUT);
-	if(size>0) {
-		JBox_SetDSPBufferData(ref, 0, size, buffer);
-	}
-}
-void Buffers::writeCV(const TJBox_ObjectRef object,const rfloat value) {
-	JBox_StoreMOMPropertyAsNumber(object,CV_OUT,value);
 }
 
 
-rint32 Buffers::readInput(rfloat *buffer) { return readBuffer(input,buffer); }
-void Buffers::writeEnvelope(rfloat *buffer,const rint32 size) { writeBuffer(envelope,buffer,size); }
-void Buffers::writeGate(const rfloat value) { writeCV(gate,value); }
 
-}
+
+
+
+
+

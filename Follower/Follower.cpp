@@ -15,7 +15,7 @@ TJBox_Float64 clamp(const TJBox_Float64 lo,const TJBox_Float64 hi,const TJBox_Fl
 
 
 CFollower::CFollower() {
-	for(auto i=0;i<NFOLLOWERS;i++) follower[i]=new EnvelopeFollower(i+1);
+	for(auto i=0;i<NFOLLOWERS;i++) follower[i]=new StereoFollower(i+1);
 
 }
 

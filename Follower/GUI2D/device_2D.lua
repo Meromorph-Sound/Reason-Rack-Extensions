@@ -43,7 +43,7 @@ front = {
   		offset = { 1260, 100 },
   		{ path = "Lamp_18_3frames", frames = 3},
   	},
-    thresholdLED1 = {
+    gateLED1 = {
       offset = { 1100, 20 },
       { path = "Bicolour_LED_3frames", frames = 3 }
     }
@@ -66,77 +66,58 @@ front = {
       offset = { 2060, 100 },
       { path = "Lamp_18_3frames", frames = 3},
     },
-    thresholdLED2 = {
+    gateLED2 = {
       offset = { 1900, 20 },
       { path = "Bicolour_LED_3frames", frames = 3 }
     }
   },
-  {
-   learningRate3 = {
-      offset = { 2300, 80 },
-      { path = "Knob_01_63frames", frames = 63 },
-    },
-    threshold3 = {
-      offset = { 2500, 80 },
-      { path = "Knob_01_63frames", frames = 63 },
-    },
-    rectification3 = {
-      offset = { 2700, 100 },
-      { path = "Button_23_2frames", frames = 2},
-    },
-    rectificationDisplay3 =
-    {
-      offset = { 2860, 100 },
-      { path = "Lamp_18_3frames", frames = 3},
-    },
-    thresholdLED3 = {
-      offset = { 2700, 20 },
-      { path = "Bicolour_LED_3frames", frames = 3 }
-    }
-  }
 }
 back = { 
 	Bg = {
 		{ path = "back" },
 	},
 	Placeholder = {
-		offset = { 100, 100 },
+		offset = { 2500, 100 },
 		{ path = "Placeholder" },
 	},
-	SignalInputSocket1 = {
-		offset = {500,100},
+	SignalLeftSocket1 = {
+		offset = {200,120},
 		{ path = "SharedAudioJack", frames = 3},
 	},
-	EnvelopeOutputSocket1 = {
-		offset = {700,100},
-		{ path = "SharedAudioJack", frames = 3},
-	},
-	GateOutputSocket1 = {
-		offset = {900,100},
-		{ path = "SharedCVJack", frames = 3},
-	},
-	SignalInputSocket2 = {
-    offset = {1105,100},
+	SignalRightSocket1 = {
+    offset = {350,120},
     { path = "SharedAudioJack", frames = 3},
   },
-  EnvelopeOutputSocket2 = {
-    offset = {1300,100},
+	EnvelopeLeftSocket1 = {
+		offset = {500,120},
+		{ path = "SharedAudioJack", frames = 3},
+	},
+	EnvelopeRightSocket1 = {
+    offset = {650,120},
+    { path = "SharedAudioJack", frames = 3},
+  },
+	GateOutputSocket1 = {
+		offset = {880,130},
+		{ path = "SharedCVJack", frames = 3},
+	},
+	SignalLeftSocket2 = {
+    offset = {1200,120},
+    { path = "SharedAudioJack", frames = 3},
+  },
+  SignalRightSocket2 = {
+    offset = {1350,120},
+    { path = "SharedAudioJack", frames = 3},
+  },
+  EnvelopeLeftSocket2 = {
+    offset = {1500,120},
+    { path = "SharedAudioJack", frames = 3},
+  },
+  EnvelopeRightSocket2 = {
+    offset = {1650,120},
     { path = "SharedAudioJack", frames = 3},
   },
   GateOutputSocket2 = {
-    offset = {1510,100},
-    { path = "SharedCVJack", frames = 3},
-  },
-  SignalInputSocket3 = {
-    offset = {1705,100},
-    { path = "SharedAudioJack", frames = 3},
-  },
-  EnvelopeOutputSocket3 = {
-    offset = {1905,100},
-    { path = "SharedAudioJack", frames = 3},
-  },
-  GateOutputSocket3 = {
-    offset = {2110,100},
+    offset = {1880,130},
     { path = "SharedCVJack", frames = 3},
   },
   deviceName = {
