@@ -26,9 +26,8 @@ Data::Data(const ruint32 n_) : n(n_), last(0), threshold(0), rho(0), mode(0) {
 }
 
 void Data::load() {
-	rho=get<rfloat>(Tags::LR);
-	auto t=std::max(0.0f,std::min(0.9999f,get<rfloat>(Tags::TH)));
-	threshold = -log2(1.0f-t);
+	rho = log2(1+get<rfloat>(Tags::LR));
+	threshold = log2(1+get<rfloat>(Tags::TH));
 }
 
 State Data::state() {
@@ -53,6 +52,7 @@ const rint64 Buffers::BUFFER_SIZE = 64;
 const rint32 Buffers::DATA_IN = kJBox_AudioInputBuffer;
 const rint32 Buffers::DATA_OUT = kJBox_AudioOutputBuffer;
 const rint32 Buffers::CV_OUT = kJBox_CVOutputValue;
+const rint32 Buffers::DATA_CONNECTED = kJBox_AudioInputConnected;
 
 char * append(char *buffer,const char *text,const rint32 n) {
 	strcpy(buffer,text);
@@ -85,6 +85,12 @@ void Buffers::writeBuffer(const TJBox_ObjectRef object,rfloat *buffer,const rint
 }
 void Buffers::writeCV(const TJBox_ObjectRef object,const rfloat value) {
 	JBox_StoreMOMPropertyAsNumber(object,CV_OUT,value);
+}
+
+bool Buffers::isConnected() {
+	auto ref = JBox_LoadMOMPropertyByTag(input,kJBox_AudioInputConnected);
+	if(JBox_GetType(ref)==kJBox_Boolean) return JBox_GetBoolean(ref);
+	else return false;
 }
 
 

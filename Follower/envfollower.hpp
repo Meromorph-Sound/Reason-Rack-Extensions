@@ -23,6 +23,7 @@ private:
 	rfloat last;
 	rfloat *audio;
 
+	bool getBuffer();
 	void bypass();
 	void rectify();
 	bool exceedsThreshold(const rfloat out) const;

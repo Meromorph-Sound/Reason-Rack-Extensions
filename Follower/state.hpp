@@ -93,6 +93,7 @@ private:
 	const static rint32 DATA_IN ;
 	const static rint32 DATA_OUT ;
 	const static rint32 CV_OUT ;
+	const static rint32 DATA_CONNECTED;
 	rint32 n;
 
 	TJBox_ObjectRef input;
@@ -115,6 +116,7 @@ public:
 	void writeEnvelope(rfloat *buffer,const rint32 size);
 	void writeGate(const rfloat value);
 
+	bool isConnected();
 };
 
 

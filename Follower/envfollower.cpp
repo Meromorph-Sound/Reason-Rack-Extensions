@@ -17,18 +17,25 @@ EnvelopeFollower::~EnvelopeFollower() {
 	if(audio) { delete[] audio; }
 }
 
-void EnvelopeFollower::bypass() {
-	size=buffers.readInput(audio);
-	if(size>0) {
-		buffers.writeEnvelope(audio,size);
-		buffers.writeGate(0);
+bool EnvelopeFollower::getBuffer() {
+	if(buffers.isConnected()) {
+		size=buffers.readInput(audio);
+		return size > 0;
 	}
+	else { return false; }
+}
+
+void EnvelopeFollower::bypass() {
+	if(getBuffer()) {
+		buffers.writeEnvelope(audio,size);
+	}
+	buffers.writeGate(0);
+	data.setGate(0);
 }
 
 void EnvelopeFollower::rectify() {
 
-	size=buffers.readInput(audio);
-	if(size>0) {
+	if(getBuffer()) {
 		data.load();
 		auto start=audio;
 		auto end=audio+size;
@@ -74,6 +81,7 @@ void EnvelopeFollower::process() {
 	switch(state) {
 	case State::Off:
 	default:
+		data.setGate(0);
 		break;
 	case State::Bypassed: {
 		bypass();
