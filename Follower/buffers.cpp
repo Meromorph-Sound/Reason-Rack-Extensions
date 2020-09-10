@@ -53,7 +53,7 @@ AudioBuffers::AudioBuffers(const Direction &dir,const Channel &channel,const cha
 }
 
 rint32 AudioBuffers::read(rfloat *b) {
-	if(!isConnected()) throw NotConnectedError();
+	if(!isConnected()) return -1;
 
 	auto ref = JBox_LoadMOMPropertyByTag(buffer, DATA_IN);
 	rint32 size = std::min(JBox_GetDSPBufferInfo(ref).fSampleCount,BUFFER_SIZE);

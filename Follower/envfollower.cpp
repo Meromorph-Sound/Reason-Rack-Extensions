@@ -15,9 +15,11 @@ MonoFollower::MonoFollower(const AudioBuffers::Channel &ch,const rint32 n_) :
 				envelope(AudioBuffers::Direction::OUT,ch,"envelope",n_),
 				n(n_), size(0),last(0) {
 	audio=new rfloat[AudioBuffers::BUFFER_SIZE];
+	env=new rfloat[AudioBuffers::BUFFER_SIZE];
 }
 MonoFollower::~MonoFollower() {
 	if(audio) { delete[] audio; }
+	if(env) { delete [] env; }
 }
 
 rfloat MonoFollower::off() {
@@ -36,36 +38,40 @@ rfloat MonoFollower::active(const rint32 mode,const rfloat rho) {
 
 	size=signal.read(audio);
 	if(size>0) {
-		auto start=audio;
-		auto end=audio+size;
+		rfloat mean=0;
+		rfloat A = rho;
+		rfloat B = 1.f - rho;
 		switch(mode) {
 		case 0:
 		default:
-			std::transform(start,end,start,[](rfloat x) { return std::max(x,0.f); });
+			for(auto i=0;i<size;i++) {
+				last = B*std::max(0.f,10*audio[i]) + A*last;
+				env[i] = last/10;
+				mean+=last/10;
+			}
 			break;
 		case 1:
-			std::transform(start,end,start,[](rfloat x) { return fabs(x); });
+			for(auto i=0;i<size;i++) {
+				last = B*abs(10*audio[i]) + A*last;
+				env[i] = last/10;
+				mean+=last/10;
+			}
 			break;
 		case 2:
-			std::transform(start,end,start,[](rfloat x) { return x*x; });
+			for(auto i=0;i<size;i++) {
+				auto x=10*audio[i];
+				last = B*x*x + A*last;
+				env[i] = last/100;
+				mean+=last/100;
+			}
 			break;
 		}
-
-		auto l=last;
-		std::transform(start,end,start,[rho,&l](rfloat x) {
-			l=rho*x + (1.f-rho)*l;
-			return l;
-		});
-		last=l;
-		rfloat mean=0.0;
-		std::for_each(start,end,[&mean](rfloat x) { mean+=x; });
-
-		envelope.write(audio,size);
+		envelope.write(env,size);
 
 		return mean/rfloat(size);
 
 	}
-	else return 0;
+	else return -1;
 
 
 
@@ -101,16 +107,16 @@ void StereoFollower::process() {
 	rfloat envSum = 0;
 	rint32 n=0;
 
-	try {
-		envSum+=left.process(s,mode,rho);
+	auto l=left.process(s,mode,rho);
+	if(l>=0) {
+		envSum+=l;
 		n++;
 	}
-	catch(...) {}
-	try {
-		envSum+=right.process(s,mode,rho);
+	auto r=right.process(s,mode,rho);
+	if(r>=0) {
+		envSum+=r;
 		n++;
 	}
-	catch(...) {}
 
 	rfloat gate=0;
 	if(s==State::On && n>0) {

@@ -23,6 +23,7 @@ private:
 	rint64 size;
 	rfloat last;
 	rfloat *audio;
+	rfloat *env;
 
 	rfloat off();
 	rfloat bypass();

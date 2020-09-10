@@ -16,10 +16,10 @@ const ruint32 Data::increment = 10;
 rint32 Data::index(const Data::Tags tag) const { return n*Data::increment + static_cast<rint32>(tag); }
 
 bool Data::hits(const TJBox_PropertyDiff diff) {
-	auto tag=diff.fPropertyTag;
+	rint32 tag=diff.fPropertyTag;
 	auto b = tag % Data::increment;
 	auto t = tag / Data::increment;
-	return (b == static_cast<ruint32>(Tags::BUTTON)) && (t==n);
+	return (b == static_cast<rint32>(Tags::BUTTON)) && (t==n);
 }
 
 Data::Data(const ruint32 n_) : n(n_), last(0), threshold(0), rho(0), mode(0) {
@@ -27,12 +27,12 @@ Data::Data(const ruint32 n_) : n(n_), last(0), threshold(0), rho(0), mode(0) {
 }
 
 void Data::load() {
-	rho=clamp<rfloat>(1,0,get<rfloat>(Tags::LR));
-	threshold = clamp<rfloat>(1,0,get<rfloat>(Tags::TH));
+	rho=clamp<rfloat>(get<rfloat>(Tags::LR));
+	threshold = clamp<rfloat>(get<rfloat>(Tags::TH));
 }
 
 State Data::state() {
-	auto s = static_cast<State>(get<rint32>(kJBox_CustomPropertiesOnOffBypass));
+	State s = static_cast<State>(get<rint32>(kJBox_CustomPropertiesOnOffBypass));
 	if(s!=State::On) { last=0; }
 	return s;
 }

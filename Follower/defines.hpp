@@ -13,12 +13,13 @@
 #include <cmath>
 #include <algorithm>
 #include <exception>
+#include <type_traits>
 
 
 namespace follower {
 
-	template<typename T>
-	T clamp(const T max,const T min,const T value) {
+	template<typename T, class = typename std::enable_if_t<std::is_arithmetic_v<T>>>
+	T clamp(const T value,const T max = 1,const T min = 0) {
 		return std::max(min,std::min(max,value));
 	}
 
