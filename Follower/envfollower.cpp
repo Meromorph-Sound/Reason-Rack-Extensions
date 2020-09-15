@@ -7,19 +7,29 @@
 
 #include "envfollower.hpp"
 
+
+
 namespace follower {
 
-EnvelopeFollower::EnvelopeFollower(const rint32 n_) :
-				data(n_), buffers(n_), n(n_), size(0),last(0) {
-	audio=new rfloat[Buffers::BUFFER_SIZE];
+rfloat accumulate(rfloat *begin,rfloat *end,const rfloat init) {
+	auto sum=init;
+	for(auto ptr=begin;ptr<end;ptr++) sum+=*ptr;
+	return sum;
+}
+
+EnvelopeFollower::EnvelopeFollower() :
+				data(), buffers(), size(0),lastL(0), lastR(0) {
+	audioL=new rfloat[Buffers::BUFFER_SIZE];
+	audioR=new rfloat[Buffers::BUFFER_SIZE];
 }
 EnvelopeFollower::~EnvelopeFollower() {
-	if(audio) { delete[] audio; }
+	if(audioL) { delete[] audioL; }
+	if(audioR) { delete[] audioR; }
 }
 
 bool EnvelopeFollower::getBuffer() {
 	if(buffers.isConnected()) {
-		size=buffers.readInput(audio);
+		size=buffers.readInput(audioL,audioR);
 		return size > 0;
 	}
 	else { return false; }
@@ -27,45 +37,58 @@ bool EnvelopeFollower::getBuffer() {
 
 void EnvelopeFollower::bypass() {
 	if(getBuffer()) {
-		buffers.writeEnvelope(audio,size);
+		buffers.writeEnvelope(audioL,audioR,size);
 	}
 	buffers.writeGate(0);
+	buffers.writeEnv(0);
 	data.setGate(0);
+}
+
+rfloat EnvelopeFollower::rect(const rfloat l,rfloat *buffer) {
+	auto start=buffer;
+	auto end=buffer+size;
+	switch(data.mode) {
+	case 0:
+	default:
+		std::transform(start,end,start,[](rfloat x) { return std::max(x,0.f); });
+		break;
+	case 1:
+		std::transform(start,end,start,[](rfloat x) { return fabs(x); });
+		break;
+	case 2:
+		std::transform(start,end,start,[](rfloat x) { return x*x; });
+		break;
+	}
+	auto rho=data.rho;
+	auto ll=l;
+	std::transform(start,end,start,[rho,&ll](rfloat x) {
+		ll=rho*x + (1.f-rho)*ll;
+		return ll;
+	});
+	return ll;
 }
 
 void EnvelopeFollower::rectify() {
 
 	if(getBuffer()) {
 		data.load();
-		auto start=audio;
-		auto end=audio+size;
-		switch(data.mode) {
-		case 0:
-		default:
-			std::transform(start,end,start,[](rfloat x) { return std::max(x,0.f); });
-			break;
-		case 1:
-			std::transform(start,end,start,[](rfloat x) { return fabs(x); });
-			break;
-		case 2:
-			std::transform(start,end,start,[](rfloat x) { return x*x; });
-			break;
-		}
 
-		auto rho=data.rho;
-		auto l=last;
-		std::transform(start,end,start,[rho,&l](rfloat x) {
-			l=rho*x + (1.f-rho)*l;
-			return l;
-		});
-		last=l;
+		lastL = rect(lastL,audioL);
+		lastR = rect(lastR,audioR);
+
+		rfloat envL = accumulate(audioL,audioL+size,0.f);
+		rfloat envR = accumulate(audioR,audioR+size,0.f);
+		auto env = (envL+envR)/(2*rfloat(size));
 
 		unsigned aboveThreshold=0;
 		for(auto i=0;i<size;i++) {
-			if (audio[i]>data.threshold) aboveThreshold+=2;
+			if (audioL[i]>data.threshold) aboveThreshold++;
+			if (audioR[i]>data.threshold) aboveThreshold++;
 		}
-		buffers.writeEnvelope(audio,size);
 		rdouble gate = (aboveThreshold>size) ? 1.0 : -1.0;
+
+		buffers.writeEnvelope(audioL,audioR,size);
+		buffers.writeEnv(env);
 		buffers.writeGate(gate);
 		data.setGate(gate);
 	}
@@ -95,16 +118,7 @@ void EnvelopeFollower::process() {
 }
 
 void EnvelopeFollower::processDiffs(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount) {
-	bool pressed=false;
-	for(auto i=0;i<iDiffCount;i++) {
-		auto diff=iPropertyDiffs[i];
-		if(data.hits(diff)) {
-			pressed=true;
-		}
-	}
-	if(pressed) {
-		data.updateMode();
-	}
+	data.hits(iPropertyDiffs,iDiffCount);
 }
 
 

@@ -5,65 +5,25 @@ front = jbox.panel {
 	},
 	widgets = {
 		jbox.analog_knob {
-			graphics = { node = "learningRate1" },
-			value = "/custom_properties/learningRate1",
+			graphics = { node = "learningRate" },
+			value = "/custom_properties/learningRate",
 		},
 		jbox.analog_knob {
-			graphics = { node = "threshold1" },
-			value = "/custom_properties/threshold1",
+			graphics = { node = "threshold" },
+			value = "/custom_properties/threshold",
 		},
 		jbox.toggle_button {
-			graphics = { node = "rectification1" },
-			value = "/custom_properties/rectification1",
+			graphics = { node = "rectification" },
+			value = "/custom_properties/rectification",
 		},
 		jbox.sequence_meter {
-			graphics = { node="rectificationDisplay1" },
-			value = "/custom_properties/rectificationDisplay1",
+			graphics = { node="rectificationDisplay" },
+			value = "/custom_properties/rectificationDisplay",
 		},
 		jbox.sequence_meter {
-		  graphics = { node="thresholdLED1" },
-		  value = "/custom_properties/thresholdLED1",
+		  graphics = { node="thresholdLED" },
+		  value = "/custom_properties/thresholdLED",
 		},
-		jbox.analog_knob {
-      graphics = { node = "learningRate2" },
-      value = "/custom_properties/learningRate2",
-    },
-    jbox.analog_knob {
-      graphics = { node = "threshold2" },
-      value = "/custom_properties/threshold2",
-    },
-    jbox.toggle_button {
-      graphics = { node = "rectification2" },
-      value = "/custom_properties/rectification2",
-    },
-    jbox.sequence_meter {
-      graphics = { node="rectificationDisplay2" },
-      value = "/custom_properties/rectificationDisplay2",
-    },
-    jbox.sequence_meter {
-      graphics = { node="thresholdLED2" },
-      value = "/custom_properties/thresholdLED2",
-    },
-    jbox.analog_knob {
-      graphics = { node = "learningRate3" },
-      value = "/custom_properties/learningRate3",
-    },
-    jbox.analog_knob {
-      graphics = { node = "threshold3" },
-      value = "/custom_properties/threshold3",
-    },
-    jbox.toggle_button {
-      graphics = { node = "rectification3" },
-      value = "/custom_properties/rectification3",
-    },
-    jbox.sequence_meter {
-      graphics = { node="rectificationDisplay3" },
-      value = "/custom_properties/rectificationDisplay3",
-    },
-    jbox.sequence_meter {
-      graphics = { node="thresholdLED3" },
-      value = "/custom_properties/thresholdLED3",
-    },
 		jbox.device_name {
 			graphics = { node = "deviceName" },
 		},
@@ -71,6 +31,13 @@ front = jbox.panel {
       graphics = { node = "onoffbypass" },
       handle_size = 0,
       value = "/custom_properties/builtin_onoffbypass",
+    },
+    jbox.custom_display{
+      graphics = { node = "graph" },
+      values = { "/custom_properties/learningRate" },
+      display_width_pixels = 400,
+      display_height_pixels = 300,
+      draw_function = "draw_response",
     },
 	},
 }
@@ -83,40 +50,28 @@ back = jbox.panel {
 			graphics = { node = "Placeholder" },
 		},
 		jbox.audio_input_socket {
-			graphics = { node = "SignalInputSocket1" },
+			graphics = { node = "SignalInputLeft" },
 			socket = "/audio_inputs/signal1",
 		},
 		jbox.audio_output_socket {
-			graphics = { node = "EnvelopeOutputSocket1" },
+			graphics = { node = "EnvelopeOutputLeft" },
 			socket = "/audio_outputs/envelope1",
 		},
 		jbox.cv_output_socket {
-			graphics = { node = "GateOutputSocket1" },
-			socket = "/cv_outputs/gate1",
+			graphics = { node = "GateOutputCV" },
+			socket = "/cv_outputs/gate",
 		},
 		jbox.audio_input_socket {
-      graphics = { node = "SignalInputSocket2" },
+      graphics = { node = "SignalInputRight" },
       socket = "/audio_inputs/signal2",
     },
     jbox.audio_output_socket {
-      graphics = { node = "EnvelopeOutputSocket2" },
+      graphics = { node = "EnvelopeOutputRight" },
       socket = "/audio_outputs/envelope2",
     },
     jbox.cv_output_socket {
-      graphics = { node = "GateOutputSocket2" },
-      socket = "/cv_outputs/gate2",
-    },
-    jbox.audio_input_socket {
-      graphics = { node = "SignalInputSocket3" },
-      socket = "/audio_inputs/signal3",
-    },
-    jbox.audio_output_socket {
-      graphics = { node = "EnvelopeOutputSocket3" },
-      socket = "/audio_outputs/envelope3",
-    },
-    jbox.cv_output_socket {
-      graphics = { node = "GateOutputSocket3" },
-      socket = "/cv_outputs/gate3",
+      graphics = { node = "EnvOutputCV" },
+      socket = "/cv_outputs/env",
     },
     jbox.device_name {
       graphics = { node = "deviceName" },

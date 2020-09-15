@@ -26,11 +26,7 @@ native = {
 
 rt_input_setup = { 
 	notify = {
-		"/custom_properties/rectification1",
-		"/custom_properties/rectification2",
-		"/custom_properties/rectification3",
-		"/custom_properties/thresholdLED1",
-    "/custom_properties/thresholdLED2",
-    "/custom_properties/thresholdLED3",
+		"/custom_properties/rectification",
+    "/custom_properties/thresholdLED",
 	}
 }

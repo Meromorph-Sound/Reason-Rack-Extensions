@@ -17,6 +17,7 @@ texts = {
 	["squared"] = "Squared",
 	["audioInput"] = "Audio Input",
 	["envelopeOutput"] = "Audio envelope out",
+	["envOutput"] = "Envelope CV out",
 	["gateOutput"] = "Gate CV out",
 	["propertyname_GateDisplay"] = "Gate"
 }

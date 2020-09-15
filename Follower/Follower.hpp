@@ -7,7 +7,6 @@
 
 namespace follower {
 
-#define NFOLLOWERS 3
 
 class CFollower {
 
@@ -17,7 +16,7 @@ private:
 
 	static const TJBox_Int64 BUFFER_SIZE;
 
-	EnvelopeFollower *follower[NFOLLOWERS];
+	EnvelopeFollower *follower;
 
 	void processButtons(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount);
 	void process();

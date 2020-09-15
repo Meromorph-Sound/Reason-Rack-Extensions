@@ -15,16 +15,16 @@ TJBox_Float64 clamp(const TJBox_Float64 lo,const TJBox_Float64 hi,const TJBox_Fl
 
 
 CFollower::CFollower() {
-	for(auto i=0;i<NFOLLOWERS;i++) follower[i]=new EnvelopeFollower(i+1);
+	follower=new EnvelopeFollower;
 
 }
 
 void CFollower::process() {
-	for(auto i=0;i<NFOLLOWERS;i++) follower[i]->process();
+	follower->process();
 }
 
 void CFollower::processButtons(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount) {
-	for(auto i=0;i<NFOLLOWERS;i++) follower[i]->processDiffs(iPropertyDiffs,iDiffCount);
+	follower->processDiffs(iPropertyDiffs,iDiffCount);
 }
 
 
