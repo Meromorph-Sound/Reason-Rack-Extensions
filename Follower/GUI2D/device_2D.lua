@@ -31,21 +31,25 @@ front = {
       { path = "Knob_01_63frames", frames = 63 },
     },
   	threshold = {
-  		offset = { 900, 80 },
+  		offset = { 1400, 80 },
   		{ path = "Knob_01_63frames", frames = 63 },
   	},
   	rectification = {
-  		offset = { 1100, 100 },
+  		offset = { 950, 100 },
   		{ path = "Button_23_2frames", frames = 2},
   	},
   	rectificationDisplay =
   	{
-  		offset = { 1260, 100 },
+  		offset = { 1110, 100 },
   		{ path = "Lamp_18_3frames", frames = 3},
   	},
     thresholdLED = {
-      offset = { 1100, 20 },
+      offset = { 1540, 20 },
       { path = "Bicolour_LED_3frames", frames = 3 }
+    },
+    envGraph = { 
+      offset = { 950, 20 },
+      { path = "EnvRectangle", frames = 1 }
     }
   },
   graph = {
@@ -70,19 +74,19 @@ back = {
 		{ path = "SharedAudioJack", frames = 3},
 	},
 	EnvelopeOutputLeft = {
-    offset = {1105,100},
+    offset = {900,100},
     { path = "SharedAudioJack", frames = 3},
   },
   EnvelopeOutputRight = {
-    offset = {1300,100},
+    offset = {1100,100},
     { path = "SharedAudioJack", frames = 3},
   },
-	GateOutputCV = {
-		offset = {900,100},
+	EnvOutputCV = {
+		offset = {1300,110},
 		{ path = "SharedCVJack", frames = 3},
 	},
-  EnvOutputCV = {
-    offset = {1510,100},
+  GateOutputCV = {
+    offset = {1500,110},
     { path = "SharedCVJack", frames = 3},
   },
   deviceName = {
