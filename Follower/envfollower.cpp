@@ -33,7 +33,6 @@ bool EnvelopeFollower::getBuffer() {
 }
 
 rfloat EnvelopeFollower::rectify(Data *data) {
-
 	if(getBuffer()) {
 		auto start=audio;
 		auto end=audio+size;

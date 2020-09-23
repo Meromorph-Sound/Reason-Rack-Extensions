@@ -24,9 +24,7 @@ private:
 
 	bool getBuffer();
 
-
 	rfloat rectify(Data *);
-	bool exceedsThreshold(const rfloat out) const;
 
 public:
 	EnvelopeFollower(const char *);
