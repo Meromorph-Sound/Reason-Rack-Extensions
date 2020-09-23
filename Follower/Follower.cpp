@@ -15,16 +15,21 @@ TJBox_Float64 clamp(const TJBox_Float64 lo,const TJBox_Float64 hi,const TJBox_Fl
 
 
 CFollower::CFollower() {
-	follower=new EnvelopeFollower;
+	data = new Data();
+	left=new EnvelopeFollower(Buffers::LEFT);
+	right=new EnvelopeFollower(Buffers::RIGHT);
 
 }
 
 void CFollower::process() {
-	follower->process();
+	data->load();
+	auto gateL = left->process(data);
+	auto gateR = right->process(data);
+	data->setGate(gateL);
 }
 
 void CFollower::processButtons(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount) {
-	follower->processDiffs(iPropertyDiffs,iDiffCount);
+	data->hits(iPropertyDiffs,iDiffCount);
 }
 
 

@@ -16,28 +16,24 @@ namespace follower {
 
 class EnvelopeFollower {
 private:
-	Data data;
 	Buffers buffers;
 
 	rint64 size;
-	rfloat lastL, lastR;
-	rfloat *audioL;
-	rfloat *audioR;
+	rfloat last;
+	rfloat *audio;
 
 	bool getBuffer();
-	void bypass();
 
-	rfloat rect(const rfloat,rfloat *);
 
-	void rectify();
+	rfloat rectify(Data *);
 	bool exceedsThreshold(const rfloat out) const;
 
 public:
-	EnvelopeFollower();
+	EnvelopeFollower(const char *);
 	virtual ~EnvelopeFollower();
 
-	void process();
-	void processDiffs(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount);
+	rfloat process(Data *);
+
 
 
 };

@@ -20,8 +20,8 @@ private:
 	const static rint32 CV_OUT ;
 	const static rint32 DATA_CONNECTED;
 
-	TJBox_ObjectRef inputL, inputR;
-	TJBox_ObjectRef envelopeL, envelopeR;
+	TJBox_ObjectRef input;
+	TJBox_ObjectRef envelope;
 	TJBox_ObjectRef gate, env;
 
 
@@ -33,11 +33,13 @@ private:
 
 
 public:
+	const static char *LEFT;
+	const static char *RIGHT;
 	const static rint64 BUFFER_SIZE ;
 
-	Buffers();
-	rint32 readInput(rfloat *left,rfloat *right);
-	void writeEnvelope(rfloat *left,rfloat *right,const rint32 size);
+	Buffers(const char *);
+	rint32 readInput(rfloat *data);
+	void writeEnvelope(rfloat *data,const rint32 size);
 	void writeGate(const rfloat value);
 	void writeEnv(const rfloat value);
 

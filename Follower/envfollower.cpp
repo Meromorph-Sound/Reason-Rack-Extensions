@@ -17,109 +17,89 @@ rfloat accumulate(rfloat *begin,rfloat *end,const rfloat init) {
 	return sum;
 }
 
-EnvelopeFollower::EnvelopeFollower() :
-				data(), buffers(), size(0),lastL(0), lastR(0) {
-	audioL=new rfloat[Buffers::BUFFER_SIZE];
-	audioR=new rfloat[Buffers::BUFFER_SIZE];
+EnvelopeFollower::EnvelopeFollower(const char *side) : buffers(side), size(0),last(0) {
+	audio=new rfloat[Buffers::BUFFER_SIZE];
 }
 EnvelopeFollower::~EnvelopeFollower() {
-	if(audioL) { delete[] audioL; }
-	if(audioR) { delete[] audioR; }
+	if(audio) { delete[] audio; }
 }
 
 bool EnvelopeFollower::getBuffer() {
 	if(buffers.isConnected()) {
-		size=buffers.readInput(audioL,audioR);
+		size=buffers.readInput(audio);
 		return size > 0;
 	}
 	else { return false; }
 }
 
-void EnvelopeFollower::bypass() {
-	if(getBuffer()) {
-		buffers.writeEnvelope(audioL,audioR,size);
-	}
-	buffers.writeGate(0);
-	buffers.writeEnv(0);
-	data.setGate(0);
-}
-
-rfloat EnvelopeFollower::rect(const rfloat l,rfloat *buffer) {
-	auto start=buffer;
-	auto end=buffer+size;
-	switch(data.mode) {
-	case 0:
-	default:
-		std::transform(start,end,start,[](rfloat x) { return std::max(x,0.f); });
-		break;
-	case 1:
-		std::transform(start,end,start,[](rfloat x) { return fabs(x); });
-		break;
-	case 2:
-		std::transform(start,end,start,[](rfloat x) { return x*x; });
-		break;
-	}
-	auto rho=data.rho;
-	auto ll=l;
-	std::transform(start,end,start,[rho,&ll](rfloat x) {
-		ll=rho*x + (1.f-rho)*ll;
-		return ll;
-	});
-	return ll;
-}
-
-void EnvelopeFollower::rectify() {
+rfloat EnvelopeFollower::rectify(Data *data) {
 
 	if(getBuffer()) {
-		data.load();
+		auto start=audio;
+		auto end=audio+size;
+		switch(data->mode) {
+		case 0:
+		default:
+			std::transform(start,end,start,[](rfloat x) { return std::max(x,0.f); });
+			break;
+		case 1:
+			std::transform(start,end,start,[](rfloat x) { return fabs(x); });
+			break;
+		case 2:
+			std::transform(start,end,start,[](rfloat x) { return x*x; });
+			break;
+		}
+		auto rho=data->rho;
+		auto ll=last;
+		std::transform(start,end,start,[rho,&ll](rfloat x) {
+			ll=rho*x + (1.f-rho)*ll;
+			return ll;
+		});
+		last=ll;
 
-		lastL = rect(lastL,audioL);
-		lastR = rect(lastR,audioR);
-
-		rfloat envL = accumulate(audioL,audioL+size,0.f);
-		rfloat envR = accumulate(audioR,audioR+size,0.f);
-		auto env = (envL+envR)/(2*rfloat(size));
+		rfloat env = accumulate(audio,audio+size,0.f)/rfloat(size);
 
 		unsigned aboveThreshold=0;
 		for(auto i=0;i<size;i++) {
-			if (audioL[i]>data.threshold) aboveThreshold++;
-			if (audioR[i]>data.threshold) aboveThreshold++;
+			if (audio[i]>data->threshold) aboveThreshold+=2;
 		}
 		rdouble gate = (aboveThreshold>size) ? 1.0 : -1.0;
 
-		buffers.writeEnvelope(audioL,audioR,size);
+		buffers.writeEnvelope(audio,size);
 		buffers.writeEnv(env);
 		buffers.writeGate(gate);
-		data.setGate(gate);
+		return gate;
 	}
 	else {
 		buffers.writeGate(0);
-		data.setGate(0);
+		return 0;
 	}
 
 }
 
-void EnvelopeFollower::process() {
-	auto state = data.state();
+rfloat EnvelopeFollower::process(Data *data) {
+	auto state = data->state();
 	switch(state) {
 	case State::Off:
 	default:
-		data.setGate(0);
+		return 0;
 		break;
 	case State::Bypassed: {
-		bypass();
+		if(getBuffer()) {
+			buffers.writeEnvelope(audio,size);
+		}
+		buffers.writeGate(0);
+		buffers.writeEnv(0);
+		return 0;
 		break;
 	}
 	case State::On: {
-		rectify();
+		return rectify(data);
 		break;
 	}
 	}
 }
 
-void EnvelopeFollower::processDiffs(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount) {
-	data.hits(iPropertyDiffs,iDiffCount);
-}
 
 
 

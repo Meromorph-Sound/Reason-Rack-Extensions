@@ -16,7 +16,8 @@ private:
 
 	static const TJBox_Int64 BUFFER_SIZE;
 
-	EnvelopeFollower *follower;
+	Data *data;
+	EnvelopeFollower *left, *right;
 
 	void processButtons(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount);
 	void process();

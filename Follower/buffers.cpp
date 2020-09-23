@@ -6,6 +6,7 @@
  */
 
 #include "buffers.hpp"
+#include <cstring>
 
 namespace follower {
 
@@ -20,15 +21,20 @@ const rint32 Buffers::DATA_OUT = kJBox_AudioOutputBuffer;
 const rint32 Buffers::CV_OUT = kJBox_CVOutputValue;
 const rint32 Buffers::DATA_CONNECTED = kJBox_AudioInputConnected;
 
+const char *Buffers::LEFT="L";
+const char *Buffers::RIGHT="R";
 
+char *append(const char *name,const char *suffix) {
+	char buffer[80];
+	strcpy(buffer,name);
+	return strcat(buffer,suffix);
+}
 
-Buffers::Buffers() {
-	inputL=JBox_GetMotherboardObjectRef("/audio_inputs/signal1");
-	inputR=JBox_GetMotherboardObjectRef("/audio_inputs/signal2");
-	envelopeL=JBox_GetMotherboardObjectRef("/audio_outputs/envelope1");
-	envelopeR=JBox_GetMotherboardObjectRef("/audio_outputs/envelope2");
-	gate=JBox_GetMotherboardObjectRef("/cv_outputs/gate");
-	env=JBox_GetMotherboardObjectRef("/cv_outputs/env");
+Buffers::Buffers(const char *side) {
+	input=JBox_GetMotherboardObjectRef(append("/audio_inputs/signal",side));
+	envelope=JBox_GetMotherboardObjectRef(append("/audio_outputs/envelope",side));
+	gate=JBox_GetMotherboardObjectRef(append("/cv_outputs/gate",side));
+	env=JBox_GetMotherboardObjectRef(append("/cv_outputs/env",side));
 }
 
 rint32 Buffers::readBuffer(const TJBox_ObjectRef object,rfloat *buffer) {
@@ -50,20 +56,16 @@ void Buffers::writeCV(const TJBox_ObjectRef object,const rfloat value) {
 }
 
 bool Buffers::isConnected() {
-	auto refL = JBox_LoadMOMPropertyByTag(inputL,kJBox_AudioInputConnected);
-	auto refR = JBox_LoadMOMPropertyByTag(inputR,kJBox_AudioInputConnected);
-	return asBoolean(refL) && asBoolean(refR);
+	auto ref = JBox_LoadMOMPropertyByTag(input,kJBox_AudioInputConnected);
+	return asBoolean(ref);
 }
 
 
-rint32 Buffers::readInput(rfloat *left,rfloat *right) {
-	auto s1 = readBuffer(inputL,left);
-	auto s2 = readBuffer(inputR,right);
-	return std::min(s1,s2);
+rint32 Buffers::readInput(rfloat *data) {
+	return readBuffer(input,data);
 }
-void Buffers::writeEnvelope(rfloat *left,rfloat *right,const rint32 size) {
-	writeBuffer(envelopeL,left,size);
-	writeBuffer(envelopeR,right,size);
+void Buffers::writeEnvelope(rfloat *data,const rint32 size) {
+	writeBuffer(envelope,data,size);
 }
 void Buffers::writeGate(const rfloat value) { writeCV(gate,value); }
 void Buffers::writeEnv(const rfloat value) { writeCV(env,value); }
