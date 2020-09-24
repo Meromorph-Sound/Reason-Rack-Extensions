@@ -47,3 +47,7 @@ Follower/Panel_Front_1U.xcf
 *.plist
 
 Follower/GUI/
+
+QUEG/GUI/
+
+QUEG/Intermediate-llvm/
