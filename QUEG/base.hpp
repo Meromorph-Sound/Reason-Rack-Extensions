@@ -14,7 +14,7 @@
 #include <algorithm>
 
 
-namespace ks {
+namespace queg {
 
 using rint32 = TJBox_Int32;
 using ruint32 = TJBox_UInt32;

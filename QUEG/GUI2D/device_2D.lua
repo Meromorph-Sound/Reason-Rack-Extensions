@@ -34,6 +34,44 @@ function centred(n,y,width)
   return { offset+x0, y }
 end
 
+function QUEG(n)
+local x0 = 1000 + 650*(n-1)
+  local queg={}
+  queg["A"..n] = {
+    offset = { x0 + 200, 50 },
+    { path = "ABCD", frames=1 }
+  }
+  queg["B"..n] = {
+    offset = { x0 + 345, 50 },
+    { path = "ABCD", frames=1 }
+  }
+  queg["C"..n] = {
+    offset = { x0 + 200, 195 },
+    { path = "ABCD", frames=1 }
+  }
+  queg["D"..n] = {
+    offset = { x0 + 345, 195 },
+    { path = "ABCD", frames=1 }
+  }
+  queg["vco"..n] = {
+   offset = { x0 + 50,350 },
+   { path = "button", frames=2 }
+  }
+  queg["manual"..n] = {
+   offset = { x0 + 435,350 },
+   { path = "button", frames=2 }
+  }
+  queg["controller"..n] = {
+   offset={ x0 + 100,550 },
+   { path = "controller", frames=1 }
+  }
+  queg["level"..n] = {
+   offset={ x0 + 180,1033 },
+   { path = "Knob_58_64frames", frames=64 }
+  }
+  return queg
+end
+
 front = { 
 	Bg = {
 		{ path = "frontPanel" },
@@ -46,38 +84,10 @@ front = {
 		offset = { 185, 1265 },
 		{ path = "Tape_Horizontal_1frames", frames = 1 },
 	},
-	A1 = {
-    offset = { 1200, 50 },
-    { path = "ABCD", frames=1 }
-  },
-  B1 = {
-    offset = { 1345, 50 },
-    { path = "ABCD", frames=1 }
-  },
-  C1 = {
-    offset = { 1200, 195 },
-    { path = "ABCD", frames=1 }
-  },
-  D1 = {
-    offset = { 1345, 195 },
-    { path = "ABCD", frames=1 }
-  },
-  manual1 = {
-   offset = { 1435,350 },
-   { path = "button", frames=2 }
-  },
-  vco1 = {
-   offset = { 1050,350 },
-   { path = "button", frames=2 }
-  },
-	controller1 = {
-	 offset={ 1100,550 },
-	 { path = "controller", frames=1 }
-	},
-	level1 = {
-	 offset={ 1167,1040 },
-	 { path = "Knob_58_64frames", frames=64 }
-	}
+	QUEG(1),
+	QUEG(2),
+	QUEG(3),
+	QUEG(4)
 }
 back = { 
 	Bg = {
