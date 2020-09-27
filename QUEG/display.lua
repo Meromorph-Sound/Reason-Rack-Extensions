@@ -5,6 +5,7 @@ format_version = "1.0"
 
 GRAPH_COLOUR = { r=0, g=255, b=0 }
 MARKER_COLOUR = { r=255, g=255, b=0 }
+LED_COLOUR = { r=255, g=0, b=0 }
 LINE_WIDTH = 4
 GRAPH_STEP = 10
 WIDTH_FACTOR = 4
@@ -15,6 +16,30 @@ function clamp(x)
 end
 
 --[[ Left display ]]--
+
+function drawA(property_values, display_info, dirty_rect)
+  local width = display_info.width
+  local height = display_info.height
+  
+  local a = property_values[1]
+  assert(a ~= nil)
+  a = clamp(a)
+  
+  jbox.trace("Setting ABCD with value " .. tostring(a))
+  
+  local colour = {
+    r = math.floor(GRAPH_COLOUR.r * a),
+    g = math.floor(GRAPH_COLOUR.g * a),
+    b = math.floor(GRAPH_COLOUR.b * a)
+  }
+  jbox.trace("Setting ABCD with colour " .. tostring(colour.r)..","..tostring(colour.g)..","..tostring(colour.b))
+  jbox_display.draw_rect({
+    left = 1,
+    top = 1,
+    right = width-1,
+    bottom = height-1
+  }, colour)
+end
 
 function drawController(property_values, display_info, dirty_rect)
 
@@ -49,6 +74,15 @@ function changeTable(x,y,name)
   local changes = {}
   changes[1] = x
   changes[2] = y
+  changes[3] = (1-x)*(1-y)
+  changes[4] = x*(1-y)
+  changes[5] = (1-x)*y
+  changes[6] = x*y
+  
+  for n = 1, 6 do
+    jbox.trace("Changes " .. tostring(n) .. " = " .. tostring(changes[n]))
+  end
+  
   return {
     gesture_ui_name = jbox.ui_text(name),
     property_changes = changes

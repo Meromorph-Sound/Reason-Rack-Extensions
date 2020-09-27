@@ -18,10 +18,58 @@ front = jbox.panel {
       },
       display_width_pixels = 400,
       display_height_pixels = 400,
-      values = { "/custom_properties/x1", "/custom_properties/y1" },
+      values = { 
+        "/custom_properties/x1", 
+        "/custom_properties/y1",
+        "/custom_properties/A1",
+        "/custom_properties/B1",
+        "/custom_properties/C1",
+        "/custom_properties/D1",
+         },
       draw_function = "drawController",
       gesture_function = "handleControllerInput"
-    }
+    },
+    jbox.analog_knob {
+      graphics = { node = "level1" },
+      value = "/custom_properties/level1"
+    },
+    jbox.toggle_button {
+      graphics = { node = "manual1" },
+      value = "/custom_properties/manual1",
+    },
+    jbox.toggle_button {
+      graphics = { node = "vco1" },
+      
+      value = "/custom_properties/vco1",
+    },
+    jbox.custom_display {
+      graphics = { node="A1" },
+      display_width_pixels = 55,
+      display_height_pixels = 55,
+      values = { "/custom_properties/A1" },
+      draw_function = "drawA"
+    },
+    jbox.custom_display {
+      graphics = { node="B1" },
+      display_width_pixels = 55,
+      display_height_pixels = 55,
+      values = { "/custom_properties/B1" },
+      draw_function = "drawA"
+    },
+    jbox.custom_display {
+      graphics = { node="C1" },
+      display_width_pixels = 55,
+      display_height_pixels = 55,
+      values = { "/custom_properties/C1" },
+      draw_function = "drawA"
+    },
+    jbox.custom_display {
+      graphics = { node="D1" },
+      display_width_pixels = 55,
+      display_height_pixels = 55,
+      values = { "/custom_properties/D1" },
+      draw_function = "drawA"
+    },
 	},
 }
 back = jbox.panel { 
