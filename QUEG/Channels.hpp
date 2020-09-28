@@ -29,7 +29,7 @@ public:
 
 	}
 
-	rint32 read(const ruint32 channel,rfloat *data) {
+	rint32 operator()(const ruint32 channel,rfloat *data) {
 		auto ref = JBox_LoadMOMPropertyByTag(in[channel-1], kJBox_AudioInputBuffer);
 		rint32 size = std::min<rint64>(JBox_GetDSPBufferInfo(ref).fSampleCount,64);
 		if(size>0) {
@@ -63,7 +63,7 @@ public:
 
 	}
 
-	void write(const char channel,rfloat *data,const rint32 size) {
+	void operator()(const char channel,rfloat *data,const rint32 size) {
 		auto ref = JBox_LoadMOMPropertyByTag(out[channel-'A'], kJBox_AudioOutputBuffer);
 		if(size>0) {
 			JBox_SetDSPBufferData(ref, 0, size, data);

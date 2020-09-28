@@ -4,7 +4,7 @@
 
 void* JBox_Export_CreateNativeObject(const char iOperation[], const TJBox_Value iParams[], TJBox_UInt32 iCount) {
      if(std::strcmp(iOperation, "Instance") == 0){ //(3)
-		return new ks::QUEG(); //(4)
+		return new queg::QUEG(); //(4)
 	}
 
 	return nullptr; //(5)
@@ -15,6 +15,6 @@ void JBox_Export_RenderRealtime(void* privateState, const TJBox_PropertyDiff iPr
 		return;
 	}
 
-	ks::QUEG * queg = reinterpret_cast<ks::QUEG*>(privateState); //(2)
+	queg::QUEG * queg = reinterpret_cast<queg::QUEG*>(privateState); //(2)
 	queg->RenderBatch(iPropertyDiffs, iDiffCount); //(3)
 }

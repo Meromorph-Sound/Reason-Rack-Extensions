@@ -18,7 +18,7 @@ enum class ChannelMode {
 	VCO
 };
 
-class State {
+class ChannelState {
 private:
 	enum class Tags : ruint32 {
 		LEVEL = 3,
@@ -53,7 +53,7 @@ public:
 	rfloat level = 1;
 	ChannelMode mode = ChannelMode::Off;
 
-	State(const ruint32 channel) : offset(10*(channel-1))  {
+	ChannelState(const ruint32 channel) : offset(10*(channel-1))  {
 		props = JBox_GetMotherboardObjectRef("/custom_properties");
 	}
 
