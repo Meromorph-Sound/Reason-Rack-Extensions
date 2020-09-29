@@ -69,7 +69,7 @@ end
 function changeTable(x,y,name)
   x=clamp(x)
   y=clamp(y)
-  jbox.trace("Setting (X1,Y1) = " .. pairString(x,y) .. "for function " .. name)
+  jbox.trace("Setting (X,Y) = " .. pairString(x,y) .. "for function " .. name)
   
   local changes = {}
   changes[1] = x

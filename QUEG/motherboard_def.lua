@@ -7,66 +7,74 @@ function makeN(n,item)
   end
   return out
 end
+
+function makeProperties(n)
+  local props = {}
+  for n = 1,4 do
+    local base=(n-1)*10
+    props["x"..n] = jbox.number {
+      property_tag = 1+base,
+      default = 0.5,
+      ui_name = jbox.ui_text("propertyname_X"),
+      ui_type = jbox.ui_linear({min=-1, max=1, units={{decimals=4}}}),
+    }
+    props["y"..n] = jbox.number {
+      property_tag = 2+base,
+      default = 0.5,
+      ui_name = jbox.ui_text("propertyname_Y"),
+      ui_type = jbox.ui_linear({min=-1, max=1, units={{decimals=4}}}),    
+    }
+    props["level"..n] = jbox.number {
+     property_tag = 3+base,
+     default = 0.5,
+     ui_name = jbox.ui_text("propertyname_level"),
+     ui_type = jbox.ui_percent({decimals=2}),
+    }
+    props["manual"..n] = jbox.boolean {
+     property_tag = 4+base,
+     default = true,
+     ui_name = jbox.ui_text("propertyname_manual"),
+     ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
+    }
+    props["vco"..n] = jbox.boolean {
+     property_tag = 5+base,
+     default = false,
+     ui_name = jbox.ui_text("propertyname_vco"),
+     ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
+    }
+    props["A"..n] = jbox.number { 
+      property_tag = 6+base,
+      default = 0.5,
+      ui_name = jbox.ui_text("propertyname_A"),
+      ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
+    } 
+    props["B"..n] = jbox.number { 
+      property_tag = 7+base,
+      default = 0.5,
+      ui_name = jbox.ui_text("propertyname_B"),
+      ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
+    } 
+    props["C"..n] = jbox.number { 
+      property_tag = 8+base,
+      default = 0.5,
+      ui_name = jbox.ui_text("propertyname_C"),
+      ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
+    } 
+    props["D"..n] = jbox.number { 
+      property_tag = 9+base,
+      default = 0.5,
+      ui_name = jbox.ui_text("propertyname_D"),
+      ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
+    }
+  end
+  return props
+end
     
 
 custom_properties = jbox.property_set{	
+  
 	document_owner = { 
-		properties = { 
-			x1 = jbox.number { 
-				property_tag = 1,
-				default = 0.5,
-				ui_name = jbox.ui_text("propertyname_X"),
-				ui_type = jbox.ui_linear({min=-1, max=1, units={{decimals=4}}}),
-			},
-			y1 = jbox.number { 
-				property_tag = 2,
-				default = 0.5,
-				ui_name = jbox.ui_text("propertyname_Y"),
-				ui_type = jbox.ui_linear({min=-1, max=1, units={{decimals=4}}}),
-			},
-			level1 = jbox.number {
-			 property_tag = 3,
-			 default = 0.5,
-			 ui_name = jbox.ui_text("propertyname_level"),
-			 ui_type = jbox.ui_percent({decimals=2}),
-			},
-			manual1 = jbox.boolean {
-			 property_tag = 4,
-			 default = true,
-			 ui_name = jbox.ui_text("propertyname_manual"),
-			 ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
-			},
-			vco1 = jbox.boolean {
-       property_tag = 5,
-       default = false,
-       ui_name = jbox.ui_text("propertyname_vco"),
-       ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
-      },
-	    A1 = jbox.number { 
-        property_tag = 6,
-        default = 0.5,
-        ui_name = jbox.ui_text("propertyname_A"),
-        ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
-      }, 
-      B1 = jbox.number { 
-        property_tag = 7,
-        default = 0.5,
-        ui_name = jbox.ui_text("propertyname_B"),
-        ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
-      }, 
-      C1 = jbox.number { 
-        property_tag = 8,
-        default = 0.5,
-        ui_name = jbox.ui_text("propertyname_C"),
-        ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
-      }, 
-      D1 = jbox.number { 
-        property_tag = 9,
-        default = 0.5,
-        ui_name = jbox.ui_text("propertyname_D"),
-        ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
-      },  
-	  }
+		properties =  makeProperties(),
 	},
 	rtc_owner = {
 		properties = {

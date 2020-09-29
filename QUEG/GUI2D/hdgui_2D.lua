@@ -1,76 +1,71 @@
 format_version = "2.0"
-front = jbox.panel { 
-	graphics = {
-		node = "Bg",
-	},
-	widgets = {
-		jbox.device_name {
-			graphics = { node = "deviceName" },
-		},
-		jbox.sequence_fader{
-      			graphics = { node = "onoffbypass" },
-      			handle_size = 0,
-      			value = "/custom_properties/builtin_onoffbypass",
+
+function displayForChannel(abcd,n)
+  local suffix=abcd..n
+  return jbox.custom_display {
+      graphics = { node=suffix },
+      display_width_pixels = 55,
+      display_height_pixels = 55,
+      values = { "/custom_properties/"..suffix },
+      draw_function = "drawA"
+    }
+end
+
+function makeWidgets()
+  local widgets = {
+    jbox.device_name {
+      graphics = { node = "deviceName" },
     },
-    jbox.custom_display {
+    jbox.sequence_fader{
+            graphics = { node = "onoffbypass" },
+            handle_size = 0,
+            value = "/custom_properties/builtin_onoffbypass",
+    }
+  }
+  for n=1, 4 do
+    table.insert(widgets,jbox.custom_display {
       graphics = {
-        node = "controller1" 
+        node = "controller"..n 
       },
       display_width_pixels = 400,
       display_height_pixels = 400,
       values = { 
-        "/custom_properties/x1", 
-        "/custom_properties/y1",
-        "/custom_properties/A1",
-        "/custom_properties/B1",
-        "/custom_properties/C1",
-        "/custom_properties/D1",
+        "/custom_properties/x"..n, 
+        "/custom_properties/y"..n,
+        "/custom_properties/A"..n,
+        "/custom_properties/B"..n,
+        "/custom_properties/C"..n,
+        "/custom_properties/D"..n,
          },
       draw_function = "drawController",
       gesture_function = "handleControllerInput"
-    },
-    jbox.analog_knob {
-      graphics = { node = "level1" },
-      value = "/custom_properties/level1"
-    },
-    jbox.toggle_button {
-      graphics = { node = "manual1" },
-      value = "/custom_properties/manual1",
-    },
-    jbox.toggle_button {
-      graphics = { node = "vco1" },
+    })
+    table.insert(widgets,jbox.analog_knob {
+      graphics = { node = "level"..n },
+      value = "/custom_properties/level"..n
+    })
+    table.insert(widgets,jbox.toggle_button {
+      graphics = { node = "manual"..n },
+      value = "/custom_properties/manual"..n,
+    })
+    table.insert(widgets,jbox.toggle_button {
+      graphics = { node = "vco"..n },
       
-      value = "/custom_properties/vco1",
-    },
-    jbox.custom_display {
-      graphics = { node="A1" },
-      display_width_pixels = 55,
-      display_height_pixels = 55,
-      values = { "/custom_properties/A1" },
-      draw_function = "drawA"
-    },
-    jbox.custom_display {
-      graphics = { node="B1" },
-      display_width_pixels = 55,
-      display_height_pixels = 55,
-      values = { "/custom_properties/B1" },
-      draw_function = "drawA"
-    },
-    jbox.custom_display {
-      graphics = { node="C1" },
-      display_width_pixels = 55,
-      display_height_pixels = 55,
-      values = { "/custom_properties/C1" },
-      draw_function = "drawA"
-    },
-    jbox.custom_display {
-      graphics = { node="D1" },
-      display_width_pixels = 55,
-      display_height_pixels = 55,
-      values = { "/custom_properties/D1" },
-      draw_function = "drawA"
-    },
+      value = "/custom_properties/vco"..n,
+    })
+    table.insert(widgets,displayForChannel('A',n))
+    table.insert(widgets,displayForChannel('B',n))
+    table.insert(widgets,displayForChannel('C',n))
+    table.insert(widgets,displayForChannel('D',n))
+  end
+  return widgets
+end
+
+front = jbox.panel { 
+	graphics = {
+		node = "Bg",
 	},
+	widgets = makeWidgets()
 }
 back = jbox.panel { 
 	graphics = {
