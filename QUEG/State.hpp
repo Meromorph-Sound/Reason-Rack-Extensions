@@ -34,13 +34,15 @@ private:
 	TJBox_ObjectRef props;
 
 
-	inline rint32 tag(const Tags &t) { return offset+static_cast<ruint32>(t); }
+	rint32 tag(const Tags &t) { return offset+static_cast<ruint32>(t); }
 
 	template<typename T>
-	T get(const Tags &t) { return static_cast<T>(JBox_LoadMOMPropertyAsNumber(props,tag(t))); }
-	template<typename T>
-	void set(const Tags &t,const T value) {
-		JBox_StoreMOMPropertyByTag(props,tag(t),JBox_MakeNumber(static_cast<rfloat>(value)));
+	T get(const Tags &t) {
+		auto idx=tag(t);
+		TJBox_Value vals[1];
+		vals[0]=JBox_MakeNumber(idx);
+		JBox_TraceValues("State.hpp",43,"Loading value with tag ^0",vals,1);
+		return static_cast<T>(JBox_LoadMOMPropertyAsNumber(props,idx));
 	}
 
 public:
@@ -53,20 +55,8 @@ public:
 	rfloat level = 1;
 	ChannelMode mode = ChannelMode::Off;
 
-	ChannelState(const ruint32 channel) : offset(10*(channel-1))  {
-		props = JBox_GetMotherboardObjectRef("/custom_properties");
-	}
-
-	void load() {
-		A=get<rfloat>(Tags::A);
-		B=get<rfloat>(Tags::B);
-		C=get<rfloat>(Tags::C);
-		D=get<rfloat>(Tags::D);
-		level=get<rfloat>(Tags::LEVEL);
-		auto manual=get<bool>(Tags::MANUAL);
-		auto vco=get<bool>(Tags::VCO);
-		mode = manual ? ChannelMode::Manual: vco ? ChannelMode::VCO : ChannelMode::Off;
-	}
+	ChannelState(const ruint32 channel);
+	void load();
 };
 
 

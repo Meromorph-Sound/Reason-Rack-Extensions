@@ -36,7 +36,12 @@ E fromRaw(const rint32 r) { return static_cast<E>(r); }
 template<typename E, class = typename std::enable_if<std::is_enum<E>::value>::type>
 rint32 toRaw(const E e) { return static_cast<rint32>(e); }
 
-
+template<typename T, class = typename std::enable_if<std::is_arithmetic<T>::value>::type>
+void LOG(const char *filename,const rint32 line,const char *temp,const T value) {
+	TJBox_Value vals[1];
+	vals[0]=JBox_MakeNumber(value);
+	JBox_TraceValues(filename,line,temp,vals,1);
+}
 }
 
 
