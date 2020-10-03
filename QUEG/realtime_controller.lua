@@ -26,5 +26,9 @@ native = {
 
 rt_input_setup = { 
 	notify = {
+	 "/custom_properties/A1",
+	 "/custom_properties/A2",
+	 "/custom_properties/A3",
+	 "/custom_properties/A4",
 	}
 }

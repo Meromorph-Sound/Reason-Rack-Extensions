@@ -30,15 +30,17 @@ function makeProperties(n)
      ui_name = jbox.ui_text("propertyname_level"),
      ui_type = jbox.ui_percent({decimals=2}),
     }
-    props["manual"..n] = jbox.boolean {
+    props["manual"..n] = jbox.number {
      property_tag = 4+base,
-     default = true,
+     default = 1,
+     steps = 2,
      ui_name = jbox.ui_text("propertyname_manual"),
      ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
     }
-    props["vco"..n] = jbox.boolean {
+    props["vco"..n] = jbox.number {
      property_tag = 5+base,
-     default = false,
+     steps = 2,
+     default = 0,
      ui_name = jbox.ui_text("propertyname_vco"),
      ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
     }
