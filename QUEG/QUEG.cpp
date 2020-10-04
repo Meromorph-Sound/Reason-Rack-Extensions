@@ -36,11 +36,11 @@ QUEG::QUEG()  {
 	for(auto i=0;i<4;i++) aScale[i]=0.5;
 }
 
-ruint32 QUEG::tag(const ruint32 channel,const Tags parameter) const {
-	return 10*channel+static_cast<ruint32>(parameter);
+ruint32 QUEG::tag(const ruint32 channel,const Tag parameter) const {
+	return 10*channel+parameter;
 }
 
-bool QUEG::getBoolean(const ruint32 channel,const Tags parameter) const {
+bool QUEG::getBoolean(const ruint32 channel,const Tag parameter) const {
 	const TJBox_Value& jboxValue = JBox_LoadMOMPropertyByTag(props, tag(channel,parameter));
 	char b = JBox_GetBoolean(jboxValue);
 	return b!=0;
@@ -66,24 +66,34 @@ void QUEG::write(const ruint32 channel,const ruint32 length,rfloat *buffer) {
 		JBox_SetDSPBufferData(ref, 0, length, buffer);
 	}
 }
+
+
 void QUEG::process() {
 
+	for(auto i=0;i<4;i++) {
+		std::fill_n(outs[i],BUFFER_SIZE,0);
+	}
 	for(ruint32 channel=0;channel<4;channel++) {
-		rfloat aProp = getNumber<rfloat>(channel,Tags::A);
 		auto length = read(channel,ins);
-		if(length>0) {
-			//auto aProp = aScale[channel];
-			for(auto i=0;i<length;i++) ins[i]*=aProp;
-			write(channel,length,ins);
+		if(length > 0) {
+			auto level = getNumber<rfloat>(channel,LEVEL);
+			for(auto i=0;i<length;i++) ins[i]*=level;
+
+			for(ruint32 outC=0;outC<4;outC++) {
+				auto scale = getNumber<rfloat>(channel,OUT_FRACTION[outC]);
+				auto out=outs[outC];
+				for(auto i=0;i<length;i++) out[i]+=scale*ins[i];
+			}
 		}
 	}
+	for(auto i=0;i<4;i++) write(i,BUFFER_SIZE,outs[i]);
 
 
 }
 
-QUEG::Tags QUEG::splitTag(const ruint32 t,ruint32 *channel) {
+QUEG::Tag QUEG::splitTag(const ruint32 t,ruint32 *channel) {
 	*channel = (t/10) % 4;
-	return static_cast<Tags>(t % 10);
+	return t % 10;
 }
 
 void QUEG::processChanges(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount) {
