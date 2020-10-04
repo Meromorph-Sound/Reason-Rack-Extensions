@@ -20,7 +20,7 @@ private:
 	const static Tag MANUAL = 4;
 	const static Tag VCO = 5;
 	const static constexpr Tag OUT_FRACTION[4] = { 6, 7, 8, 9 };
-
+	const static Tag OUT_BASE = 6;
 
 
 	TJBox_ObjectRef props;
@@ -30,13 +30,14 @@ private:
 	rfloat *ins;
 	rfloat *outs[4];
 
-	rfloat aScale[4];
+	rfloat scales[4][4];
+	rfloat levels[4];
 
 
 
 	static const TJBox_Int64 BUFFER_SIZE;
 	ruint32 tag(const ruint32 channel,const Tag parameter) const;
-	Tag splitTag(const ruint32 t,ruint32 *channel);
+	Tag splitTag(const ruint32 t,ruint32 *inChannel,ruint32 *outChannel);
 
 	template <typename T, class = typename std::enable_if_t<std::is_arithmetic_v<T>>>
 	T getNumber(const ruint32 channel,const Tag parameter) const {
@@ -51,7 +52,6 @@ private:
 	ruint32 read(const ruint32 channel,rfloat *buffer);
 	void write(const ruint32 channel,const ruint32 length,rfloat *buffer);
 	bool isConnected(const ruint32 channel);
-
 
 	void processChanges(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount);
 	void process();

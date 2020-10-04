@@ -1,5 +1,32 @@
 format_version = "1.0"
 
+function append(list1,list2)
+  for k, v in pairs(list2) do
+    table.insert(list1,v)
+  end
+  return list1
+end  
+
+function notificationsFor(base) 
+  local out={}
+  for n = 1,4 do
+    table.insert(out,base..n)
+  end
+  return out
+end
+
+function notifications(bases) 
+  local out={}
+  for k,v in pairs(bases) do
+    append(out,notificationsFor(v))
+  end
+  return out
+end
+
+
+
+  
+
 rtc_bindings = { 
 	{ source = "/environment/system_sample_rate", dest = "/global_rtc/init_instance" },
 	{ source = "/environment/instance_id", dest = "/global_rtc/init_instance" },
@@ -25,10 +52,11 @@ native = {
 }
 
 rt_input_setup = { 
-	notify = {
-	 "/custom_properties/A1",
-	 "/custom_properties/A2",
-	 "/custom_properties/A3",
-	 "/custom_properties/A4",
-	}
+	notify = notifications({
+	   "/custom_properties/A", 
+	   "/custom_properties/B", 
+	   "/custom_properties/C", 
+	   "/custom_properties/D", 
+	   "/custom_properties/level"
+ })
 }

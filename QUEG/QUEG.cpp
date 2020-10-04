@@ -33,7 +33,10 @@ QUEG::QUEG()  {
 	ins = new rfloat[BUFFER_SIZE];
 	for(auto i=0;i<4;i++) outs[i]=new rfloat[BUFFER_SIZE];
 
-	for(auto i=0;i<4;i++) aScale[i]=0.5;
+	for(auto i=0;i<4;i++) {
+		for(auto j=0;j<4;j++) scales[i][j]=0.5;
+		levels[i]=0.5;
+	}
 }
 
 ruint32 QUEG::tag(const ruint32 channel,const Tag parameter) const {
@@ -76,11 +79,11 @@ void QUEG::process() {
 	for(ruint32 channel=0;channel<4;channel++) {
 		auto length = read(channel,ins);
 		if(length > 0) {
-			auto level = getNumber<rfloat>(channel,LEVEL);
+			auto level = levels[channel]; //getNumber<rfloat>(channel,LEVEL);
 			for(auto i=0;i<length;i++) ins[i]*=level;
 
 			for(ruint32 outC=0;outC<4;outC++) {
-				auto scale = getNumber<rfloat>(channel,OUT_FRACTION[outC]);
+				auto scale = scales[channel][outC]; //getNumber<rfloat>(channel,OUT_FRACTION[outC]);
 				auto out=outs[outC];
 				for(auto i=0;i<length;i++) out[i]+=scale*ins[i];
 			}
@@ -91,25 +94,40 @@ void QUEG::process() {
 
 }
 
-QUEG::Tag QUEG::splitTag(const ruint32 t,ruint32 *channel) {
-	*channel = (t/10) % 4;
-	return t % 10;
+QUEG::Tag QUEG::splitTag(const ruint32 t,ruint32 *inChannel,ruint32 *outChannel) {
+	*inChannel = (t/10) % 4;
+	auto instruction = t%10;
+	if(instruction>=OUT_BASE) {
+		*outChannel=instruction-OUT_BASE;
+		return OUT_BASE;
+	}
+	else {
+		return instruction;
+	}
+}
+
+inline rfloat toFloat(const TJBox_PropertyDiff diff) {
+	return static_cast<rfloat>(JBox_GetNumber(diff.fCurrentValue));
 }
 
 void QUEG::processChanges(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount) {
-	/*auto t=tag(0,Tags::A);
+
 	for(auto i=0;i<iDiffCount;i++) {
 		auto diff=iPropertyDiffs[i];
-		ruint32 channel=0;
-		auto dTag = splitTag(diff.fPropertyTag,&channel);
+		ruint32 inChannel=0;
+		ruint32 outChannel=0;
+		auto dTag = splitTag(diff.fPropertyTag,&inChannel,&outChannel);
 		switch(dTag) {
-		case Tags::A:
-			aScale[channel] = static_cast<rfloat>(JBox_GetNumber(diff.fCurrentValue));
+		case OUT_BASE:
+			scales[inChannel][outChannel] = toFloat(diff);
+			break;
+		case LEVEL:
+			levels[inChannel] = toFloat(diff);
 			break;
 		default:
 			break;
 		}
-	}*/
+	}
 }
 
 
