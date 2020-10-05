@@ -20,6 +20,8 @@ function notifications(bases)
   for k,v in pairs(bases) do
     append(out,notificationsFor(v))
   end
+  jbox.trace("Made notifications:")
+  jbox.trace(table.concat(out,', '))
   return out
 end
 
@@ -51,12 +53,14 @@ native = {
 	},
 }
 
-rt_input_setup = { 
-	notify = notifications({
-	   "/custom_properties/A", 
-	   "/custom_properties/B", 
-	   "/custom_properties/C", 
-	   "/custom_properties/D", 
-	   "/custom_properties/level"
- })
+--rt_input_setup = { 
+--	notify = notifications({
+--	   "/custom_properties/A",
+--	   "/custom_properties/B",
+--	   "/custom_properties/C",
+--	   "/custom_properties/D"
+-- })
+--}
+rt_input_setup = {
+  notify = {}
 }

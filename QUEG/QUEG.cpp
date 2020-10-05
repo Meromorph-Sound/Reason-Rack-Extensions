@@ -33,10 +33,10 @@ QUEG::QUEG()  {
 	ins = new rfloat[BUFFER_SIZE];
 	for(auto i=0;i<4;i++) outs[i]=new rfloat[BUFFER_SIZE];
 
-	for(auto i=0;i<4;i++) {
-		for(auto j=0;j<4;j++) scales[i][j]=0.5;
-		levels[i]=0.5;
-	}
+	//for(auto i=0;i<4;i++) {
+	//	for(auto j=0;j<4;j++) scales[i][j]=0.5;
+	//	levels[i]=0.5;
+	//}
 }
 
 ruint32 QUEG::tag(const ruint32 channel,const Tag parameter) const {
@@ -79,13 +79,11 @@ void QUEG::process() {
 	for(ruint32 channel=0;channel<4;channel++) {
 		auto length = read(channel,ins);
 		if(length > 0) {
-			auto level = levels[channel]; //getNumber<rfloat>(channel,LEVEL);
-			for(auto i=0;i<length;i++) ins[i]*=level;
-
+			auto level = getNumber<rfloat>(channel,LEVEL);
 			for(ruint32 outC=0;outC<4;outC++) {
-				auto scale = scales[channel][outC]; //getNumber<rfloat>(channel,OUT_FRACTION[outC]);
+				auto scale = getNumber<rfloat>(channel,OUT_FRACTION[outC])*level;
 				auto out=outs[outC];
-				for(auto i=0;i<length;i++) out[i]+=scale*ins[i];
+				std::transform(ins,ins+length,out,out,[scale](rfloat in,rfloat out) { return out + scale*in; });
 			}
 		}
 	}
@@ -111,7 +109,7 @@ inline rfloat toFloat(const TJBox_PropertyDiff diff) {
 }
 
 void QUEG::processChanges(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount) {
-
+	/*
 	for(auto i=0;i<iDiffCount;i++) {
 		auto diff=iPropertyDiffs[i];
 		ruint32 inChannel=0;
@@ -128,6 +126,7 @@ void QUEG::processChanges(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDi
 			break;
 		}
 	}
+	*/
 }
 
 

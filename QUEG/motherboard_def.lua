@@ -1,5 +1,13 @@
 format_version = "3.0"
 
+function name(tag,n)
+  return tag..n
+end
+
+function propName(tag,n) 
+  return jbox.ui_text("propertyname_"..name(tag,n))
+end
+
 function makeN(n,item)
   local out={}
   for i = 1, n do
@@ -8,64 +16,96 @@ function makeN(n,item)
   return out
 end
 
-function makeProperties(n)
+function makeGUIProperties()
   local props = {}
   for n = 1,4 do
     local base=(n-1)*10
-    props["x"..n] = jbox.number {
+    props[name("x",n)] = jbox.number {
       property_tag = 1+base,
       default = 0.5,
-      ui_name = jbox.ui_text("propertyname_X"),
-      ui_type = jbox.ui_linear({min=-1, max=1, units={{decimals=4}}}),
+      ui_name = propName("x",n),
+      ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}}),
     }
-    props["y"..n] = jbox.number {
+    props[name("y",n)] = jbox.number {
       property_tag = 2+base,
       default = 0.5,
-      ui_name = jbox.ui_text("propertyname_Y"),
-      ui_type = jbox.ui_linear({min=-1, max=1, units={{decimals=4}}}),    
+      ui_name = propName("y",n),
+      ui_type = jbox.ui_linear({min=1, max=1, units={{decimals=4}}}),    
     }
-    props["level"..n] = jbox.number {
+    props[name("level",n)] = jbox.number {
      property_tag = 3+base,
      default = 0.5,
-     ui_name = jbox.ui_text("propertyname_level"),
+     ui_name = propName("level",n),
      ui_type = jbox.ui_percent({decimals=2}),
     }
-    props["manual"..n] = jbox.number {
+    props[name("manual",n)] = jbox.number {
      property_tag = 4+base,
      default = 1,
      steps = 2,
-     ui_name = jbox.ui_text("propertyname_manual"),
+     ui_name = propName("manual",n),
      ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
     }
-    props["vco"..n] = jbox.number {
+    props[name("vco",n)] = jbox.number {
      property_tag = 5+base,
      steps = 2,
      default = 0,
-     ui_name = jbox.ui_text("propertyname_vco"),
+     ui_name = propName("vco",n),
      ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
     }
-    props["A"..n] = jbox.number { 
+    props[name("A",n)] = jbox.number { 
       property_tag = 6+base,
       default = 0.5,
-      ui_name = jbox.ui_text("propertyname_A"),
+      ui_name = propName("A",n),
       ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
     } 
-    props["B"..n] = jbox.number { 
+    props[name("B",n)] = jbox.number { 
       property_tag = 7+base,
       default = 0.5,
-      ui_name = jbox.ui_text("propertyname_B"),
+      ui_name = propName("B",n),
       ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
     } 
-    props["C"..n] = jbox.number { 
+    props[name("C",n)] = jbox.number { 
       property_tag = 8+base,
       default = 0.5,
-      ui_name = jbox.ui_text("propertyname_C"),
+      ui_name = propName("C",n),
       ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
     } 
-    props["D"..n] = jbox.number { 
+    props[name("D",n)] = jbox.number { 
       property_tag = 9+base,
       default = 0.5,
-      ui_name = jbox.ui_text("propertyname_D"),
+      ui_name = propName("D",n),
+      ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
+    }
+  end
+  return props
+end
+
+function makeRTProperties()
+  local props = {}
+  for n = 1,4 do
+    local base=(n-1)*10
+    props[name("A",n)] = jbox.number { 
+      property_tag = 6+base,
+      default = 0.5,
+      ui_name = propName("A",n),
+      ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
+    } 
+    props[name("B",n)] = jbox.number { 
+      property_tag = 7+base,
+      default = 0.5,
+      ui_name = propName("B",n),
+      ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
+    } 
+    props[name("C",n)] = jbox.number { 
+      property_tag = 8+base,
+      default = 0.5,
+      ui_name = propName("C",n),
+      ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
+    } 
+    props[name("D",n)] = jbox.number { 
+      property_tag = 9+base,
+      default = 0.5,
+      ui_name = propName("D",n),
       ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
     }
   end
@@ -76,14 +116,53 @@ end
 custom_properties = jbox.property_set{	
   
 	document_owner = { 
-		properties =  makeProperties(),
+		properties =  makeGUIProperties(),
 	},
+--	rt_owner = {
+--	 properties = makeRTProperties()
+--	},
 	rtc_owner = {
 		properties = {
 			instance = jbox.native_object{},
 		}
 	},
 }
+
+function makeMIDI(base,properties)
+  local out={}
+  local cc=base
+  for channel = 1,4 do
+    for k,tag in pairs(properties) do
+      out[base] = "/custom_properties/"..name(tag,channel)
+      base=base+1
+    end
+  end
+  return out
+end
+
+function makeRemote(properties)
+  local out = {}
+  for k, tag in properties do
+    for channel = 1, 4 do
+      local nm=name(tag,channel)
+      local pn=propName(tag,channel)
+      out["/custom_properties/"..nm] = {
+        internal_name=nm,
+        short_ui_name=pn,
+        shortest_ui_name=pn
+      }
+    end
+  end
+  return out
+end
+    
+
+midi_implementation_chart = {
+  midi_cc_chart = makeMIDI(39,{"level","x","y"})
+}
+
+remote_implementation_chart = makeRemote({"level","x","y"})
+
 
 audio_inputs = {
   in1 = jbox.audio_input{ ui_name = jbox.ui_text("audioInput1") },

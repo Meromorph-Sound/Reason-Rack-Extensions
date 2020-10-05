@@ -30,8 +30,8 @@ private:
 	rfloat *ins;
 	rfloat *outs[4];
 
-	rfloat scales[4][4];
-	rfloat levels[4];
+	//rfloat scales[4][4];
+	//rfloat levels[4];
 
 
 
