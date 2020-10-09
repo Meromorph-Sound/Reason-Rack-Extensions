@@ -32,10 +32,10 @@ function makeWidgets()
       values = { 
         "/custom_properties/x"..n, 
         "/custom_properties/y"..n,
-        "/custom_properties/A"..n,
-        "/custom_properties/B"..n,
-        "/custom_properties/C"..n,
-        "/custom_properties/D"..n,
+ --       "/custom_properties/A"..n,
+ --       "/custom_properties/B"..n,
+ --       "/custom_properties/C"..n,
+ --       "/custom_properties/D"..n
          },
       draw_function = "drawController",
       gesture_function = "handleControllerInput"
@@ -53,10 +53,26 @@ function makeWidgets()
       
       value = "/custom_properties/vco"..n,
     })
-    table.insert(widgets,displayForChannel('A',n))
-    table.insert(widgets,displayForChannel('B',n))
-    table.insert(widgets,displayForChannel('C',n))
-    table.insert(widgets,displayForChannel('D',n))
+    table.insert(widgets,jbox.sequence_meter {
+      value = "/custom_properties/A"..n,
+      graphics = { node = "A"..n }
+    })
+    table.insert(widgets,jbox.sequence_meter {
+      value = "/custom_properties/B"..n,
+      graphics = { node = "B"..n }
+    })
+    table.insert(widgets,jbox.sequence_meter {
+      value = "/custom_properties/C"..n,
+      graphics = { node = "C"..n }
+    })
+    table.insert(widgets,jbox.sequence_meter {
+      value = "/custom_properties/D"..n,
+      graphics = { node = "D"..n }
+    })
+    --table.insert(widgets,displayForChannel('A',n))
+    --table.insert(widgets,displayForChannel('B',n))
+    --table.insert(widgets,displayForChannel('C',n))
+    --table.insert(widgets,displayForChannel('D',n))
   end
   return widgets
 end

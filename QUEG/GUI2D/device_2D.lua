@@ -44,15 +44,15 @@ local x0 = 1000 + 650*(n-1)
   }
   queg["B"..n] = {
     offset = { x0 + 345, 50 },
-    { path = "ABCD", frames=1 }
+    { path = "meter_16frames", frames=16 }
   }
   queg["C"..n] = {
     offset = { x0 + 200, 195 },
-    { path = "ABCD", frames=1 }
+    { path = "meter_16frames", frames=16 }
   }
   queg["D"..n] = {
     offset = { x0 + 345, 195 },
-    { path = "ABCD", frames=1 }
+    { path = "meter_16frames", frames=16 }
   }
   queg["vco"..n] = {
    offset = { x0 + 50,350 },

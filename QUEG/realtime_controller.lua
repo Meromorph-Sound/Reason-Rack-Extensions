@@ -18,7 +18,7 @@ end
 function notifications(bases) 
   local out={}
   for k,v in pairs(bases) do
-    append(out,notificationsFor(v))
+    append(out,notificationsFor("/custom_properties/"..v))
   end
   jbox.trace("Made notifications:")
   jbox.trace(table.concat(out,', '))
@@ -62,5 +62,5 @@ native = {
 -- })
 --}
 rt_input_setup = {
-  notify = {}
+  notify = notifications({"x","y","level"})
 }

@@ -19,6 +19,7 @@ namespace queg {
 using rint32 = TJBox_Int32;
 using ruint32 = TJBox_UInt32;
 using rint64 = TJBox_Int64;
+using ruint64 = TJBox_UInt64;
 using rdouble = TJBox_Float64;
 using rfloat = TJBox_AudioSample;
 

@@ -74,12 +74,12 @@ function changeTable(x,y,name)
   local changes = {}
   changes[1] = x
   changes[2] = y
-  changes[3] = (1-x)*(1-y)
-  changes[4] = x*(1-y)
-  changes[5] = (1-x)*y
-  changes[6] = x*y
+  --changes[3] = (1-x)*(1-y)
+  --changes[4] = x*(1-y)
+  --changes[5] = (1-x)*y
+  --changes[6] = x*y
   
-  for n = 1, 6 do
+  for n = 1, 2 do
     jbox.trace("Changes " .. tostring(n) .. " = " .. tostring(changes[n]))
   end
   

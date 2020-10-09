@@ -23,8 +23,11 @@ texts = {
  }
  
  insert(texts,"x","X")
- insert(texts,"x","Y")
+ insert(texts,"y","Y")
  insert(texts,"level","Level")
+ insert(texts,"x_shortest","X")
+ insert(texts,"y_shortest","Y")
+ insert(texts,"level_shortest","L")
  insert(texts,"manual","Manual")
  insert(texts,"vco","VCO")
  insert(texts,"A","A")
