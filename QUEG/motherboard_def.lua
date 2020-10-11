@@ -77,6 +77,10 @@ function makeGUIProperties()
 --      ui_type = jbox.ui_linear({min=0, max=1, units={{decimals=4}}})
 --    }
   end
+  jbox.trace("Made GUI properties:")
+  for k,v in pairs(props) do
+    jbox.trace(k.." : "..tostring(v))
+  end
   return props
 end
 
@@ -168,25 +172,98 @@ midi_implementation_chart = {
 remote_implementation_chart = makeRemote({"level","x","y"})
 
 
+function audioIn(tag) 
+  return jbox.audio_input{ ui_name = jbox.ui_text(tag) }
+end
+
+function audioOut(tag) 
+  return jbox.audio_output{ ui_name = jbox.ui_text(tag) }
+end
+
+function cvIn(tag) 
+  return jbox.cv_input{ ui_name = jbox.ui_text(tag) }
+end
+
+function cvOut(tag) 
+  return jbox.cv_output{ ui_name = jbox.ui_text(tag) }
+end
+
+function ChannelCVOut(channel)
+  local tags = { "A", "B", "C", "D" }
+  local table={}
+  for index, tag in pairs(tags) do
+    local name=tag..channel.."Out"
+    table[name] = cvOut(name)
+  end
+  return table
+end
+
+function ChannelCVIn(channel) 
+  local tags = { "level", "mode", "X", "Y" }
+  local table={}
+  for index, tag in pairs(tags) do
+    local name=tag..channel.."In"
+    table[name] = cvIn(name)
+  end
+  return table
+end
+
+function CVOut(table)
+  for n = 1,4 do
+    local temp=ChannelCVOut(n)
+    for k, v in temp do
+      table[k]=v
+    end
+  end
+  return table
+end
+
+function CVIn(table)
+  for n = 1,4 do
+    local temp=ChannelCVIn(n)
+    for k, v in temp do
+      table[k]=v
+    end
+  end
+  return table
+end
+  
+
 audio_inputs = {
-  in1 = jbox.audio_input{ ui_name = jbox.ui_text("audioInput1") },
-  in2 = jbox.audio_input{ ui_name = jbox.ui_text("audioInput2") },
-  in3 = jbox.audio_input{ ui_name = jbox.ui_text("audioInput3") },
-  in4 = jbox.audio_input{ ui_name = jbox.ui_text("audioInput4") },
+  in1 = audioIn("audioInput1"),
+  in2 = audioIn("audioInput2"),
+  in3 = audioIn("audioInput3"),
+  in4 = audioIn("audioInput4")
 }
 
 audio_outputs = {
-  outA = jbox.audio_output{ ui_name = jbox.ui_text("audioOutputA") },
-  outB = jbox.audio_output{ ui_name = jbox.ui_text("audioOutputB") },
-  outC = jbox.audio_output{ ui_name = jbox.ui_text("audioOutputC") },
-  outD = jbox.audio_output{ ui_name = jbox.ui_text("audioOutputD") },
+  outA = audioOut("audioOutputA"),
+  outB = audioOut("audioOutputB"),
+  outC = audioOut("audioOutputC"),
+  outD = audioOut("audioOutputD")
 }
 
-cv_inputs = {
-}
+cv_inputs = {}
+for n = 1,4 do
+  local temp=ChannelCVIn(n)
+  for k, v in pairs(temp) do
+    cv_inputs[k]=v
+  end
+end
+cv_inputs["vcoXIn"] = cvIn("vcoXIn")
+cv_inputs["vcoYIn"] = cvIn("vcoYIn")
 
-cv_outputs = {
-}
+
+cv_outputs = {}
+for n = 1,4 do
+  local temp=ChannelCVOut(n)
+  for k, v in pairs(temp) do
+    cv_outputs[k]=v
+  end
+end
+cv_outputs["vcoXOut"] = cvOut("vcoXOut")
+cv_outputs["vcoYOut"] = cvOut("vcoYOut")
+
 
 
 

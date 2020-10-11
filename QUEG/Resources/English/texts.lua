@@ -6,6 +6,15 @@ function insert(table,tag,text)
   end
 end
 
+function cvs(table,tags)
+  for idx,tag in pairs(tags) do
+    for n=1, 4 do
+      table[tag..n.."In"] = tag.." "..n.." input"
+      table[tag..n.."Out"] = tag.." "..n.." output"
+    end
+  end
+end
+
 texts = {
 ["on"] = "On",
   ["off"] = "Off",
@@ -19,7 +28,11 @@ texts = {
   ["audioOutputC"] = "Out C",
   ["audioOutputD"] = "Out D",
   ["setController"] = "Set controller position",
-  ["resetController"] = "Revert controller position"
+  ["resetController"] = "Revert controller position",
+  ["vcoXIn"] = "VCO X input",
+  ["vcoYIn"] = "VCO Y input",
+  ["vcoXOut"] = "VCO X output",
+  ["vcoYOut"] = "VCO Y output",
  }
  
  insert(texts,"x","X")
@@ -34,4 +47,5 @@ texts = {
  insert(texts,"B","B")
  insert(texts,"C","C")
  insert(texts,"D","D")
+ cvs(texts,{"X", "Y", "A", "B", "C", "D", "level", "mode"})
  

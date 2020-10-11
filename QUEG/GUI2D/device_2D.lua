@@ -73,6 +73,88 @@ local x0 = 1000 + 650*(n-1)
   return queg
 end
 
+function QUEGBackGlobal() 
+  local table={}
+  local tags={ "A", "B", "C", "D" }
+  for n = 1,4 do
+    local aX = 120 + 150*(n-1)
+    table["SignalInput"..n] = {
+      offset = {aX,330},
+      { path = "SharedAudioJack", frames = 3},
+    }
+    table["SignalOutput"..tags[n]] = {
+      offset = {aX,600},
+      { path = "SharedAudioJack", frames = 3},
+    }
+  end
+  table["vcoXIn"] = {
+      offset = {275,890},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["vcoYIn"] = {
+      offset = {525,890},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["vcoXOut"] = {
+      offset = {230,1160},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["vcoYOut"] = {
+      offset = {480,1160},
+      { path = "SharedCVJack", frames = 3},
+    }
+  return table
+end
+
+function QUEGBack(n)
+  local table={}
+  local x0 = 960+500*(n-1)
+  local y0 = 450
+  local dY = 440
+  table["X"..n.."In"] = {
+      offset = {x0,y0},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["Y"..n.."In"] = {
+      offset = {x0+150,y0},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["level"..n.."In"] = {
+      offset = {x0,y0+150},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["mode"..n.."In"] = {
+      offset = {x0+150,y0+150},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["A"..n.."Out"] = {
+      offset = {x0,y0+dY},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["B"..n.."Out"] = {
+      offset = {x0+150,y0+dY},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["C"..n.."Out"] = {
+      offset = {x0,y0+dY+150},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["D"..n.."Out"] = {
+      offset = {x0+150,y0+dY+150},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["X"..n.."Out"] = {
+      offset = {x0,y0+dY+300},
+      { path = "SharedCVJack", frames = 3},
+    }
+  table["Y"..n.."Out"] = {
+      offset = {x0+150,y0+dY+300},
+      { path = "SharedCVJack", frames = 3},
+    }
+  return table
+end
+  
+
 front = { 
 	Bg = {
 		{ path = "frontPanel" },
@@ -92,49 +174,22 @@ front = {
 }
 back = { 
 	Bg = {
-		{ path = "Panel_Back_4U" },
+		{ path = "backPanel" },
 	},
 	Placeholder = {
-		offset = { 100, 100 },
+		offset = { 3000, 300 },
 		{ path = "Placeholder" },
 	},
-	SignalInput1 = {
-		offset = {500,100},
-		{ path = "SharedAudioJack", frames = 3},
-	},
-	SignalInput2 = {
-		offset = {700,100},
-		{ path = "SharedAudioJack", frames = 3},
-	},
-   SignalInput3 = {
-            offset = {900,100},
-            { path = "SharedAudioJack", frames = 3},
-    },
-   SignalInput4 = {
-            offset = {1100,100},
-            { path = "SharedAudioJack", frames = 3},
-    },
-   SignalOutputA = {
-            offset = {500,500},
-            { path = "SharedAudioJack", frames = 3},
-    },
-    SignalOutputB = {
-            offset = {700,500},
-            { path = "SharedAudioJack", frames = 3},
-    },
-   SignalOutputC = {
-            offset = {900,500},
-            { path = "SharedAudioJack", frames = 3},
-    },
-   SignalOutputD = {
-            offset = {1100,500},
-            { path = "SharedAudioJack", frames = 3},
-    },
-  deviceName = {
-    offset = { 3280, MARGIN},
+	deviceName = {
+    offset = { 3300, 75},
     { path = "Tape_Horizontal_1frames", frames = 1 },
   },
-  }
+  QUEGBackGlobal(),
+  QUEGBack(1),
+  QUEGBack(2),
+  QUEGBack(3),
+  QUEGBack(4),
+}
 folded_front = { 
 	Bg = {
 		{ path = "Panel_Folded_Front" },
