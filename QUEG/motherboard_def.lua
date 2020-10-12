@@ -189,7 +189,7 @@ function cvOut(tag)
 end
 
 function ChannelCVOut(channel)
-  local tags = { "A", "B", "C", "D" }
+  local tags = { "A", "B", "C", "D", "X", "Y" }
   local table={}
   for index, tag in pairs(tags) do
     local name=tag..channel.."Out"
