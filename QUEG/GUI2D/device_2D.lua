@@ -73,6 +73,60 @@ local x0 = 1000 + 650*(n-1)
   return queg
 end
 
+function VCOFront()
+  local table={
+    VCOactive = {
+      offset = { 1045, 1685 },
+      { path = "button", frames=2 }
+    },
+    VCOfreeze = {
+      offset = { 1245, 1580 },
+      { path = "button", frames=2 }
+    },
+    VCOzero = {
+      offset = { 1245, 1790 },
+      { path = "button", frames=2 }
+    },
+    VCOfrequency = {
+      offset={ 1555, 1605 },
+      { path = "Knob_58_64frames", frames=64 }
+    },
+    VCOwidth = {
+      offset={ 1905, 1605 },
+      { path = "Knob_58_64frames", frames=64 }
+    },
+    VCOheight = {
+      offset={ 2255, 1605 },
+      { path = "Knob_58_64frames", frames=64 }
+    }, 
+    VCOpattern = {
+      offset = { 2690, 1670 },
+      { path = "VCOPatterns_5frames", frames=5 }
+    },
+    VCOstartsBG = {
+      offset = { 2915, 1525 },
+      { path = "starts", frames = 1 }
+    },
+    VCOstart1 = {
+      offset = { 3095, 1585 },
+      { path = "VCOOrder_4frames", frames=4 }
+    },
+    VCOstart2 = {
+      offset = { 3295, 1585 },
+      { path = "VCOOrder_4frames", frames=4 }
+    },
+    VCOstart3 = {
+      offset = { 3295, 1785 },
+      { path = "VCOOrder_4frames", frames=4 }
+    },
+    VCOstart4 = {
+      offset = { 3095, 1785 },
+      { path = "VCOOrder_4frames", frames=4 }
+    }
+        
+  }
+end
+
 function QUEGBackGlobal() 
   local table={}
   local tags={ "A", "B", "C", "D" }
@@ -164,7 +218,7 @@ front = {
       		{path="Fader_Bypass_3frames", frames = 3},
     	},
 	deviceName = {
-		offset = { 185, 1265 },
+		offset = { 185, 1915 },
 		{ path = "Tape_Horizontal_1frames", frames = 1 },
 	},
 	QUEG(1),

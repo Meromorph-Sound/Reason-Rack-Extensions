@@ -58,7 +58,68 @@ function makeWidgets()
             graphics = { node = "onoffbypass" },
             handle_size = 0,
             value = "/custom_properties/builtin_onoffbypass",
-    }
+    },
+    jbox.toggle_button {
+      graphics = { node = "VCOactive" },
+      
+      value = "/custom_properties/VCOactive",
+    },
+    jbox.toggle_button {
+      graphics = { node = "VCOfreeze" },
+      
+      value = "/custom_properties/VCOfreeze",
+    },
+    jbox.toggle_button {
+      graphics = { node = "VCOzero" },
+      
+      value = "/custom_properties/VCOzero",
+    },
+    jbox.analog_knob {
+      graphics = { node = "VCOfrequency" },
+      value = "/custom_properties/VCOfrequency"
+    },
+    jbox.analog_knob {
+      graphics = { node = "VCOwidth" },
+      value = "/custom_properties/VCOwidth"
+    },
+    jbox.analog_knob {
+      graphics = { node = "VCOheight" },
+      value = "/custom_properties/VCOheight"
+    },
+    jbox.popup_button {
+      graphics = { node = "VCOpattern" },
+      value = "/custom_properties/VCOpattern"
+    },
+    hbox.static_decoration {
+      graphics = { node = "VCOstartsBG" },
+      visibility_switch = "/custom_properties/VCOpattern",
+      visibility_values = { 1, 2 }
+    },
+    jbox.popup_button {
+      graphics = { node = "VCOstart1" },
+      value = "/custom_properties/VCOstart1",
+      visibility_switch = "/custom_properties/VCOpattern",
+      visibility_values = { 1, 2 }
+    },
+    jbox.popup_button {
+      graphics = { node = "VCOstart2" },
+      value = "/custom_properties/VCOstart2",
+      visibility_switch = "/custom_properties/VCOpattern",
+      visibility_values = { 1, 2 }
+    },
+    jbox.popup_button {
+      graphics = { node = "VCOstart3" },
+      value = "/custom_properties/VCOstart3",
+      visibility_switch = "/custom_properties/VCOpattern",
+      visibility_values = { 1, 2 }
+    },
+    jbox.popup_button {
+      graphics = { node = "VCOstart4" },
+      value = "/custom_properties/VCOstart4",
+      visibility_switch = "/custom_properties/VCOpattern",
+      visibility_values = { 1, 2 }
+    }    
+    
   }
   for n=1, 4 do
     table.insert(widgets,jbox.custom_display {

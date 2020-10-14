@@ -17,7 +17,132 @@ function makeN(n,item)
 end
 
 function makeGUIProperties()
-  local props = {}
+  local props = {
+    VCOactive = jbox.number {
+     property_tag = 51,
+     default = 1,
+     steps = 2,
+     ui_name = jbox.ui_text("VCOactive"),
+     ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
+    },
+    VCOfreeze = jbox.number {
+     property_tag = 52,
+     default = 1,
+     steps = 2,
+     ui_name = jbox.ui_text("VCOfreeze"),
+     ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
+    },
+    VCOzero = jbox.number {
+     property_tag = 53,
+     default = 1,
+     steps = 2,
+     ui_name = jbox.ui_text("VCOzero"),
+     ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
+    },
+    VCOfrequency = jbox.number {
+     property_tag = 54,
+     default = 0,
+     ui_name = jbox.ui_text("VCOfrequency"),
+     ui_type = jbox.ui_percent({decimals=2}),
+    },
+    VCOwidth = jbox.number {
+     property_tag = 55,
+     default = 0.5,
+     ui_name = jbox.ui_text("VCOwidth"),
+     ui_type = jbox.ui_percent({decimals=2}),
+    },
+    VCOheight = jbox.number {
+     property_tag = 56,
+     default = 0.5,
+     ui_name = jbox.ui_text("VCOheight"),
+     ui_type = jbox.ui_percent({decimals=2}),
+    },
+    VCOpattern = jbox.number {
+     property_tag = 60,
+     default = 1,
+     steps = 5,
+     ui_name = propName("VCOpattern"),
+     ui_type = jbox.ui_selector { 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight") 
+      }
+    },
+    VCOstart1 = jbox.number {
+     property_tag = 61,
+     default = 1,
+     steps = 4,
+     ui_name = propName("VCstart1"),
+     ui_type = jbox.ui_selector { 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight")
+      }
+    },
+    VCOstart1 = jbox.number {
+     property_tag = 61,
+     default = 1,
+     steps = 4,
+     ui_name = propName("VCstart1"),
+     ui_type = jbox.ui_selector { 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight")
+      }
+    },
+    VCOstart1 = jbox.number {
+     property_tag = 61,
+     default = 1,
+     steps = 4,
+     ui_name = propName("VCstart1"),
+     ui_type = jbox.ui_selector { 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight")
+      }
+    },
+    VCOstart2 = jbox.number {
+     property_tag = 62,
+     default = 2,
+     steps = 4,
+     ui_name = propName("VCstart2"),
+     ui_type = jbox.ui_selector { 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight")
+      }
+    },
+    VCOstart3 = jbox.number {
+     property_tag = 63,
+     default = 3,
+     steps = 4,
+     ui_name = propName("VCstart3"),
+     ui_type = jbox.ui_selector { 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight")
+      }
+    },
+    VCOstart4 = jbox.number {
+     property_tag = 64,
+     default = 4,
+     steps = 4,
+     ui_name = propName("VCstart4"),
+     ui_type = jbox.ui_selector { 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight"), 
+      jbox.ui_text("VCOheight")
+      }
+    }   
+  }
   for n = 1,4 do
     local base=(n-1)*10
     props[name("x",n)] = jbox.number {

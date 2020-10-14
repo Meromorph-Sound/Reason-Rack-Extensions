@@ -11,6 +11,6 @@ accepts_notes = false
 auto_create_track = true
 auto_create_note_lane = false
 supports_performance_automation = false
-device_height_ru = 4
+device_height_ru = 6
 automation_highlight_color = {r = 60, g = 255, b = 2}
 
