@@ -73,6 +73,19 @@ local x0 = 1000 + 650*(n-1)
   return queg
 end
 
+function makePopup(name, path, nFrames, xy1, xy2 )
+  local tab = {}
+  tab[name] = {
+    offset = xy1,
+    { path = name, frames = nFrames }
+  }
+  tab[name.."_button"] = {
+    offset = xy2,
+    path = { "UpDownButton", frames = 2 }
+  }
+  return tab
+end
+
 function VCOFront()
   local table={
     VCOactive = {
@@ -125,6 +138,7 @@ function VCOFront()
     }
         
   }
+  return table
 end
 
 function QUEGBackGlobal() 
@@ -224,7 +238,8 @@ front = {
 	QUEG(1),
 	QUEG(2),
 	QUEG(3),
-	QUEG(4)
+	QUEG(4),
+	VCOFront()
 }
 back = { 
 	Bg = {

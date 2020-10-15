@@ -1,8 +1,21 @@
 format_version = "1.0"
+ 
 
-function insert(table,tag,text) 
-  for n=1, 4 do
-    table["propertyname_"..tag..n] = text.." "..n
+function insert(table,tags) 
+  for tag, text in pairs(tags) do
+    for n=1, 4 do
+      table["propertyname_"..tag..n] = text.." "..n
+    end
+  end
+end
+
+function properties(table,tags) 
+  for k, tag in pairs(tags) do
+    table[tag]=string.upper(tag)
+    for n=1, 4 do
+      table["propertyname_"..tag..n] = tag.." "..n
+      table[tag..n]=string.upper(tag).." "..n
+    end
   end
 end
 
@@ -15,8 +28,15 @@ function cvs(table,tags)
   end
 end
 
+function vco(table,tags)
+  for k, tag in pairs(tags) do
+    table["propertyname_VCO"..tag] = "VCO "..tag
+  end
+end
+  
+
 texts = {
-["on"] = "On",
+  ["on"] = "On",
   ["off"] = "Off",
   ["n/a"] = "N/A",
   ["audioInput1"] = "In 1",
@@ -35,17 +55,10 @@ texts = {
   ["vcoYOut"] = "VCO Y output",
  }
  
- insert(texts,"x","X")
- insert(texts,"y","Y")
- insert(texts,"level","Level")
- insert(texts,"x_shortest","X")
- insert(texts,"y_shortest","Y")
- insert(texts,"level_shortest","L")
- insert(texts,"manual","Manual")
- insert(texts,"vco","VCO")
- insert(texts,"A","A")
- insert(texts,"B","B")
- insert(texts,"C","C")
- insert(texts,"D","D")
- cvs(texts,{"X", "Y", "A", "B", "C", "D", "level", "mode"})
+ properties(texts,{ "x", "y", "A", "B", "C", "D", "vco", "level", "manual" } )
+ cvs(texts,{ "X", "Y", "A", "B", "C", "D", "level", "mode"})
+ vco(texts,{ "active", "freeze", "zero", "frequency", "width", "height", "pattern", 
+             "start1", "start2", "start3", "start4" })
+ insert(texts,{ ["x_shortest"] = "X", ["y_shortest"] = "Y", ["level_shortest"] = "L"} )
+ 
  

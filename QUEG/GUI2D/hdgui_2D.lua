@@ -2,6 +2,11 @@ format_version = "2.0"
 
 local utils={}
 
+function utils.insert(array,extra) 
+  for k, item in pairs(extra) do
+    table.insert(array,item)
+  end
+end
 
 function utils.makeWidget(kind,channel,nodeName,propName)
   local prop = propName or nodeName
@@ -40,7 +45,20 @@ function utils.makePanel(widg,extras)
   return jbox.panel(args)
 end
 
-
+function utils.makePopup(property, name) 
+  local p = "/custom_properties/"..property
+  return {
+    jbox.analog_knob{
+      graphics = { node = name },
+      value = p
+    },
+    jbox.up_down_button{
+      graphics = { node = name.."_button" },
+      value = p,
+      show_automation_rect = false
+    }
+  }
+end
 
 
 --function makeWidget(kind,channel,nodeName,propName)
@@ -61,12 +79,10 @@ function makeWidgets()
     },
     jbox.toggle_button {
       graphics = { node = "VCOactive" },
-      
       value = "/custom_properties/VCOactive",
     },
     jbox.toggle_button {
       graphics = { node = "VCOfreeze" },
-      
       value = "/custom_properties/VCOfreeze",
     },
     jbox.toggle_button {
@@ -86,38 +102,38 @@ function makeWidgets()
       graphics = { node = "VCOheight" },
       value = "/custom_properties/VCOheight"
     },
-    jbox.popup_button {
+    jbox.up_down_button {
       graphics = { node = "VCOpattern" },
       value = "/custom_properties/VCOpattern"
     },
-    hbox.static_decoration {
+    jbox.static_decoration {
       graphics = { node = "VCOstartsBG" },
       visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 1, 2 }
+      visibility_values = { 0,1 }
     },
-    jbox.popup_button {
+    jbox.up_down_button {
       graphics = { node = "VCOstart1" },
       value = "/custom_properties/VCOstart1",
       visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 1, 2 }
+      visibility_values = { 0,1 }
     },
-    jbox.popup_button {
+    jbox.up_down_button {
       graphics = { node = "VCOstart2" },
       value = "/custom_properties/VCOstart2",
       visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 1, 2 }
+      visibility_values = { 0,1 }
     },
-    jbox.popup_button {
+    jbox.up_down_button {
       graphics = { node = "VCOstart3" },
       value = "/custom_properties/VCOstart3",
       visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 1, 2 }
+      visibility_values = { 0,1 }
     },
-    jbox.popup_button {
+    jbox.up_down_button {
       graphics = { node = "VCOstart4" },
       value = "/custom_properties/VCOstart4",
       visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 1, 2 }
+      visibility_values = { 0,1 }
     }    
     
   }
