@@ -113,28 +113,48 @@ function VCOFront()
       { path = "Knob_58_64frames", frames=64 }
     }, 
     VCOpattern = {
-      offset = { 2690, 1670 },
+      offset = { 2595, 1670 },
       { path = "VCOPatterns_5frames", frames=5 }
     },
-    VCOstartsBG = {
-      offset = { 2915, 1525 },
-      { path = "starts", frames = 1 }
+    VCOpattern_updown = {
+      offset = { 2820, 1670 },
+      { path = "upDown", frames=3 }
     },
+--    VCOstartsBG = {
+--      offset = { 2915, 1525 },
+--      { path = "starts", frames = 1 }
+--    },
     VCOstart1 = {
-      offset = { 3095, 1585 },
+      offset = { 3005, 1585 },
       { path = "VCOOrder_4frames", frames=4 }
+    },
+    VCOstart_updown1 = {
+      offset = { 3125, 1585 },
+      { path = "upDown", frames=3 }
     },
     VCOstart2 = {
-      offset = { 3295, 1585 },
+      offset = { 3265, 1585 },
       { path = "VCOOrder_4frames", frames=4 }
+    },
+    VCOstart_updown2 = {
+      offset = { 3385, 1585 },
+      { path = "upDown", frames=3 }
     },
     VCOstart3 = {
-      offset = { 3295, 1785 },
+      offset = { 3265, 1785 },
       { path = "VCOOrder_4frames", frames=4 }
     },
+    VCOstart_updown3 = {
+      offset = { 3385, 1785 },
+      { path = "upDown", frames=3 }
+    },
     VCOstart4 = {
-      offset = { 3095, 1785 },
+      offset = { 3005, 1785 },
       { path = "VCOOrder_4frames", frames=4 }
+    },
+    VCOstart_updown4 = {
+      offset = { 3125, 1785 },
+      { path = "upDown", frames=3 }
     }
         
   }

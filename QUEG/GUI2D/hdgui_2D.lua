@@ -45,19 +45,23 @@ function utils.makePanel(widg,extras)
   return jbox.panel(args)
 end
 
-function utils.makePopup(property, name) 
-  local p = "/custom_properties/"..property
-  return {
-    jbox.analog_knob{
-      graphics = { node = name },
-      value = p
-    },
-    jbox.up_down_button{
-      graphics = { node = name.."_button" },
-      value = p,
-      show_automation_rect = false
-    }
-  }
+function utils.makePopup(tab,property,name,n) 
+    local nn = name..n
+    local prop = "/custom_properties/"..prop..n
+    table.insert(tab,jbox.up_down_button{
+      graphics = { node = name.."_updown"..n },
+      value = prop,
+      visibility_switch = "/custom_properties/VCOpattern",
+      visibility_values = { 0,1 }
+    })
+    table.insert(tab,jbox.analog_knob {
+      graphics = { node = nn },
+      value = prop,
+      show_automation_rect = false,
+      visibility_switch = "/custom_properties/VCOpattern",
+      visibility_values = { 0,1 }
+    })
+  
 end
 
 
@@ -85,9 +89,8 @@ function makeWidgets()
       graphics = { node = "VCOfreeze" },
       value = "/custom_properties/VCOfreeze",
     },
-    jbox.toggle_button {
+    jbox.momentary_button {
       graphics = { node = "VCOzero" },
-      
       value = "/custom_properties/VCOzero",
     },
     jbox.analog_knob {
@@ -103,40 +106,33 @@ function makeWidgets()
       value = "/custom_properties/VCOheight"
     },
     jbox.up_down_button {
+      graphics = { node = "VCOpattern_updown" },
+      value = "/custom_properties/VCOpattern",
+      show_automation_rect = false
+    },
+    jbox.analog_knob {
       graphics = { node = "VCOpattern" },
       value = "/custom_properties/VCOpattern"
-    },
-    jbox.static_decoration {
-      graphics = { node = "VCOstartsBG" },
-      visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 0,1 }
-    },
-    jbox.up_down_button {
-      graphics = { node = "VCOstart1" },
-      value = "/custom_properties/VCOstart1",
-      visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 0,1 }
-    },
-    jbox.up_down_button {
-      graphics = { node = "VCOstart2" },
-      value = "/custom_properties/VCOstart2",
-      visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 0,1 }
-    },
-    jbox.up_down_button {
-      graphics = { node = "VCOstart3" },
-      value = "/custom_properties/VCOstart3",
-      visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 0,1 }
-    },
-    jbox.up_down_button {
-      graphics = { node = "VCOstart4" },
-      value = "/custom_properties/VCOstart4",
-      visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 0,1 }
-    }    
+    }
     
   }
+  for n=1,4 do
+    prop="/custom_properties/VCOstart"..n
+    table.insert(widgets, jbox.up_down_button{
+      graphics = { node = "VCOstart_updown"..n },
+      value = prop,
+      visibility_switch = "/custom_properties/VCOpattern",
+      visibility_values = { 0,1 }
+    })
+    table.insert(widgets, jbox.analog_knob {
+      graphics = { node = "VCOstart"..n },
+      value = prop,
+      show_automation_rect = false,
+      visibility_switch = "/custom_properties/VCOpattern",
+      visibility_values = { 0,1 }
+    })
+  end
+
   for n=1, 4 do
     table.insert(widgets,jbox.custom_display {
       graphics = {
