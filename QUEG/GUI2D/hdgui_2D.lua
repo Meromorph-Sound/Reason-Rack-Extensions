@@ -8,12 +8,16 @@ function utils.insert(array,extra)
   end
 end
 
-function utils.makeWidget(kind,channel,nodeName,propName)
-  local prop = propName or nodeName
-  return jbox[kind] { 
-    graphics = { node = nodeName..channel },
-    value = "/custom_properties/"..prop..channel
-  }
+function utils.append(array,extra) 
+  for k, item in pairs(extra) do
+    array[k]=item
+  end
+end
+
+function utils.copy(array)
+  local out = {}
+  utils.append(out,array)
+  return out
 end
 
 function utils.makeCV(name,direction) 
@@ -32,37 +36,8 @@ function utils.allCVNames(tab,suffix,list)
     end
 end
 
-function utils.makePanel(widg,extras)
-  widg = widg or {} 
-  extras = extras or {}
-  local args = { 
-    graphics = { node = "Bg" },
-    widgets = widg
-  }
-  for k, v in pairs(extras) do
-    table.insert(args,v)
-  end
-  return jbox.panel(args)
-end
 
-function utils.makePopup(tab,property,name,n) 
-    local nn = name..n
-    local prop = "/custom_properties/"..prop..n
-    table.insert(tab,jbox.up_down_button{
-      graphics = { node = name.."_updown"..n },
-      value = prop,
-      visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 0,1 }
-    })
-    table.insert(tab,jbox.analog_knob {
-      graphics = { node = nn },
-      value = prop,
-      show_automation_rect = false,
-      visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 0,1 }
-    })
-  
-end
+
 
 
 --function makeWidget(kind,channel,nodeName,propName)
@@ -73,64 +48,61 @@ end
 --  }
 --end
 
+function utils.propname(property)
+  return "/custom_properties/"..property
+end
+
+function utils.widget(kind,node,property,extras)
+  property=property or node
+  local params = {
+    graphics = { node = node },
+    value = utils.propname(property)
+  }
+  utils.append(params,extras or {})
+  return jbox[kind](params)
+end
+
+function utils.knob(node,extras)
+  return utils.widget('analog_knob',node,node,extras)
+end
+
+function utils.toggle(node,extras)
+  return utils.widget('toggle_button',node,node,extras)
+end
+
+function utils.sequence(node,extras)
+  return utils.widget('sequence_meter',node,node,extras)
+end
+
+function utils.updown(property,node,extras)
+  local p = { show_automation_rect = false }
+  utils.append(p,extras or {})
+  return utils.widget('up_down_button',node,property,p)
+end
+
+
 function makeWidgets()
   local widgets = {
     jbox.device_name { graphics = { node = "deviceName" } },
-    jbox.sequence_fader{
-            graphics = { node = "onoffbypass" },
-            handle_size = 0,
-            value = "/custom_properties/builtin_onoffbypass",
-    },
-    jbox.toggle_button {
-      graphics = { node = "VCOactive" },
-      value = "/custom_properties/VCOactive",
-    },
-    jbox.toggle_button {
-      graphics = { node = "VCOfreeze" },
-      value = "/custom_properties/VCOfreeze",
-    },
-    jbox.momentary_button {
-      graphics = { node = "VCOzero" },
-      value = "/custom_properties/VCOzero",
-    },
-    jbox.analog_knob {
-      graphics = { node = "VCOfrequency" },
-      value = "/custom_properties/VCOfrequency"
-    },
-    jbox.analog_knob {
-      graphics = { node = "VCOwidth" },
-      value = "/custom_properties/VCOwidth"
-    },
-    jbox.analog_knob {
-      graphics = { node = "VCOheight" },
-      value = "/custom_properties/VCOheight"
-    },
-    jbox.up_down_button {
-      graphics = { node = "VCOpattern_updown" },
-      value = "/custom_properties/VCOpattern",
-      show_automation_rect = false
-    },
-    jbox.analog_knob {
-      graphics = { node = "VCOpattern" },
-      value = "/custom_properties/VCOpattern"
-    }
-    
+    utils.widget("sequence_fader","onoffbypass","builtin_onoffbypass", { handle_size = 0 }),
+    utils.knob("VCOpattern"),
+    utils.updown("VCOpattern","VCOpattern_updown"),
+     utils.toggle("VCOactive"),
+    utils.toggle("VCOfreeze"),
+    utils.widget("momentary_button","VCOzero"),
+    utils.knob("VCOfrequency"),
+    utils.knob("VCOwidth"),
+    utils.knob("VCOheight")
   }
-  for n=1,4 do
-    prop="/custom_properties/VCOstart"..n
-    table.insert(widgets, jbox.up_down_button{
-      graphics = { node = "VCOstart_updown"..n },
-      value = prop,
-      visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 0,1 }
-    })
-    table.insert(widgets, jbox.analog_knob {
-      graphics = { node = "VCOstart"..n },
-      value = prop,
-      show_automation_rect = false,
-      visibility_switch = "/custom_properties/VCOpattern",
-      visibility_values = { 0,1 }
-    })
+  
+  local visibility = {
+    visibility_switch = utils.propname("VCOpattern"),
+    visibility_values = { 0,1 }
+  }
+  for n=1,4 do 
+    local prop="VCOstart"..n
+    table.insert(widgets, utils.updown(prop,"VCOstart_updown"..n,visibility))
+    table.insert(widgets, utils.knob(prop,visibility))
   end
 
   for n=1, 4 do
@@ -141,8 +113,8 @@ function makeWidgets()
       display_width_pixels = 400,
       display_height_pixels = 400,
       values = { 
-        "/custom_properties/x"..n, 
-        "/custom_properties/y"..n,
+        utils.propname("x"..n), 
+        utils.propname("y"..n),
          },
       draw_function = "drawController",
       gesture_function = "handleControllerInput"
@@ -151,38 +123,13 @@ function makeWidgets()
     --  graphics = { node = "level"..n },
     --  value = "/custom_properties/level"..n
     --})
-    table.insert(widgets,utils.makeWidget('analog_knob',n,"level"))
-    table.insert(widgets,utils.makeWidget('toggle_button',n,"manual"))
-    table.insert(widgets,utils.makeWidget('toggle_button',n,"vco"))
-    table.insert(widgets,utils.makeWidget('sequence_meter',n,"A"))
-    table.insert(widgets,utils.makeWidget('sequence_meter',n,"B"))
-    table.insert(widgets,utils.makeWidget('sequence_meter',n,"C"))
-    table.insert(widgets,utils.makeWidget('sequence_meter',n,"D"))
-    -- {
-    --  graphics = { node = "manual"..n },
-    --  value = "/custom_properties/manual"..n,
-    --})
---    table.insert(widgets,jbox.toggle_button {
---      graphics = { node = "vco"..n },
---      
---      value = "/custom_properties/vco"..n,
---    })
---    table.insert(widgets,jbox.sequence_meter {
---      value = "/custom_properties/A"..n,
---      graphics = { node = "A"..n }
---    })
---    table.insert(widgets,jbox.sequence_meter {
---      value = "/custom_properties/B"..n,
---      graphics = { node = "B"..n }
---    })
---    table.insert(widgets,jbox.sequence_meter {
---      value = "/custom_properties/C"..n,
---      graphics = { node = "C"..n }
---    })
---    table.insert(widgets,jbox.sequence_meter {
---      value = "/custom_properties/D"..n,
---      graphics = { node = "D"..n }
---    })
+    table.insert(widgets,utils.knob("level"..n))
+    table.insert(widgets,utils.toggle("manual"..n))
+    table.insert(widgets,utils.toggle("vco"..n))
+    table.insert(widgets,utils.sequence("A"..n))
+    table.insert(widgets,utils.sequence("B"..n))
+    table.insert(widgets,utils.sequence("C"..n))
+    table.insert(widgets,utils.sequence("D"..n))
   end
   return widgets
 end
