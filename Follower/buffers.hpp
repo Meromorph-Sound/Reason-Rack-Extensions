@@ -15,10 +15,10 @@ namespace follower {
 class Buffers {
 private:
 
-	const static rint32 DATA_IN ;
-	const static rint32 DATA_OUT ;
-	const static rint32 CV_OUT ;
-	const static rint32 DATA_CONNECTED;
+	const static int32 DATA_IN ;
+	const static int32 DATA_OUT ;
+	const static int32 CV_OUT ;
+	const static int32 DATA_CONNECTED;
 
 	TJBox_ObjectRef input;
 	TJBox_ObjectRef envelope;
@@ -26,9 +26,9 @@ private:
 
 
 
-	rint32 readBuffer(const TJBox_ObjectRef object,rfloat *buffer);
-	void writeBuffer(const TJBox_ObjectRef object,rfloat *buffer,const rint32 size);
-	void writeCV(const TJBox_ObjectRef object,const rfloat value);
+	int32 readBuffer(const TJBox_ObjectRef object,float32 *buffer);
+	void writeBuffer(const TJBox_ObjectRef object,float32 *buffer,const int32 size);
+	void writeCV(const TJBox_ObjectRef object,const float32 value);
 
 
 
@@ -38,10 +38,10 @@ public:
 	const static rint64 BUFFER_SIZE ;
 
 	Buffers(const char *);
-	rint32 readInput(rfloat *data);
-	void writeEnvelope(rfloat *data,const rint32 size);
-	void writeGate(const rfloat value);
-	void writeEnv(const rfloat value);
+	int32 readInput(float32 *data);
+	void writeEnvelope(float32 *data,const int32 size);
+	void writeGate(const float32 value);
+	void writeEnv(const float32 value);
 
 	bool isConnected();
 };

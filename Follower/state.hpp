@@ -16,7 +16,7 @@ namespace follower {
 
 
 
-rdouble asNumber(const TJBox_Value value,const rdouble def=0.0);
+float64 asNumber(const TJBox_Value value,const float64 def=0.0);
 
 class Data {
 private:
@@ -30,7 +30,7 @@ private:
 	};
 
 //	static const ruint32 increment;
-//	rint32 index(const Tags tag) const;
+//	int32 index(const Tags tag) const;
 
 //	ruint32 n;
 	TJBox_ObjectRef props;
@@ -39,19 +39,19 @@ private:
 
 
 	template<typename T>
-	T get(const rint32 idx) { return static_cast<T>(JBox_LoadMOMPropertyAsNumber(props,idx)); }
+	T get(const int32 idx) { return static_cast<T>(JBox_LoadMOMPropertyAsNumber(props,idx)); }
 	template<typename T>
 	T get(const Tags tag) { return get<T>(static_cast<ruint32>(tag)); }
 	template<typename T>
 	void set(const Tags tag,const T value) {
-		JBox_StoreMOMPropertyByTag(props,static_cast<ruint32>(tag),JBox_MakeNumber(static_cast<rfloat>(value)));
+		JBox_StoreMOMPropertyByTag(props,static_cast<ruint32>(tag),JBox_MakeNumber(static_cast<float32>(value)));
 	}
 
 public:
-	rfloat last;
-	rfloat threshold;
-	rfloat rho;
-	rint32 mode;
+	float32 last;
+	float32 threshold;
+	float32 rho;
+	int32 mode;
 
 	Data();
 
@@ -60,7 +60,7 @@ public:
 
 
 	void updateMode();
-	void setGate(const rfloat);
+	void setGate(const float32);
 	void hits(const TJBox_PropertyDiff [],ruint32);
 
 
@@ -75,8 +75,8 @@ private:
 public:
 	Environment();
 
-	rdouble sampleRate();
-	rdouble masterTune();
+	float64 sampleRate();
+	float64 masterTune();
 };
 
 

@@ -19,18 +19,18 @@ private:
 	Buffers buffers;
 
 	rint64 size;
-	rfloat last;
-	rfloat *audio;
+	float32 last;
+	float32 *audio;
 
 	bool getBuffer();
 
-	rfloat rectify(Data *);
+	float32 rectify(Data *);
 
 public:
 	EnvelopeFollower(const char *);
 	virtual ~EnvelopeFollower();
 
-	rfloat process(Data *);
+	float32 process(Data *);
 
 
 

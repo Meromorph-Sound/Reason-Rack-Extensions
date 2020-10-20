@@ -4,13 +4,7 @@ namespace queg {
 
 
 
-char *append(char *buffer,const char *stem,const char base,const ruint32 index) {
-	strcpy(buffer,stem);
-	auto len=strlen(stem);
-	buffer[len]=base+index;
-	buffer[len+1]=0;
-	return buffer;
-}
+
 
 
 
@@ -30,8 +24,8 @@ QUEG::QUEG()  {
 		outputs[i]=JBox_GetMotherboardObjectRef(append(buffer,"/audio_outputs/out",'A',i));
 	}
 
-	ins = new rfloat[BUFFER_SIZE];
-	for(auto i=0;i<4;i++) outs[i]=new rfloat[BUFFER_SIZE];
+	ins = new float32[BUFFER_SIZE];
+	for(auto i=0;i<4;i++) outs[i]=new float32[BUFFER_SIZE];
 
 	for(auto i=0;i<4;i++) {
 		for(auto j=0;j<4;j++) scales[i][j]=0.5;
@@ -42,10 +36,10 @@ QUEG::QUEG()  {
 }
 
 State QUEG::state() const {
-	return static_cast<State>(get<rint32>(kJBox_CustomPropertiesOnOffBypass));
+	return static_cast<State>(get<int32>(kJBox_CustomPropertiesOnOffBypass));
 }
 
-//ruint32 QUEG::tag(const ruint32 channel,const Tag parameter) const {
+//uint32 QUEG::tag(const uint32 channel,const Tag parameter) const {
 //	return 10*channel+parameter;
 //}
 
@@ -64,16 +58,16 @@ bool QUEG::isConnected(const Channel channel) {
 	if(JBox_GetType(ref)==kJBox_Boolean) return JBox_GetBoolean(ref);
 	else return false;
 }
-ruint32 QUEG::read(const Channel channel,rfloat *buffer) {
+uint32 QUEG::read(const Channel channel,float32 *buffer) {
 	if(!isConnected(channel)) return 0;
 	auto ref = JBox_LoadMOMPropertyByTag(inputs[channel], kJBox_AudioInputBuffer);
-	auto length = std::min<rint64>(JBox_GetDSPBufferInfo(ref).fSampleCount,BUFFER_SIZE);
+	auto length = std::min<int64>(JBox_GetDSPBufferInfo(ref).fSampleCount,BUFFER_SIZE);
 	if(length>0) {
 		JBox_GetDSPBufferData(ref, 0, length, buffer);
 	}
-	return static_cast<rint32>(length);
+	return static_cast<int32>(length);
 }
-void QUEG::write(const Channel channel,const ruint32 length,rfloat *buffer) {
+void QUEG::write(const Channel channel,const uint32 length,float32 *buffer) {
 	auto ref = JBox_LoadMOMPropertyByTag(outputs[channel], kJBox_AudioOutputBuffer);
 	if(length>0) {
 		JBox_SetDSPBufferData(ref, 0, length, buffer);
@@ -84,60 +78,63 @@ void QUEG::write(const Channel channel,const ruint32 length,rfloat *buffer) {
 
 
 
-QUEG::Tag QUEG::splitTag(const ruint32 t,Channel *inChannel,Channel *outChannel) {
-	*inChannel = (t/10) % 4;
-	auto tag = t%10;
-	if(tag>=OUT_BASE) {
-		*outChannel=tag-OUT_BASE;
-		return OUT_BASE;
-	}
-	else {
-		return tag;
-	}
+
+inline float32 toFloat(const value_t diff) {
+	return static_cast<float32>(JBox_GetNumber(diff));
 }
 
-inline rfloat toFloat(const TJBox_PropertyDiff diff) {
-	return static_cast<rfloat>(JBox_GetNumber(diff.fCurrentValue));
+void QUEG::processMixerChange(const Tag tag,const value_t diff) {
+	Channel inChannel=0;
+			Channel outChannel=0;
+			Tag dTag = splitMixerTag(tag,&inChannel,&outChannel);
+
+	switch(dTag) {
+	//		case OUT_BASE:
+	//			scales[inChannel][outChannel] = toFloat(diff);
+	//			break;
+			case CHANNEL_LEVEL:
+				levels[inChannel] = toFloat(diff);
+				break;
+			case X:
+				xs[inChannel] = toFloat(diff);
+				break;
+			case Y:
+				ys[inChannel] = toFloat(diff);
+				break;
+			default:
+				break;
+			}
+
+
+		for(Channel channel=0;channel<4;channel++) {
+			auto x=xs[channel];
+			auto y=ys[channel];
+			scales[channel][0]=(1-x)*(1-y);
+			scales[channel][1]=x*(1-y);
+			scales[channel][2]=(1-x)*y;
+			scales[channel][3]=x*y;
+
+			for(Tag j=0;j<4;j++) {
+				set<float32>(scales[channel][j],OUT_BASE+j,channel);
+			}
+		}
 }
 
-void QUEG::processChanges(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount) {
+void QUEG::processVCOChange(const Tag tag,const value_t diff) {
+	Channel channel=0;
+	Tag dTag = splitVCOTag(tag,&channel);
+	//vco.processChanges(dTag,outChannel);
+}
 
-
-
+void QUEG::processChanges(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDiffCount) {
 	for(auto i=0;i<iDiffCount;i++) {
 		auto diff=iPropertyDiffs[i];
-		ruint32 inChannel=0;
-		ruint32 outChannel=0;
-		auto dTag = splitTag(diff.fPropertyTag,&inChannel,&outChannel);
-
-		switch(dTag) {
-//		case OUT_BASE:
-//			scales[inChannel][outChannel] = toFloat(diff);
-//			break;
-		case LEVEL:
-			levels[inChannel] = toFloat(diff);
-			break;
-		case X:
-			xs[inChannel] = toFloat(diff);
-			break;
-		case Y:
-			ys[inChannel] = toFloat(diff);
-			break;
-		default:
-			break;
+		Tag tag = diff.fPropertyTag;
+		if(tag<VCO_RANGE_START) {
+			processMixerChange(tag,diff.fCurrentValue);
 		}
-
-	}
-	for(Channel channel=0;channel<4;channel++) {
-		auto x=xs[channel];
-		auto y=ys[channel];
-		scales[channel][0]=(1-x)*(1-y);
-		scales[channel][1]=x*(1-y);
-		scales[channel][2]=(1-x)*y;
-		scales[channel][3]=x*y;
-
-		for(Tag j=0;j<4;j++) {
-			set<rfloat>(scales[channel][j],OUT_BASE+j,channel);
+		else {
+			processVCOChange(tag,diff.fCurrentValue);
 		}
 	}
 
@@ -159,11 +156,11 @@ void QUEG::process() {
 	for(Channel channel=0;channel<4;channel++) {
 		auto length = read(channel,ins);
 		if(length > 0) {
-			auto level = levels[channel]; //get<rfloat>(LEVEL,channel);
+			auto level = levels[channel]; //get<float32>(LEVEL,channel);
 			for(Channel outC=0;outC<4;outC++) {
-				auto scale = scales[channel][outC]*level; //get<rfloat>(OUT_FRACTION[outC],channel)*level;
+				auto scale = scales[channel][outC]*level; //get<float32>(OUT_FRACTION[outC],channel)*level;
 				auto out=outs[outC];
-				std::transform(ins,ins+length,out,out,[scale](rfloat in,rfloat out) { return out + scale*in; });
+				std::transform(ins,ins+length,out,out,[scale](float32 in,float32 out) { return out + scale*in; });
 			}
 		}
 	}
@@ -172,7 +169,7 @@ void QUEG::process() {
 
 
 
-void QUEG::RenderBatch(const TJBox_PropertyDiff diffs[], TJBox_UInt32 nDiffs) {
+void QUEG::RenderBatch(const TJBox_PropertyDiff diffs[], uint32 nDiffs) {
 	processChanges(diffs,nDiffs);
 	auto s=state();
 	switch(s) {

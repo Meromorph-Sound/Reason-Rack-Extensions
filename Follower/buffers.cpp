@@ -16,10 +16,10 @@ bool asBoolean(const TJBox_Value value,const bool def=false) {
 }
 
 const rint64 Buffers::BUFFER_SIZE = 64;
-const rint32 Buffers::DATA_IN = kJBox_AudioInputBuffer;
-const rint32 Buffers::DATA_OUT = kJBox_AudioOutputBuffer;
-const rint32 Buffers::CV_OUT = kJBox_CVOutputValue;
-const rint32 Buffers::DATA_CONNECTED = kJBox_AudioInputConnected;
+const int32 Buffers::DATA_IN = kJBox_AudioInputBuffer;
+const int32 Buffers::DATA_OUT = kJBox_AudioOutputBuffer;
+const int32 Buffers::CV_OUT = kJBox_CVOutputValue;
+const int32 Buffers::DATA_CONNECTED = kJBox_AudioInputConnected;
 
 const char *Buffers::LEFT="L";
 const char *Buffers::RIGHT="R";
@@ -37,21 +37,21 @@ Buffers::Buffers(const char *side) {
 	env=JBox_GetMotherboardObjectRef(append("/cv_outputs/env",side));
 }
 
-rint32 Buffers::readBuffer(const TJBox_ObjectRef object,rfloat *buffer) {
+int32 Buffers::readBuffer(const TJBox_ObjectRef object,float32 *buffer) {
 	auto ref = JBox_LoadMOMPropertyByTag(object, DATA_IN);
-	rint32 size = std::min(JBox_GetDSPBufferInfo(ref).fSampleCount,BUFFER_SIZE);
+	int32 size = std::min(JBox_GetDSPBufferInfo(ref).fSampleCount,BUFFER_SIZE);
 	if(size>0) {
 		JBox_GetDSPBufferData(ref, 0, size, buffer);
 	}
 	return size;
 }
-void Buffers::writeBuffer(const TJBox_ObjectRef object,rfloat *buffer,const rint32 size) {
+void Buffers::writeBuffer(const TJBox_ObjectRef object,float32 *buffer,const int32 size) {
 	auto ref = JBox_LoadMOMPropertyByTag(object, DATA_OUT);
 	if(size>0) {
 		JBox_SetDSPBufferData(ref, 0, size, buffer);
 	}
 }
-void Buffers::writeCV(const TJBox_ObjectRef object,const rfloat value) {
+void Buffers::writeCV(const TJBox_ObjectRef object,const float32 value) {
 	JBox_StoreMOMPropertyAsNumber(object,CV_OUT,value);
 }
 
@@ -61,14 +61,14 @@ bool Buffers::isConnected() {
 }
 
 
-rint32 Buffers::readInput(rfloat *data) {
+int32 Buffers::readInput(float32 *data) {
 	return readBuffer(input,data);
 }
-void Buffers::writeEnvelope(rfloat *data,const rint32 size) {
+void Buffers::writeEnvelope(float32 *data,const int32 size) {
 	writeBuffer(envelope,data,size);
 }
-void Buffers::writeGate(const rfloat value) { writeCV(gate,value); }
-void Buffers::writeEnv(const rfloat value) { writeCV(env,value); }
+void Buffers::writeGate(const float32 value) { writeCV(gate,value); }
+void Buffers::writeEnv(const float32 value) { writeCV(env,value); }
 
 
 

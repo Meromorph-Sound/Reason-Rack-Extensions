@@ -11,7 +11,7 @@
 
 namespace follower {
 
-rdouble asNumber(const TJBox_Value value,const rdouble def) {
+float64 asNumber(const TJBox_Value value,const float64 def) {
 	if(JBox_GetType(value)==kJBox_Number) return JBox_GetNumber(value);
 	else return def;
 }
@@ -24,18 +24,18 @@ Data::Data() : last(0), threshold(0), rho(0), mode(0) {
 }
 
 void Data::load() {
-	rho = log2(1+get<rfloat>(Tags::LR));
-	threshold = log2(1+get<rfloat>(Tags::TH));
+	rho = log2(1+get<float32>(Tags::LR));
+	threshold = log2(1+get<float32>(Tags::TH));
 }
 
 State Data::state() {
-	auto s = static_cast<State>(get<rint32>(kJBox_CustomPropertiesOnOffBypass));
+	auto s = static_cast<State>(get<int32>(kJBox_CustomPropertiesOnOffBypass));
 	if(s!=State::On) { last=0; }
 	return s;
 }
 
-void Data::setGate(const rfloat g) {
-	rint32 gate = (g>0) ? 2 : (g<0) ? 0 : 1;
+void Data::setGate(const float32 g) {
+	int32 gate = (g>0) ? 2 : (g<0) ? 0 : 1;
 	set(Tags::GATE,gate);
 }
 
@@ -64,11 +64,11 @@ Environment::Environment() {
 	env = JBox_GetMotherboardObjectRef("/environment");
 }
 
-rdouble Environment::sampleRate() {
+float64 Environment::sampleRate() {
 	auto ref = JBox_LoadMOMPropertyByTag(env,kJBox_EnvironmentSystemSampleRate);
 	return asNumber(ref);
 }
-rdouble Environment::masterTune() {
+float64 Environment::masterTune() {
 	auto ref = JBox_LoadMOMPropertyByTag(env,kJBox_EnvironmentMasterTune);
 	return asNumber(ref);
 }
