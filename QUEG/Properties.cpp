@@ -33,6 +33,11 @@ bool Properties::getBoolean(const Tag tag,const Channel channel) const {
 	return b!=0;
 }
 
+Source Properties::xySource(const Channel channel) const {
+	bool isManual = get<bool>(CHANNEL_SOURCE_MANUAL,channel);
+	bool isVCO = get<bool>(CHANNEL_SOURCE_VCO,channel);
+	return (isVCO) ? Source::VCO : (isManual) ? Source::Manual : Source::Off;
+}
 
 
 

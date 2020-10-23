@@ -29,8 +29,8 @@ enum class State : int32 {
 	Off = 0, On = 1, Bypassed = 2
 };
 
-enum class Mode : int32 {
-	HalfWave = 0, FullWave = 1, Squared = 2
+enum class Source : int32 {
+	Off = 0, Manual = 1, VCO = 2
 };
 
 template<typename E, class = typename std::enable_if<std::is_enum<E>::value>::type>

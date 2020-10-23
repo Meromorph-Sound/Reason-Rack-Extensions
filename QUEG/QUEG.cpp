@@ -32,6 +32,8 @@ QUEG::QUEG()  {
 		levels[i]=0.5;
 		xs[i]=0.5;
 		ys[i]=0.5;
+		isManuals[i]=false;
+		isVCOs[4]=false;
 	}
 }
 
@@ -101,6 +103,12 @@ void QUEG::processMixerChange(const Tag tag,const value_t diff) {
 			case Y:
 				ys[inChannel] = toFloat(diff);
 				break;
+			case CHANNEL_SOURCE_MANUAL:
+				isManuals[inChannel] = static_cast<bool>(JBox_GetNumber(diff));
+				break;
+			case CHANNEL_SOURCE_VCO:
+				isVCOs[inChannel] = static_cast<bool>(JBox_GetNumber(diff));
+				break;
 			default:
 				break;
 			}
@@ -118,6 +126,11 @@ void QUEG::processMixerChange(const Tag tag,const value_t diff) {
 				set<float32>(scales[channel][j],OUT_BASE+j,channel);
 			}
 		}
+}
+
+Source QUEG::channelSource(const Channel c) const {
+	if(isVCOs[c]) return Source::VCO;
+	return (isManuals[c]) ? Source::Manual : Source::Off;
 }
 
 void QUEG::processVCOChange(const Tag tag,const value_t diff) {

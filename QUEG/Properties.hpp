@@ -55,6 +55,8 @@ public:
 		float32 vcoWidth() const { return get<float32>(VCO_WIDTH); }
 		float32 vcoheight() const { return get<float32>(VCO_HEIGHT); }
 
+		Source xySource(const Channel channel) const;
+
 
 
 };
