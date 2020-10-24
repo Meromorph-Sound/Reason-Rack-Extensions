@@ -39,6 +39,9 @@ texts = {
   ["on"] = "On",
   ["off"] = "Off",
   ["n/a"] = "N/A",
+  ["VCO"] = "VCO",
+  ["manual"] = "Manual",
+  ["bypass"] = "Bypass",
   ["audioInput1"] = "In 1",
   ["audioInput2"] = "In 2",
   ["audioInput3"] = "In 3",
@@ -55,7 +58,7 @@ texts = {
   ["vcoYOut"] = "VCO Y output",
  }
  
- properties(texts,{ "x", "y", "A", "B", "C", "D", "vco", "level", "manual" } )
+ properties(texts,{ "x", "y", "A", "B", "C", "D", "source", "level" } )
  cvs(texts,{ "X", "Y", "A", "B", "C", "D", "level", "mode"})
  vco(texts,{ "active", "freeze", "zero", "frequency", "width", "height", "pattern", 
              "start1", "start2", "start3", "start4" })

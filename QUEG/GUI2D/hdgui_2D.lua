@@ -70,6 +70,13 @@ function utils.toggle(node,extras)
   return utils.widget('toggle_button',node,node,extras)
 end
 
+function utils.radio(property,idx,target)
+  local extra = {
+    index = idx
+  } 
+  return utils.widget('radio_button',target,property,extra)
+end
+
 function utils.sequence(node,extras)
   return utils.widget('sequence_meter',node,node,extras)
 end
@@ -124,8 +131,10 @@ function makeWidgets()
     --  value = "/custom_properties/level"..n
     --})
     table.insert(widgets,utils.knob("level"..n))
-    table.insert(widgets,utils.toggle("manual"..n))
-    table.insert(widgets,utils.toggle("vco"..n))
+    
+    table.insert(widgets,utils.radio("source"..n,0,"vco"..n))
+    table.insert(widgets,utils.radio("source"..n,1,"manual"..n))
+    table.insert(widgets,utils.radio("source"..n,2,"bypass"..n))
     table.insert(widgets,utils.sequence("A"..n))
     table.insert(widgets,utils.sequence("B"..n))
     table.insert(widgets,utils.sequence("C"..n))

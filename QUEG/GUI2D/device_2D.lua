@@ -59,8 +59,12 @@ local x0 = 1000 + 650*(n-1)
    { path = "button", frames=2 }
   }
   queg["manual"..n] = {
-   offset = { x0 + 435,350 },
+   offset = { x0 + 242,350 },
    { path = "button", frames=2 }
+  }
+  queg["bypass"..n] = {
+    offset = { x0 + 435,350 },
+    { path = "button", frames=2 }
   }
   queg["controller"..n] = {
    offset={ x0 + 100,550 },

@@ -107,19 +107,12 @@ function makeGUIProperties()
      ui_name = propName("level",n),
      ui_type = jbox.ui_percent({decimals=2}),
     }
-    props[name("manual",n)] = jbox.number {
+    props[name("source",n)] = jbox.number {
      property_tag = 4+base,
      default = 1,
-     steps = 2,
-     ui_name = propName("manual",n),
-     ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
-    }
-    props[name("vco",n)] = jbox.number {
-     property_tag = 5+base,
-     steps = 2,
-     default = 0,
-     ui_name = propName("vco",n),
-     ui_type = jbox.ui_selector { jbox.UI_TEXT_ON, jbox.UI_TEXT_OFF }
+     steps = 3,
+     ui_name = propName("source",n),
+     ui_type = jbox.ui_selector { jbox.ui_text("VCO"), jbox.ui_text("manual"), jbox.ui_text("bypass") }
     }
 --    props[name("A",n)] = jbox.number { 
 --      property_tag = 6+base,

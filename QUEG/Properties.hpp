@@ -45,7 +45,11 @@ public:
 		}
 		bool getBoolean(const Tag tag,const Channel channel) const;
 
+		float32 getEnvVariable(const Tag tag) const;
+
 		float32 sampleRate() const;
+		float32 tempo() const;
+		float32 playPosition() const;
 
 		bool vcoStepping() const { return get<bool>(VCO_ACTIVE) && !get<bool>(VCO_FROZEN); }
 		bool vcoReset() const { return get<bool>(VCO_RESET); }

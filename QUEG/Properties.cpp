@@ -21,10 +21,19 @@ TJBox_Value Properties::getRaw(const Tag tag,const Channel channel) const {
 	return JBox_LoadMOMPropertyByTag(props, 10*channel+tag);
 }
 
-float32 Properties::sampleRate() const {
-	const TJBox_Value& v = JBox_LoadMOMPropertyByTag(env, kJBox_EnvironmentSystemSampleRate);
+float32 Properties::getEnvVariable(const Tag tag) const {
+	const TJBox_Value& v = JBox_LoadMOMPropertyByTag(env, tag);
 	const TJBox_Float64& n = JBox_GetNumber(v);
 	return static_cast<float32>(n);
+}
+
+float32 Properties::sampleRate() const { return getEnvVariable(kJBox_EnvironmentSystemSampleRate); }
+float32 Properties::tempo() const { return getEnvVariable(kJBox_TransportTempo); }
+float32 Properties::playPosition() const {
+	auto rawPP = getEnvVariable(kJBox_TransportPlayPos);
+	auto crotchetsPerMinute = 4.0/getEnvVariable(kJBox_TransportTimeSignatureDenominator);
+	auto crotchetDuration = 60.0/crotchetsPerMinute;
+	return rawPP*crotchetDuration/15360.0;
 }
 
 bool Properties::getBoolean(const Tag tag,const Channel channel) const {
@@ -34,9 +43,9 @@ bool Properties::getBoolean(const Tag tag,const Channel channel) const {
 }
 
 Source Properties::xySource(const Channel channel) const {
-	bool isManual = get<bool>(CHANNEL_SOURCE_MANUAL,channel);
-	bool isVCO = get<bool>(CHANNEL_SOURCE_VCO,channel);
-	return (isVCO) ? Source::VCO : (isManual) ? Source::Manual : Source::Off;
+	auto s = get<int32>(CHANNEL_SOURCE,channel);
+	if(s>=0 && s < 3) return static_cast<Source>(s);
+	else return Source::Bypass;
 }
 
 

@@ -28,12 +28,14 @@ QUEG::QUEG()  {
 	for(auto i=0;i<4;i++) outs[i]=new float32[BUFFER_SIZE];
 
 	for(auto i=0;i<4;i++) {
-		for(auto j=0;j<4;j++) scales[i][j]=0.5;
+		for(auto j=0;j<4;j++) {
+			manualScales[i][j]=0.5;
+			vcoScales[i][j]=0.5;
+		}
 		levels[i]=0.5;
 		xs[i]=0.5;
 		ys[i]=0.5;
-		isManuals[i]=false;
-		isVCOs[4]=false;
+		sources[i]=Source::Manual;
 	}
 }
 
@@ -103,11 +105,11 @@ void QUEG::processMixerChange(const Tag tag,const value_t diff) {
 			case Y:
 				ys[inChannel] = toFloat(diff);
 				break;
-			case CHANNEL_SOURCE_MANUAL:
-				isManuals[inChannel] = static_cast<bool>(JBox_GetNumber(diff));
-				break;
-			case CHANNEL_SOURCE_VCO:
-				isVCOs[inChannel] = static_cast<bool>(JBox_GetNumber(diff));
+			case CHANNEL_SOURCE: {
+					auto s = static_cast<int32>(toFloat(diff));
+					if(s>=0 && s < 3) sources[inChannel] = static_cast<Source>(s);
+					else sources[inChannel] = Source::Bypass;
+				}
 				break;
 			default:
 				break;
@@ -117,21 +119,18 @@ void QUEG::processMixerChange(const Tag tag,const value_t diff) {
 		for(Channel channel=0;channel<4;channel++) {
 			auto x=xs[channel];
 			auto y=ys[channel];
-			scales[channel][0]=(1-x)*(1-y);
-			scales[channel][1]=x*(1-y);
-			scales[channel][2]=(1-x)*y;
-			scales[channel][3]=x*y;
+			manualScales[channel][0]=(1-x)*(1-y);
+			manualScales[channel][1]=x*(1-y);
+			manualScales[channel][2]=(1-x)*y;
+			manualScales[channel][3]=x*y;
 
 			for(Tag j=0;j<4;j++) {
-				set<float32>(scales[channel][j],OUT_BASE+j,channel);
+				set<float32>(manualScales[channel][j],OUT_BASE+j,channel);
 			}
 		}
 }
 
-Source QUEG::channelSource(const Channel c) const {
-	if(isVCOs[c]) return Source::VCO;
-	return (isManuals[c]) ? Source::Manual : Source::Off;
-}
+
 
 void QUEG::processVCOChange(const Tag tag,const value_t diff) {
 	Channel channel=0;
@@ -162,16 +161,20 @@ void QUEG::bypass() {
 	}
 }
 
+
+
 void QUEG::process() {
 	for(auto i=0;i<4;i++) {
 		std::fill_n(outs[i],BUFFER_SIZE,0);
 	}
 	for(Channel channel=0;channel<4;channel++) {
 		auto length = read(channel,ins);
-		if(length > 0) {
-			auto level = levels[channel]; //get<float32>(LEVEL,channel);
+		auto source = sources[channel];
+		if(length > 0 && source != Source::Bypass) {
+			auto scales = ((source == Source::Manual) ? manualScales : vcoScales)[channel];
+			auto level = levels[channel];
 			for(Channel outC=0;outC<4;outC++) {
-				auto scale = scales[channel][outC]*level; //get<float32>(OUT_FRACTION[outC],channel)*level;
+				auto scale = scales[outC]*level; //get<float32>(OUT_FRACTION[outC],channel)*level;
 				auto out=outs[outC];
 				std::transform(ins,ins+length,out,out,[scale](float32 in,float32 out) { return out + scale*in; });
 			}

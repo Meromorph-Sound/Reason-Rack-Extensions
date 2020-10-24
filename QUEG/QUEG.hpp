@@ -45,12 +45,13 @@ private:
 	float32 *ins;
 	float32 *outs[4];
 
-	float32 scales[4][4];
+	float32 manualScales[4][4];
+	float32 vcoScales[4][4];
 	float32 levels[4];
 	float32 xs[4];
 	float32 ys[4];
-	bool isManuals[4];
-	bool isVCOs[4];
+	Source sources[4];
+
 
 
 
@@ -78,11 +79,10 @@ private:
 
 	bool getBoolean(const Tag tag,const Channel channel) const;
 
-	Source channelSource(const Channel) const;
-
 	// Extension management methods
 
 	State state() const;
+	float32 scaleFactor(const Channel channel,const Channel output) const;
 
 	// IO management methods
 

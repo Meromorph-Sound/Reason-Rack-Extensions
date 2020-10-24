@@ -30,7 +30,7 @@ enum class State : int32 {
 };
 
 enum class Source : int32 {
-	Off = 0, Manual = 1, VCO = 2
+	VCO = 0, Manual = 1, Bypass = 2
 };
 
 template<typename E, class = typename std::enable_if<std::is_enum<E>::value>::type>
