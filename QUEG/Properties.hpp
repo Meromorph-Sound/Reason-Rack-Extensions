@@ -17,7 +17,27 @@
 
 namespace queg {
 
+struct Tempo {
 
+	static const float32 PPQ_FACTOR = 15360.0;
+
+	float32 bpm;
+	float32 beatsPerSecond;
+	float32 numerator;
+	float32 denominator;
+	float32 crotchetsPerSecond;
+	float32 pulsesPerSecond;
+
+	Tempo(const float32 bpm_,const float32 num_,const float32 denom_) :
+		bpm(bpm_), beatsPerSecond(bpm/60), numerator(num_), denominator(denom_),
+		crotchetsPerSecond(4*beatsPerSecond/denominator), pulsesPerSecond(crotchetsPerSecond*PPQ_FACTOR) {
+		//auto crotchetsPerBeat = 4.0 / denominator;
+		//crotchetsPerSecond = beatsPerSecond * crotchetsPerBeat;
+	}
+
+	float32 pulses2seconds(const float32 pulse) { return pulse / pulsesPerSecond; }
+
+};
 
 class Properties {
 private:
@@ -48,7 +68,7 @@ public:
 		float32 getEnvVariable(const Tag tag) const;
 
 		float32 sampleRate() const;
-		float32 tempo() const;
+		Tempo tempo(const bool filtered = true) const;
 		float32 playPosition() const;
 
 		bool vcoStepping() const { return get<bool>(VCO_ACTIVE) && !get<bool>(VCO_FROZEN); }

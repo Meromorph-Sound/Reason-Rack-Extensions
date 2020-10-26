@@ -57,6 +57,34 @@ public:
 	}
 };
 
+class Clock {
+private:
+	float32 period;
+	float32 sampleRate;
+	float32 increment;
+	float32 counter;
+
+public:
+	Clock() : period(1), sampleRate(48000), increment(1/(period*sampleRate)), counter(0) {}
+	virtual ~Clock() = default;
+
+	float32 step() {
+		counter+=increment;
+		return counter;
+	}
+	void reset() { counter=0; }
+	float32 position() const { return counter; }
+
+	void setSampleRate(const float32 rate) {
+		sampleRate=rate;
+		increment=1.0/(sampleRate*period);
+	}
+	void setPeriod(const float32 period_) {
+		period=period_;
+		increment=1.0/(sampleRate*period);
+	}
+};
+
 class VCO {
 
 };

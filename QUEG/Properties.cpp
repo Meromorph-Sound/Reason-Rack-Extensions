@@ -28,12 +28,15 @@ float32 Properties::getEnvVariable(const Tag tag) const {
 }
 
 float32 Properties::sampleRate() const { return getEnvVariable(kJBox_EnvironmentSystemSampleRate); }
-float32 Properties::tempo() const { return getEnvVariable(kJBox_TransportTempo); }
+Tempo Properties::tempo(const bool filtered) const {
+	auto tempo = getEnvVariable(filtered ? kJBox_TransportFilteredTempo : kJBox_TransportTempo);
+	auto num = getEnvVariable(kJBox_TransportTimeSignatureNumerator);
+	auto denom = getEnvVariable(kJBox_TransportTimeSignatureDenominator);
+	return Tempo(tempo,num,denom);
+}
 float32 Properties::playPosition() const {
-	auto rawPP = getEnvVariable(kJBox_TransportPlayPos);
-	auto crotchetsPerMinute = 4.0/getEnvVariable(kJBox_TransportTimeSignatureDenominator);
-	auto crotchetDuration = 60.0/crotchetsPerMinute;
-	return rawPP*crotchetDuration/15360.0;
+	auto crotchetsPerMinute = tempo(true)*4.0/getEnvVariable(kJBox_TransportTimeSignatureDenominator);
+	return getEnvVariable(kJBox_TransportPlayPos)*crotchetsPerMinute/256.0;
 }
 
 bool Properties::getBoolean(const Tag tag,const Channel channel) const {
