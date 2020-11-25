@@ -9,6 +9,7 @@
 #define VCO_HPP_
 
 #include "base.hpp"
+#include "Properties.hpp"
 #include <initializer_list>
 #include <vector>
 #include <tuple>
@@ -113,81 +114,139 @@ struct Pair {
 	float32 y() const { return std::get<1>(pair); }
 };
 
-struct Coordinate {
+struct Trajectory {
 	float32 a;
 	float32 b;
 
-	Coordinate() : a(0), b(0) {}
-	Coordinate(const float32 a_,const float32 b_) : a(a_),b(b_) {}
-	Coordinate(const Coordinate &) = default;
-	Coordinate & operator=(const Coordinate &) = default;
-	virtual ~Coordinate() = default;
+	Trajectory() : a(0), b(0) {}
+	Trajectory(const float32 a_,const float32 b_) : a(a_),b(b_) {}
+	Trajectory(const Trajectory &) = default;
+	Trajectory & operator=(const Trajectory &) = default;
+	virtual ~Trajectory() = default;
 
 	float32 operator()(float32 offset) const { return a*offset+b; }
 
-	Coordinate operator+(const Coordinate &other) { return Coordinate(a+other.a,b+other.b); }
-	Coordinate operator-(const Coordinate &other) { return Coordinate(a-other.a,b-other.b); }
-	Coordinate operator*(const float32 f) { return Coordinate(a*f,b*f); }
-	Coordinate & operator*=(const float32 f) {
+	Trajectory operator+(const Trajectory &other) { return Trajectory(a+other.a,b+other.b); }
+	Trajectory operator-(const Trajectory &other) { return Trajectory(a-other.a,b-other.b); }
+	Trajectory operator*(const float32 f) { return Trajectory(a*f,b*f); }
+	Trajectory & operator*=(const float32 f) {
 		a*=f;
 		b*=f;
 		return *this;
 	}
 
-	static Coordinate forward() { return Coordinate(1,0); }
-	static Coordinate reverse() { return Coordinate(-1,1); }
-	static Coordinate constant(const float32 c=1) { return Coordinate(0,c); }
-	static Coordinate zero() { return Coordinate(); }
-	static Coordinate one() { return Coordinate(0,1); }
+	static Trajectory forward() { return Trajectory(1,0); }
+	static Trajectory reverse() { return Trajectory(-1,1); }
+	static Trajectory constant(const float32 c=1) { return Trajectory(0,c); }
+	static Trajectory zero() { return Trajectory(); }
+	static Trajectory one() { return Trajectory(0,1); }
 };
 
 struct Position {
-	Coordinate x;
-	Coordinate y;
+	Trajectory x;
+	Trajectory y;
 
-	Position() : x(Coordinate()), y(Coordinate()) {}
-	Position(const Coordinate &cx,const Coordinate &cy) : x(cx), y(cy) {}
+	Position() : x(Trajectory()), y(Trajectory()) {}
+	Position(const Trajectory &cx,const Trajectory &cy) : x(cx), y(cy) {}
 	Position(const Position &) = default;
 	Position & operator=(const Position &) = default;
 	virtual ~Position() = default;
 
-	Pair operator()(const float32 f) const { return Pair(x(f),y(f)); }
+	Pair operator()(const float32 f) const {
+		return Pair(x(f),y(f)); }
 };
 
-struct Pattern {
+class Pattern {
+private:
 	std::vector<Position> sides;
+	int32 n;
 
-	Pattern() : sides(4,Position()) {}
-	Pattern(const std::initializer_list<Position> &l) : sides(l.begin(),l.end()) {}
+	int32 side(const float32 f) const { return (int32)fmod(f,n); }
+	float32 offset(const float32 f) const { return f-floor(f); }
+
+public:
+	Pattern() : sides(4,Position()), n(4) {}
+	Pattern(const std::initializer_list<Position> &l) : sides(l.begin(),l.end()), n(sides.size()) {}
 	Pattern(const Pattern &) = default;
 	Pattern & operator=(const Pattern &) = default;
 	virtual ~Pattern() = default;
 
 	Pair operator()(const float32 f) const {
-		auto side=(int32)floor(f);
-		return sides[side](f-floor(f));
+		return sides[side(f)](offset(f));
 	}
 	float32 x(float32 f) const { return (*this)(f).x(); }
 	float32 y(float32 f) const { return (*this)(f).y(); }
 
 	const static Pattern square() {
-		return Pattern({Position(Coordinate::forward(),Coordinate::zero()),
-						Position(Coordinate::one(),Coordinate::forward()),
-						Position(Coordinate::reverse(),Coordinate::one()),
-						Position(Coordinate::zero(),Coordinate::reverse())});
+		return Pattern({Position(Trajectory::forward(),Trajectory::zero()),
+						Position(Trajectory::one(),Trajectory::forward()),
+						Position(Trajectory::reverse(),Trajectory::one()),
+						Position(Trajectory::zero(),Trajectory::reverse())});
 	}
 };
 
 
 
 
-class VCOChannel {
+struct VCOChannel {
 private:
+	uint32 startSide;
+	Pattern pattern;
+
+public:
+	VCOChannel() : startSide(0), pattern() {};
+	VCOChannel(const VCOChannel &) = default;
+	VCOChannel & operator=(const VCOChannel &) = default;
+	virtual ~VCOChannel() = default;
 
 
+	Pair position(const float32 f) const { return pattern(f+startSide); }
 };
 
 class VCO {
+private:
+	TJBox_ObjectRef xOutCV;
+	TJBox_ObjectRef yOutCV;
+
+	Clock clock;
+	bool active;
+	bool holding;
+	Pattern pattern;
+	std::vector<VCOChannel> channels;
+
+	bool shouldTick() const { return active && !holding; }
+	void writeCV(const Pair &p = Pair());
+
+public:
+	static const int32 CV_OUT;
+	explicit VCO();
+
+	void updateTempo(const Tempo &);
+	void updateSampleRate(const float32);
+
+	void zero();
+	void start();
+	void stop();
+	void hold(const bool h) { holding=h; }
+
+	void tick() {
+		if(shouldTick()) clock.step();
+		if(!active) writeCV();
+		else {
+			auto t=clock.position();
+			auto xy=pattern(t);
+			writeCV(xy);
+
+			for(auto it=channels.begin();it!=channels.end();it++) {
+				// TODO: refactor so we have a single pattern, and then
+				// offset / size info for channels, and apply that
+				// separately
+			}
+		}
+
+	}
+
+
 
 };
 
