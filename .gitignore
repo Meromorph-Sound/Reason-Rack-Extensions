@@ -51,3 +51,7 @@ Follower/GUI/
 QUEG/GUI/
 
 QUEG/Intermediate-llvm/
+
+Debug/
+
+.metadata/

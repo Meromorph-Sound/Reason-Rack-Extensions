@@ -9,7 +9,7 @@
 
 namespace queg {
 
-
+const float32 Tempo::PPQ_FACTOR = 15360.0;
 
 Properties::Properties() {
 	props=JBox_GetMotherboardObjectRef("/custom_properties");
@@ -35,7 +35,7 @@ Tempo Properties::tempo(const bool filtered) const {
 	return Tempo(tempo,num,denom);
 }
 float32 Properties::playPosition() const {
-	auto crotchetsPerMinute = tempo(true)*4.0/getEnvVariable(kJBox_TransportTimeSignatureDenominator);
+	auto crotchetsPerMinute = tempo(true).crotchetsPerMinute()*4.0/getEnvVariable(kJBox_TransportTimeSignatureDenominator);
 	return getEnvVariable(kJBox_TransportPlayPos)*crotchetsPerMinute/256.0;
 }
 

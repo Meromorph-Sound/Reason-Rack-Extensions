@@ -65,13 +65,13 @@ private:
 
 	TJBox_Value getRaw(const Tag tag,const Channel channel=0) const;
 
-	template <typename T, class = typename std::enable_if_t<std::is_arithmetic_v<T>>>
+	template <typename T, class = typename std::enable_if<std::is_arithmetic<T>::value>::type>
 	T get(const Tag tag,const Channel channel=0) const {
 		const TJBox_Value& jboxValue = getRaw(tag,channel);
 		const TJBox_Float64& valueFloat = JBox_GetNumber(jboxValue);
 		return static_cast<T>(valueFloat);
 	}
-	template <typename T, class = typename std::enable_if_t<std::is_arithmetic_v<T>>>
+	template <typename T, class = typename std::enable_if_t<std::is_arithmetic<T>::value>::type>
 	void set(const T value,const Tag tag,const Channel channel=0) {
 		TJBox_Value v = JBox_MakeNumber(static_cast<float64>(value));
 		JBox_StoreMOMPropertyByTag(props,10*channel+tag,v);
