@@ -42,6 +42,8 @@ private:
 	TJBox_ObjectRef inputs[4];
 	TJBox_ObjectRef outputs[4];
 
+
+
 	float32 *ins;
 	float32 *outs[4];
 

@@ -34,6 +34,7 @@ struct Tempo {
 		//auto crotchetsPerBeat = 4.0 / denominator;
 		//crotchetsPerSecond = beatsPerSecond * crotchetsPerBeat;
 	}
+	Tempo() : Tempo(120.0,4,4) {};
 
 	float32 pulses2seconds(const float32 pulse) { return pulse / pulsesPerSecond; }
 	float32 crotchetsPerMinute() const { return crotchetsPerSecond*60.0f; }

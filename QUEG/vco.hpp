@@ -10,11 +10,13 @@
 
 #include "base.hpp"
 #include "Properties.hpp"
+#include "Clock.hpp"
 #include <initializer_list>
 #include <vector>
 #include <tuple>
 
 namespace queg {
+namespace vco {
 
 class Channel {
 
@@ -58,42 +60,6 @@ public:
 		if(length>0) {
 			JBox_SetDSPBufferData(ref, 0, length, buffer);
 		}
-	}
-};
-
-class Clock {
-private:
-	float32 reset;
-	float32 period;
-	float32 sampleRate;
-	float32 increment;
-	float32 counter;
-
-public:
-	Clock(const float32 reset_=4) :
-		reset(reset_), period(1), sampleRate(48000), increment(1/(period*sampleRate)), counter(0) {}
-	Clock(const Clock &) = default;
-	Clock & operator=(const Clock &) = default;
-	virtual ~Clock() = default;
-
-	float32 step() {
-		counter=fmod(counter+increment,reset);
-		return counter;
-	}
-	void zero() { counter=0; }
-
-	float32 position() const { return counter; }
-	uint32 integral() const { return (uint32)floor(counter); }
-	float32 fractional() const { return counter-floor(counter); }
-
-
-	void setSampleRate(const float32 rate) {
-		sampleRate=rate;
-		increment=1.0/(sampleRate*period);
-	}
-	void setPeriod(const float32 period_) {
-		period=period_;
-		increment=1.0/(sampleRate*period);
 	}
 };
 
@@ -189,18 +155,14 @@ public:
 
 
 struct VCOChannel {
-private:
 	uint32 startSide;
-	Pattern pattern;
+	float32 width;
+	float32 height;
 
-public:
-	VCOChannel() : startSide(0), pattern() {};
+	VCOChannel() : startSide(0), width(1), height(1) {};
 	VCOChannel(const VCOChannel &) = default;
 	VCOChannel & operator=(const VCOChannel &) = default;
 	virtual ~VCOChannel() = default;
-
-
-	Pair position(const float32 f) const { return pattern(f+startSide); }
 };
 
 class VCO {
@@ -208,9 +170,11 @@ private:
 	TJBox_ObjectRef xOutCV;
 	TJBox_ObjectRef yOutCV;
 
-	Clock clock;
+
 	bool active;
 	bool holding;
+	Clock clock;
+	Tempo tempo;
 	Pattern pattern;
 	std::vector<VCOChannel> channels;
 
@@ -223,6 +187,7 @@ public:
 
 	void updateTempo(const Tempo &);
 	void updateSampleRate(const float32);
+	void updatePeriod(const float32);
 
 	void zero();
 	void start();
@@ -250,7 +215,7 @@ public:
 
 };
 
-}
+}}
 
 
 
