@@ -9,7 +9,8 @@
 
 namespace queg {
 
-const float32 Tempo::PPQ_FACTOR = 15360.0;
+
+const float32 Properties::pulsesPerCrotchet = 15360.0;
 
 Properties::Properties() {
 	props=JBox_GetMotherboardObjectRef("/custom_properties");
@@ -34,9 +35,23 @@ Tempo Properties::tempo(const bool filtered) const {
 	auto denom = getEnvVariable(kJBox_TransportTimeSignatureDenominator);
 	return Tempo(tempo,num,denom);
 }
-float32 Properties::playPosition() const {
-	auto crotchetsPerMinute = tempo(true).crotchetsPerMinute()*4.0/getEnvVariable(kJBox_TransportTimeSignatureDenominator);
-	return getEnvVariable(kJBox_TransportPlayPos)*crotchetsPerMinute/256.0;
+
+float32 Properties::crotchetsPerBeat() const {
+	return 4.0/getEnvVariable(kJBox_TransportTimeSignatureDenominator);
+}
+float32 Properties::beatsPerMinute(const bool filtered) const {
+	return getEnvVariable(filtered ? kJBox_TransportFilteredTempo : kJBox_TransportTempo);
+}
+float32 Properties::playPositionInPulses() const {
+	return getEnvVariable(kJBox_TransportPlayPos);
+}
+
+float32 Properties::playPositionInSeconds(const bool filtered) const {
+	auto crotchetsPerMinute=beatsPerMinute(filtered)*crotchetsPerBeat();
+	auto offsetInPulses = getEnvVariable(kJBox_TransportPlayPos);
+	auto offsetInCrotchets = playPositionInPulses()/pulsesPerCrotchet;
+	auto seconds = offsetInCrotchets * (crotchetsPerMinute / 60.0);
+	return seconds;
 }
 
 bool Properties::getBoolean(const Tag tag,const Channel channel) const {

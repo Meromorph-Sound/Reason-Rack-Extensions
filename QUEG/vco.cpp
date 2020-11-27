@@ -23,17 +23,12 @@ void VCO::writeCV(const Pair &p) {
 	JBox_StoreMOMPropertyAsNumber(yOutCV,CV_OUT,p.y());
 }
 
-// TODO: this is where the scaling based on sample rate and tempo is required
-void VCO::updatePeriod(const float32 period) { clock.setPeriod(period); }
-void VCO::updateTempo(const Tempo &tempo_) { tempo=tempo_; }
-void VCO::updateSampleRate(const float32 rate) { clock.setSampleRate(rate); }
 
 
-void VCO::zero() { clock.zero(); }
 
-void VCO::start() { active=true; }
 void VCO::stop() { active=false; }
 
+void VCO::start() { active=true; }
 void VCO::tick() {
 		if(shouldTick()) clock.step();
 		if(!active) writeCV();

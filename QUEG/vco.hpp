@@ -44,7 +44,9 @@ private:
 	bool active;
 	bool holding;
 	Clock clock;
-	Tempo tempo;
+	float32 bufferStartTime;
+	float32 sampleDuration;
+	float32 period;
 	Pattern pattern;
 	std::vector<VCOChannel> channels;
 
@@ -55,11 +57,15 @@ public:
 	static const int32 CV_OUT;
 	explicit VCO();
 
-	void updateTempo(const Tempo &);
-	void updateSampleRate(const float32);
-	void updatePeriod(const float32);
+	void startOfBuffer(const float32 startTime, const float32 rate) {
+		bufferStartTime=startTime;
+		sampleDuration=1.0/rate;
+	}
+	void updatePeriod(const float32 p) { period=p; }
+	float32 timeAtSample(const uint32 n) const { return bufferStartTime+n*sampleDuration; }
+	float32 vcoTick(const uint32 n) const { return timeAtSample(n)/period; }
 
-	void zero();
+	void zero() { bufferStartTime=0; }
 	void start();
 	void stop();
 
