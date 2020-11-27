@@ -5,6 +5,7 @@
 #include <cmath>
 #include "base.hpp"
 #include "tags.hpp"
+#include "vco.hpp"
 #include <type_traits>
 
 
@@ -53,6 +54,7 @@ private:
 	float32 xs[4];
 	float32 ys[4];
 	Source sources[4];
+	vco::VCO vco;
 
 
 

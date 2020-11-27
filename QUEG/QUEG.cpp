@@ -16,7 +16,7 @@ TJBox_Float64 clamp(const TJBox_Float64 lo,const TJBox_Float64 hi,const TJBox_Fl
 const TJBox_Int64 QUEG::BUFFER_SIZE = 64;
 
 
-QUEG::QUEG()  {
+QUEG::QUEG() : vco()  {
 	props=JBox_GetMotherboardObjectRef("/custom_properties");
 	char buffer[80];
 	for(auto i=0;i<4;i++) {
@@ -135,7 +135,7 @@ void QUEG::processMixerChange(const Tag tag,const value_t diff) {
 void QUEG::processVCOChange(const Tag tag,const value_t diff) {
 	Channel channel=0;
 	Tag dTag = splitVCOTag(tag,&channel);
-	//vco.processChanges(dTag,outChannel);
+	vco.processChanges(dTag,channel,diff);
 }
 
 void QUEG::processChanges(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDiffCount) {
