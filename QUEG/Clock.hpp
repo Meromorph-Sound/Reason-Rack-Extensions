@@ -9,38 +9,45 @@
 #define QUEG_CLOCK_HPP_
 
 #include "base.hpp"
+#include "tags.hpp"
 
 namespace queg {
 namespace vco {
 
 class Clock {
 private:
-	static const float32 DEFAULT_SAMPLE_RATE;
-	static const float32 N_SIDES;
+	TJBox_ObjectRef env;
+
 	float32 period;
-	float32 sampleRate;
-	float32 increment;
-	float32 counter;
+	float32 originTime;
+	float32 bufferStartTime;
+	float32 sampleDuration;
+
+	float32 getEnvVariable(const Tag tag) const;
+
+	float32 playPositionInPulses() const;
+	float32 beatsPerMinute(const bool filtered=true) const;
+	float32 crotchetsPerBeat() const;
+	float32 sampleRate() const;
+
 
 
 
 public:
+	const static float32 pulsesPerCrotchet;
+
 	Clock();
 	Clock(const Clock &) = default;
 	Clock & operator=(const Clock &) = default;
 	virtual ~Clock() = default;
 
-	float32 step();
-	void zero();
-	void reset();
+	void resetToBuffer(const bool zero=false,const bool filtered=true);
+	void reset() { resetToBuffer(true); }
 
-	float32 position() const;
-	uint32 integral() const;
-	float32 fractional() const;
+	float32 timeAt(const uint32 n) const;
+	float32 positionInCycleAt(const uint32 n) const;
 
-
-	void setSampleRate(const float32 rate);
-	void setPeriod(const float32 period_);
+	void setPeriod(const float32 period_) { period = period_; }
 };
 
 

@@ -10,36 +10,47 @@
 namespace queg {
 namespace vco {
 
-const float32 Clock::DEFAULT_SAMPLE_RATE = 48000;
-const float32 Clock::N_SIDES = 4;
+const float32 Clock::pulsesPerCrotchet = 15360.0;
 
-Clock::Clock() :
-	period(1), sampleRate(DEFAULT_SAMPLE_RATE), increment(1/(period*sampleRate)), counter(0) {}
-
-
-float32 Clock::step() {
-		counter=fmod(counter+increment,N_SIDES);
-		return counter;
-}
-void Clock::setSampleRate(const float32 rate) {
-		sampleRate=rate;
-		increment=1.0/(sampleRate*period);
-	}
-void Clock::setPeriod(const float32 period_) {
-		period=period_;
-		increment=1.0/(sampleRate*period);
+	Clock::Clock() : period(1), originTime(0), bufferStartTime(0),
+			sampleDuration(1.0/48000.0) {
+		env=JBox_GetMotherboardObjectRef("/environment");
 	}
 
-void Clock::zero() { counter=0; }
-void Clock::reset() {
-	period=1;
-	sampleRate=DEFAULT_SAMPLE_RATE;
-	increment=1.0/(sampleRate*period);
-}
+	float32 Clock::getEnvVariable(const Tag tag) const {
+		const TJBox_Value& v = JBox_LoadMOMPropertyByTag(env, tag);
+		const TJBox_Float64& n = JBox_GetNumber(v);
+		return static_cast<float32>(n);
+	}
 
-	float32 Clock::position() const { return counter; }
-	uint32 Clock::integral() const { return (uint32)floor(counter); }
-	float32 Clock::fractional() const { return counter-floor(counter); }
+	float32 Clock::crotchetsPerBeat() const {
+		return 4.0/getEnvVariable(kJBox_TransportTimeSignatureDenominator);
+	}
+	float32 Clock::beatsPerMinute(const bool filtered) const {
+		return getEnvVariable(filtered ? kJBox_TransportFilteredTempo : kJBox_TransportTempo);
+	}
+	float32 Clock::playPositionInPulses() const {
+		return getEnvVariable(kJBox_TransportPlayPos);
+	}
+	float32 Clock::sampleRate() const {
+		return getEnvVariable(kJBox_EnvironmentSystemSampleRate);
+	}
+
+	void Clock::resetToBuffer(const bool zero,const bool filtered) {
+		auto crotchetsPerMinute=beatsPerMinute(filtered)*crotchetsPerBeat();
+		auto offsetInCrotchets = playPositionInPulses()/pulsesPerCrotchet;
+		bufferStartTime = offsetInCrotchets * (crotchetsPerMinute / 60.0);
+		if(zero) originTime=bufferStartTime;
+
+		sampleDuration=1.0/sampleRate();
+	}
+
+	float32 Clock::timeAt(const uint32 n) const {
+		return bufferStartTime-originTime+n*sampleDuration();
+	}
+	float32 Clock::positionInCycleAt(const uint32 n) const {
+		return timeAt(n)/period;
+	}
 
 
 } /* namespace vco */

@@ -43,12 +43,13 @@ private:
 
 	bool active;
 	bool holding;
+	bool shouldReset;
 	Clock clock;
-	float32 bufferStartTime;
-	float32 sampleDuration;
-	float32 period;
+
+	std::vector<float> offsets;
 	Pattern pattern;
 	std::vector<VCOChannel> channels;
+
 
 	bool shouldTick() const { return active && !holding; }
 	void writeCV(const Pair &p = Pair());
@@ -57,19 +58,12 @@ public:
 	static const int32 CV_OUT;
 	explicit VCO();
 
-	void startOfBuffer(const float32 startTime, const float32 rate) {
-		bufferStartTime=startTime;
-		sampleDuration=1.0/rate;
-	}
-	void updatePeriod(const float32 p) { period=p; }
-	float32 timeAtSample(const uint32 n) const { return bufferStartTime+n*sampleDuration; }
-	float32 vcoTick(const uint32 n) const { return timeAtSample(n)/period; }
 
-	void zero() { bufferStartTime=0; }
-	void start();
-	void stop();
 
-	void tick();
+
+	float positionFor(const uint32 channel,const uint32 offset) const;
+
+	void processBuffer();
 
 	void processChanges(const Tag &tag,const Channel channel,const value_t value);
 

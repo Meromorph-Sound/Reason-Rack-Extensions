@@ -13,7 +13,7 @@ namespace vco {
 const int32 VCO::CV_OUT = kJBox_CVOutputValue;
 
 
-VCO::VCO() : active(false), holding(false), clock(), tempo(), channels(4) {
+VCO::VCO() : active(false), holding(false), shouldReset(true), clock(), offsets(4), channels(4) {
 	xOutCV = JBox_GetMotherboardObjectRef("/cv_outputs/vcoXOut");
 	yOutCV = JBox_GetMotherboardObjectRef("/cv_outputs/vcoYOut");
 }
@@ -26,25 +26,24 @@ void VCO::writeCV(const Pair &p) {
 
 
 
-void VCO::stop() { active=false; }
 
-void VCO::start() { active=true; }
-void VCO::tick() {
-		if(shouldTick()) clock.step();
-		if(!active) writeCV();
-		else {
-			auto t=clock.position();
-			auto xy=pattern(t);
-			writeCV(xy);
 
-			for(auto it=channels.begin();it!=channels.end();it++) {
-				// TODO: refactor so we have a single pattern, and then
-				// offset / size info for channels, and apply that
-				// separately
-			}
-		}
-
+void VCO::processBuffer() {
+	if(shouldTick()) {
+		clock.resetToBuffer(shouldReset);
+		shouldReset=false;
 	}
+	if(!active) writeCV();
+	else {
+		auto t=clock.positionInCycleAt(0);
+		auto xy=pattern(t);
+		writeCV(xy);
+	}
+}
+
+float VCO::positionFor(const uint32 channel,const uint32 offset) const {
+	return clock.positionInCycleAt(offset)+offsets[channel];
+}
 
 inline float32 toFloat(const value_t diff) {
 	return static_cast<float32>(JBox_GetNumber(diff));
@@ -53,17 +52,16 @@ inline float32 toFloat(const value_t diff) {
 void VCO::processChanges(const Tag &tag,const Channel channel,const value_t value) {
 	switch(tag) {
 	case VCO_ACTIVE:
-		if(toFloat(value)>0) start();
-		else stop();
+		active = toFloat(value)>0;
 		break;
 	case VCO_FROZEN:
 		holding = toFloat(value)>0;
 		break;
 	case VCO_RESET:
-		if(toFloat(value)>0) zero();
+		shouldReset = toFloat(value)>0;
 		break;
 	case VCO_FREQUENCY:
-		updatePeriod(toFloat(value));
+		clock.setPeriod(toFloat(value));
 		break;
 	case VCO_WIDTH:
 		break;

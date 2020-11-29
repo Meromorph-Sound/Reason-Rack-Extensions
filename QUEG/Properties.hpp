@@ -24,14 +24,10 @@ namespace queg {
 class Properties {
 private:
 	TJBox_ObjectRef props;
-	TJBox_ObjectRef env;
 
-	float32 playPositionInPulses() const;
-	float32 beatsPerMinute(const bool filtered=true) const;
-	float32 crotchetsPerBeat() const;
 
 public:
-	static const float32 pulsesPerCrotchet;
+
 
 	Properties();
 
@@ -50,10 +46,8 @@ public:
 		}
 		bool getBoolean(const Tag tag,const Channel channel) const;
 
-		float32 getEnvVariable(const Tag tag) const;
 
-		float32 sampleRate() const;
-		float32 playPositionInSeconds(const bool filtered = true) const;
+
 
 
 		bool vcoStepping() const { return get<bool>(VCO_ACTIVE) && !get<bool>(VCO_FROZEN); }
