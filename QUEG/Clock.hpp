@@ -18,7 +18,6 @@ class Clock {
 private:
 	TJBox_ObjectRef env;
 
-	float32 period;
 	float32 originTime;
 	float32 bufferStartTime;
 	float32 sampleDuration;
@@ -44,10 +43,9 @@ public:
 	void resetToBuffer(const bool zero=false,const bool filtered=true);
 	void reset() { resetToBuffer(true); }
 
-	float32 timeAt(const uint32 n) const;
-	float32 positionInCycleAt(const uint32 n) const;
+	float32 operator()(const uint32 n) const;
 
-	void setPeriod(const float32 period_) { period = period_; }
+
 };
 
 

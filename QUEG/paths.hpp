@@ -74,6 +74,7 @@ struct Position {
 };
 
 class Pattern {
+
 private:
 	std::vector<Position> sides;
 	int32 n;
@@ -82,6 +83,15 @@ private:
 	float32 offset(const float32 f) const;
 
 public:
+	enum class Path : uint32 {
+		CLOCKWISE_SQUARE = 0,
+		COUNTERCLOCKWISE_SQUARE = 1,
+		LEFT_RIGHT = 2,
+		TOP_BOTTOM = 3,
+		CROSS = 4
+	};
+	static Path toPath(const value_t value);
+
 	Pattern() : sides(4,Position()), n(4) {}
 	Pattern(const std::initializer_list<Position> &l) : sides(l.begin(),l.end()), n(sides.size()) {}
 	Pattern(const Pattern &) = default;
@@ -92,7 +102,7 @@ public:
 	float32 x(float32 f) const { return (*this)(f).x(); }
 	float32 y(float32 f) const { return (*this)(f).y(); }
 
-	static Pattern square();
+	static Pattern kind(const Pattern::Path &path);
 };
 
 

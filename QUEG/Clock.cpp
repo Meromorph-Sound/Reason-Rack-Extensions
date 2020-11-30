@@ -12,7 +12,7 @@ namespace vco {
 
 const float32 Clock::pulsesPerCrotchet = 15360.0;
 
-	Clock::Clock() : period(1), originTime(0), bufferStartTime(0),
+	Clock::Clock() : originTime(0), bufferStartTime(0),
 			sampleDuration(1.0/48000.0) {
 		env=JBox_GetMotherboardObjectRef("/environment");
 	}
@@ -45,12 +45,10 @@ const float32 Clock::pulsesPerCrotchet = 15360.0;
 		sampleDuration=1.0/sampleRate();
 	}
 
-	float32 Clock::timeAt(const uint32 n) const {
+	float32 Clock::operator()(const uint32 n) const {
 		return bufferStartTime-originTime+n*sampleDuration();
 	}
-	float32 Clock::positionInCycleAt(const uint32 n) const {
-		return timeAt(n)/period;
-	}
+
 
 
 } /* namespace vco */

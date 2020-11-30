@@ -11,9 +11,12 @@ namespace queg {
 namespace vco {
 
 const int32 VCO::CV_OUT = kJBox_CVOutputValue;
+const float32 VCO::PERIOD_MIN = 7.5e-3;
+const float32 VCO::PERIOD_MAX = 75.0;
 
 
-VCO::VCO() : active(false), holding(false), shouldReset(true), clock(), offsets(4), channels(4) {
+VCO::VCO() : active(false), holding(false), shouldReset(true), clock(), period(1),
+		offsets(4), channels(4) {
 	xOutCV = JBox_GetMotherboardObjectRef("/cv_outputs/vcoXOut");
 	yOutCV = JBox_GetMotherboardObjectRef("/cv_outputs/vcoYOut");
 }
@@ -23,10 +26,9 @@ void VCO::writeCV(const Pair &p) {
 	JBox_StoreMOMPropertyAsNumber(yOutCV,CV_OUT,p.y());
 }
 
-
-
-
-
+float VCO::clockPos(const uint32 offset) const {
+	return clock(offset)/period;
+}
 
 void VCO::processBuffer() {
 	if(shouldTick()) {
@@ -35,14 +37,14 @@ void VCO::processBuffer() {
 	}
 	if(!active) writeCV();
 	else {
-		auto t=clock.positionInCycleAt(0);
-		auto xy=pattern(t);
-		writeCV(xy);
+		auto t=clockPos(0);
+		writeCV(pattern(t));
 	}
 }
 
-float VCO::positionFor(const uint32 channel,const uint32 offset) const {
-	return clock.positionInCycleAt(offset)+offsets[channel];
+Pair VCO::operator()(const uint32 channel,const uint32 offset) const {
+	auto pos = offsets[channel]+clockPos(offset);
+	return pattern(pos);
 }
 
 inline float32 toFloat(const value_t diff) {
@@ -50,6 +52,7 @@ inline float32 toFloat(const value_t diff) {
 }
 
 void VCO::processChanges(const Tag &tag,const Channel channel,const value_t value) {
+
 	switch(tag) {
 	case VCO_ACTIVE:
 		active = toFloat(value)>0;
@@ -61,15 +64,19 @@ void VCO::processChanges(const Tag &tag,const Channel channel,const value_t valu
 		shouldReset = toFloat(value)>0;
 		break;
 	case VCO_FREQUENCY:
-		clock.setPeriod(toFloat(value));
+		float v=std::min(1.0f,std::max(0.0f,toFloat(value)));
+		period=PERIOD_MIN + (PERIOD_MAX-PERIOD_MIN)*v;
 		break;
 	case VCO_WIDTH:
 		break;
 	case VCO_HEIGHT:
 		break;
 	case VCO_PATTERN:
+		auto path = Pattern::toPath(value);
+		pattern=Pattern::kind(path);
 		break;
 	case VCO_START_BASE:
+		offsets[channel]=toFloat(value);
 		break;
 	default:
 		break;

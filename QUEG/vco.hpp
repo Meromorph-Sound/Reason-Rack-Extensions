@@ -45,26 +45,27 @@ private:
 	bool holding;
 	bool shouldReset;
 	Clock clock;
+	float period;
 
 	std::vector<float> offsets;
-	Pattern pattern;
 	std::vector<VCOChannel> channels;
-
+	Pattern pattern;
 
 	bool shouldTick() const { return active && !holding; }
 	void writeCV(const Pair &p = Pair());
+	float clockPos(const uint32 offset) const;
 
 public:
 	static const int32 CV_OUT;
+	static const float PERIOD_MIN;
+	static const float PERIOD_MAX;
 	explicit VCO();
 
 
+	Pair operator()(const uint32 channel,const uint32 offset) const;
 
-
-	float positionFor(const uint32 channel,const uint32 offset) const;
 
 	void processBuffer();
-
 	void processChanges(const Tag &tag,const Channel channel,const value_t value);
 
 
