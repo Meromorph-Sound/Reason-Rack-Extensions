@@ -54,12 +54,16 @@ inline float32 toFloat(const value_t diff) {
 void VCO::processChanges(const Tag &tag,const Channel channel,const value_t value) {
 
 	switch(tag) {
-	case VCO_ACTIVE:
+	case VCO_ACTIVE: {
+		auto old = active;
 		active = toFloat(value)>0;
-		break;
-	case VCO_FROZEN:
+		if (!old && active) shouldReset=true;
+		break; }
+	case VCO_FROZEN: {
+		auto old = holding;
 		holding = toFloat(value)>0;
-		break;
+		if(old && !holding) shouldReset=true;
+		break; }
 	case VCO_RESET:
 		shouldReset = toFloat(value)>0;
 		break;
