@@ -49,6 +49,7 @@ private:
 
 	std::vector<float> offsets;
 	std::vector<VCOChannel> channels;
+	PatternSet patternSet;
 	Pattern pattern;
 
 	bool shouldTick() const { return active && !holding; }

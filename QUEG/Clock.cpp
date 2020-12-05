@@ -46,7 +46,7 @@ const float32 Clock::pulsesPerCrotchet = 15360.0;
 	}
 
 	float32 Clock::operator()(const uint32 n) const {
-		return bufferStartTime-originTime+n*sampleDuration();
+		return bufferStartTime-originTime+n*sampleDuration;
 	}
 
 

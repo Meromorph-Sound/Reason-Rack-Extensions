@@ -67,18 +67,18 @@ void VCO::processChanges(const Tag &tag,const Channel channel,const value_t valu
 	case VCO_RESET:
 		shouldReset = toFloat(value)>0;
 		break;
-	case VCO_FREQUENCY:
+	case VCO_FREQUENCY: {
 		float v=std::min(1.0f,std::max(0.0f,toFloat(value)));
 		period=PERIOD_MIN + (PERIOD_MAX-PERIOD_MIN)*v;
-		break;
+		break; }
 	case VCO_WIDTH:
 		break;
 	case VCO_HEIGHT:
 		break;
-	case VCO_PATTERN:
+	case VCO_PATTERN: {
 		auto path = Pattern::toPath(value);
-		pattern=Pattern::kind(path);
-		break;
+		pattern=patternSet.kind(path);
+		break; }
 	case VCO_START_BASE:
 		offsets[channel]=toFloat(value);
 		break;

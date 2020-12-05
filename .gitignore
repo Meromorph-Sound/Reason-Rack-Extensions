@@ -55,3 +55,7 @@ QUEG/Intermediate-llvm/
 Debug/
 
 .metadata/
+
+DirtyLFO/GUI/
+
+DirtyLFO/Intermediate-llvm/

@@ -8,13 +8,15 @@
 namespace follower {
 
 
+
+
 class CFollower {
 
 	
 private:
 
 
-	static const TJBox_Int64 BUFFER_SIZE;
+	static const rint64 BUFFER_SIZE;
 
 	Data *data;
 	EnvelopeFollower *left, *right;

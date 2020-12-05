@@ -6,7 +6,7 @@
  */
 
 #include "paths.hpp"
-#include <map>
+
 #include <initializer_list>
 
 namespace queg {
@@ -24,38 +24,40 @@ Pair Pattern::operator()(const float32 f) const {
 		return sides[side(f)](offset(f));
 	}
 
-static Pattern::Path Pattern::toPath(const value_t value) {
+Pattern::Path Pattern::toPath(const value_t value) {
 	uint32 f = (uint32)static_cast<float32>(JBox_GetNumber(value));
 	return static_cast<Pattern::Path>(f);
 }
 
-static Pattern cwsquare = Pattern({Position(Trajectory::forward(),Trajectory::zero()),
-						    Position(Trajectory::one(),Trajectory::forward()),
-						    Position(Trajectory::reverse(),Trajectory::one()),
-						    Position(Trajectory::zero(),Trajectory::reverse())});
-static Pattern ccsquare = Pattern({Position(Trajectory::zero(),Trajectory::forward()),
-						    Position(Trajectory::forward(),Trajectory::one()),
-						    Position(Trajectory::one(),Trajectory::reverse()),
-						    Position(Trajectory::reverse(),Trajectory::zero())});
-static Pattern lr = Pattern({Position(Trajectory::forward(),Trajectory::zero()),
-					  Position(Trajectory::reverse(),Trajectory::zero())});
-static Pattern tb = Pattern({Position(Trajectory::zero(),Trajectory::forward()),
-					  Position(Trajectory::zero(),Trajectory::reverse())});
-static Pattern null = Pattern();
 
-std::pair<const Pattern::Path,Pattern> P(const Pattern::Path path,Pattern p) {
-	return std::make_pair(path,p);
+
+Pattern::Pattern() : sides(4,Position()), n(4) {  }
+Pattern::Pattern(const std::initializer_list<Position> &l) : sides(l.begin(),l.end()), n(sides.size()) {  }
+
+
+PatternSet::PatternSet() : paths() {
+	auto cwsquare = Pattern({Position(Trajectory::forward(),Trajectory::zero()),
+								    Position(Trajectory::one(),Trajectory::forward()),
+								    Position(Trajectory::reverse(),Trajectory::one()),
+								    Position(Trajectory::zero(),Trajectory::reverse())});
+		auto ccsquare = Pattern({Position(Trajectory::zero(),Trajectory::forward()),
+								    Position(Trajectory::forward(),Trajectory::one()),
+								    Position(Trajectory::one(),Trajectory::reverse()),
+								    Position(Trajectory::reverse(),Trajectory::zero())});
+		auto lr = Pattern({Position(Trajectory::forward(),Trajectory::zero()),
+							  Position(Trajectory::reverse(),Trajectory::zero())});
+		auto tb = Pattern({Position(Trajectory::zero(),Trajectory::forward()),
+							  Position(Trajectory::zero(),Trajectory::reverse())});
+		auto null = Pattern();
+
+		paths[Pattern::Path::CLOCKWISE_SQUARE] = cwsquare;
+		paths[Pattern::Path::COUNTERCLOCKWISE_SQUARE] = ccsquare;
+		paths[Pattern::Path::LEFT_RIGHT] = lr;
+		paths[Pattern::Path::TOP_BOTTOM] = tb;
+		paths[Pattern::Path::CROSS] = null;
 }
-static std::map<Pattern::Path,Pattern> paths({
-		P( Pattern::Path::CLOCKWISE_SQUARE, cwsquare ),
-		P( Pattern::Path::COUNTERCLOCKWISE_SQUARE, ccsquare ),
-		P( Pattern::Path::LEFT_RIGHT, lr ),
-		P( Pattern::Path::TOP_BOTTOM, tb ),
-		P( Pattern::Path::CROSS, null )}
-);
 
-
-Pattern Pattern::kind(const Pattern::Path &p) { return paths[p]; }
+Pattern PatternSet::kind(const Pattern::Path &p) { return paths.at(p); }
 
 
 } /* namespace vco */

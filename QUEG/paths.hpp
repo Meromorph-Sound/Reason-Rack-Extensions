@@ -12,6 +12,7 @@
 #include <initializer_list>
 #include <vector>
 #include <tuple>
+#include <map>
 
 namespace queg {
 namespace vco {
@@ -92,8 +93,11 @@ public:
 	};
 	static Path toPath(const value_t value);
 
-	Pattern() : sides(4,Position()), n(4) {}
-	Pattern(const std::initializer_list<Position> &l) : sides(l.begin(),l.end()), n(sides.size()) {}
+
+
+
+	Pattern();
+	Pattern(const std::initializer_list<Position> &l) ;
 	Pattern(const Pattern &) = default;
 	Pattern & operator=(const Pattern &) = default;
 	virtual ~Pattern() = default;
@@ -102,7 +106,16 @@ public:
 	float32 x(float32 f) const { return (*this)(f).x(); }
 	float32 y(float32 f) const { return (*this)(f).y(); }
 
-	static Pattern kind(const Pattern::Path &path);
+
+};
+
+class PatternSet {
+private:
+	std::map<Pattern::Path,Pattern> paths;
+
+public:
+	PatternSet();
+	Pattern kind(const Pattern::Path &path);
 };
 
 
