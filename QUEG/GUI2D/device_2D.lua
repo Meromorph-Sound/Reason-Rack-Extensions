@@ -118,7 +118,7 @@ function VCOFront()
     }, 
     VCOpattern = {
       offset = { 2595, 1670 },
-      { path = "VCOPatterns_5frames", frames=5 }
+      { path = "VCOPatterns_8frames", frames=8 }
     },
     VCOpattern_updown = {
       offset = { 2820, 1670 },

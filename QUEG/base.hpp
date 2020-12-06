@@ -45,6 +45,10 @@ void LOG(const char *filename,const int32 line,const char *temp,const T value) {
 	vals[0]=JBox_MakeNumber(value);
 	JBox_TraceValues(filename,line,temp,vals,1);
 }
+
+void trace(const char *tmpl);
+void trace(const char *tmpl,const float32 value);
+void trace(const char *tmpl,const float32 value1,const float32 value2);
 }
 
 

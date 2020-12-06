@@ -146,6 +146,7 @@ void QUEG::processChanges(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDif
 			processMixerChange(tag,diff.fCurrentValue);
 		}
 		else {
+			trace("VCO event ^0",tag);
 			processVCOChange(tag,diff.fCurrentValue);
 		}
 	}
@@ -164,6 +165,7 @@ void QUEG::bypass() {
 
 
 void QUEG::process() {
+	vco.processBuffer();
 	for(auto i=0;i<4;i++) {
 		std::fill_n(outs[i],BUFFER_SIZE,0);
 	}

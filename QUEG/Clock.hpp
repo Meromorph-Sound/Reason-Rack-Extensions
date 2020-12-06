@@ -17,19 +17,24 @@ namespace vco {
 class Clock {
 private:
 	TJBox_ObjectRef env;
+	TJBox_ObjectRef trans;
 
 	float32 originTime;
 	float32 bufferStartTime;
 	float32 sampleDuration;
 
-	float32 getEnvVariable(const Tag tag) const;
+	unsigned counter=0;
+
+	static float32 getVariable(const TJBox_ObjectRef obj,const Tag tag);
 
 	float32 playPositionInPulses() const;
-	float32 beatsPerMinute(const bool filtered=true) const;
+	float32 beatsPerMinute() const;
 	float32 crotchetsPerBeat() const;
 	float32 sampleRate() const;
 
 
+	float32 getEnvVariable(const Tag tag) const;
+	float32 getTransVariable(const Tag tag) const;
 
 
 public:
@@ -40,8 +45,8 @@ public:
 	Clock & operator=(const Clock &) = default;
 	virtual ~Clock() = default;
 
-	void resetToBuffer(const bool zero=false,const bool filtered=true);
-	void reset() { resetToBuffer(true); }
+	void tick(const bool zero=false);
+	void reset() { tick(true); }
 
 	float32 operator()(const uint32 n) const;
 

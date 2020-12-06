@@ -61,14 +61,17 @@ function makeGUIProperties()
     VCOpattern = jbox.number {
      property_tag = 60,
      default = 0,
-     steps = 5,
+     steps = 8,
      ui_name = propName("VCOpattern"),
      ui_type = jbox.ui_selector { 
       propName("VCOheight"), 
       propName("VCOheight"), 
       propName("VCOheight"), 
       propName("VCOheight"), 
-      propName("VCOheight") 
+      propName("VCOheight"), 
+      propName("VCOheight"),
+      propName("VCOheight"),
+      propName("VCOheight")
       }
     }, 
   }

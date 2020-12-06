@@ -11,7 +11,7 @@
 #include "base.hpp"
 #include "Properties.hpp"
 #include "Clock.hpp"
-#include "paths.hpp"
+#include "Pattern.hpp"
 #include <initializer_list>
 #include <vector>
 #include <tuple>
@@ -49,21 +49,21 @@ private:
 
 	std::vector<float> offsets;
 	std::vector<VCOChannel> channels;
-	PatternSet patternSet;
-	Pattern pattern;
+	std::vector<Pattern *> patterns;
+	Pattern *pattern;
 
 	bool shouldTick() const { return active && !holding; }
-	void writeCV(const Pair &p = Pair());
+	void writeCV(const Point &p = Point());
 	float clockPos(const uint32 offset) const;
 
 public:
 	static const int32 CV_OUT;
-	static const float PERIOD_MIN;
-	static const float PERIOD_MAX;
+	static const float PERIOD_BASE;
+	static const float PERIOD_DECADES;
 	explicit VCO();
 
 
-	Pair operator()(const uint32 channel,const uint32 offset) const;
+	Point operator()(const uint32 channel,const uint32 offset) const;
 
 
 	void processBuffer();
