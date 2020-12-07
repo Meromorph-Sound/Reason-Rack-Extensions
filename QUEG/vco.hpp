@@ -45,11 +45,12 @@ private:
 	bool holding;
 	bool shouldReset;
 	Clock clock;
-	float period;
+	float32 period;
+	float32 width, height;
 
 	std::vector<float> offsets;
 	std::vector<VCOChannel> channels;
-	std::vector<Pattern *> patterns;
+	Patterns patterns;
 	Pattern *pattern;
 
 	bool shouldTick() const { return active && !holding; }

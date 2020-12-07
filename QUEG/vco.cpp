@@ -18,11 +18,11 @@ const float32 VCO::PERIOD_DECADES = 3.0;
 
 
 VCO::VCO() : active(false), holding(false), shouldReset(true), clock(), period(1),
-		offsets(4), channels(4), patterns(8) {
+		width(1), height(1),
+		offsets(4), channels(4), patterns() {
 	xOutCV = JBox_GetMotherboardObjectRef("/cv_outputs/vcoXOut");
 	yOutCV = JBox_GetMotherboardObjectRef("/cv_outputs/vcoYOut");
 
-	for(uint32 i=0;i<8;i++) patterns[i]=makePattern(i);
 	pattern=nullptr;
 }
 
@@ -81,14 +81,25 @@ void VCO::processChanges(const Tag &tag,const Channel channel,const value_t valu
 		period=PERIOD_BASE * pow(10.0f,v/PERIOD_DECADES);
 		trace("Period is ^0",period);
 		break; }
-	case VCO_WIDTH:
+	case VCO_WIDTH: {
+		float v=std::min(1.0f,std::max(0.0f,toFloat(value)));
+		width=v;
+		if(pattern) pattern->setScaling(width,height);
+		trace("Width is ^0",width);
 		break;
-	case VCO_HEIGHT:
+	}
+	case VCO_HEIGHT:{
+		float v=std::min(1.0f,std::max(0.0f,toFloat(value)));
+		height=v;
+		if(pattern) pattern->setScaling(width,height);
+		trace("Height is ^0",height);
 		break;
+	}
 	case VCO_PATTERN: {
 		auto v = (uint32)toFloat(value);
 		trace("Pattern is ^0",v);
 		pattern=patterns[v];
+		pattern->setScaling(width,height);
 		break; }
 	case VCO_START_BASE:
 		offsets[channel]=toFloat(value);
