@@ -11,6 +11,17 @@
 
 namespace queg {
 
+struct Scaler {
+	float32 scales[4];
+
+	Scaler();
+	Scaler(float32 x,float32 y);
+	Scaler(const vco::Point &p) : Scaler(p.x,p.y) {};
+	virtual ~Scaler() = default;
+	float32 operator[](const uint32 n) const { return scales[n]; }
+
+};
+
 
 struct BitSet {
 private:
@@ -35,6 +46,32 @@ public:
 	void reset() { field=0; }
 };
 
+struct ChannelInfo {
+	Source source;
+	float32 lvl;
+	vco::Point xy;
+
+	ChannelInfo() : source(Source::Manual), lvl(0.5), xy(0.5,0.5) {}
+	ChannelInfo(const ChannelInfo &) = default;
+	ChannelInfo &operator=(const ChannelInfo &) = default;
+	virtual ~ChannelInfo() = default;
+
+	float32 x() const { return xy.x; }
+	float32 y() const { return xy.y; }
+	void x(const float32 x_) { xy.x=x_; }
+	void y(const float32 y_) { xy.y=y_; }
+
+	float32 level() const { return lvl; }
+	void level(const float32 lvl_) { lvl=lvl_; }
+
+	bool isManual() const { return source==Source::Manual; }
+	bool isVCO() const { return source==Source::VCO; }
+	bool isBypassed() const { return source==Source::Bypass; }
+	void setSource(const Source &s) { source=s; }
+
+	Scaler scaler() const { return Scaler(xy); }
+};
+
 class QUEG {
 private:
 
@@ -43,21 +80,11 @@ private:
 	TJBox_ObjectRef inputs[4];
 	TJBox_ObjectRef outputs[4];
 
-
-
 	float32 *ins;
 	float32 *outs[4];
 
-	float32 manualScales[4][4];
-	float32 vcoScales[4][4];
-	float32 levels[4];
-	float32 xs[4];
-	float32 ys[4];
-	Source sources[4];
+	ChannelInfo infos[4];
 	vco::VCO vco;
-
-
-
 
 	static const TJBox_Int64 BUFFER_SIZE;
 

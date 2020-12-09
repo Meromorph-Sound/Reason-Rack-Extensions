@@ -5,6 +5,15 @@ namespace queg {
 
 
 
+Scaler::Scaler() {
+		for(auto i=0;i<4;i++) scales[i]=0.5;
+	}
+Scaler::Scaler(float32 x,float32 y) {
+		scales[0]=(1-x)*(1-y);
+		scales[1]=x*(1-y);
+		scales[2]=(1-x)*y;
+		scales[3]=x*y;
+	}
 
 
 
@@ -28,14 +37,7 @@ QUEG::QUEG() : vco()  {
 	for(auto i=0;i<4;i++) outs[i]=new float32[BUFFER_SIZE];
 
 	for(auto i=0;i<4;i++) {
-		for(auto j=0;j<4;j++) {
-			manualScales[i][j]=0.5;
-			vcoScales[i][j]=0.5;
-		}
-		levels[i]=0.5;
-		xs[i]=0.5;
-		ys[i]=0.5;
-		sources[i]=Source::Manual;
+		infos[i]=ChannelInfo();
 	}
 }
 
@@ -88,6 +90,7 @@ inline float32 toFloat(const value_t diff) {
 }
 
 void QUEG::processMixerChange(const Tag tag,const value_t diff) {
+	bool changed = false;
 	Channel inChannel=0;
 			Channel outChannel=0;
 			Tag dTag = splitMixerTag(tag,&inChannel,&outChannel);
@@ -97,38 +100,29 @@ void QUEG::processMixerChange(const Tag tag,const value_t diff) {
 	//			scales[inChannel][outChannel] = toFloat(diff);
 	//			break;
 			case CHANNEL_LEVEL:
-				levels[inChannel] = toFloat(diff);
+				infos[inChannel].level(toFloat(diff));
 				break;
 			case X:
-				xs[inChannel] = toFloat(diff);
+				infos[inChannel].x(toFloat(diff));
+				changed=true;
 				break;
 			case Y:
-				ys[inChannel] = toFloat(diff);
+				infos[inChannel].y(toFloat(diff));
+				changed=true;
 				break;
 			case CHANNEL_SOURCE: {
 					auto s = static_cast<int32>(toFloat(diff));
-					if(s>=0 && s < 3) sources[inChannel] = static_cast<Source>(s);
-					else sources[inChannel] = Source::Bypass;
+					if(s>=0 && s < 3) infos[inChannel].setSource(static_cast<Source>(s));
+					else infos[inChannel].setSource(Source::Bypass);
 				}
 				break;
 			default:
 				break;
 			}
-
-
-		for(Channel channel=0;channel<4;channel++) {
-			auto x=xs[channel];
-			auto y=ys[channel];
-			manualScales[channel][0]=(1-x)*(1-y);
-			manualScales[channel][1]=x*(1-y);
-			manualScales[channel][2]=(1-x)*y;
-			manualScales[channel][3]=x*y;
-
-			for(Tag j=0;j<4;j++) {
-				set<float32>(manualScales[channel][j],OUT_BASE+j,channel);
-			}
-		}
 }
+
+
+
 
 
 
@@ -136,6 +130,7 @@ void QUEG::processVCOChange(const Tag tag,const value_t diff) {
 	Channel channel=0;
 	Tag dTag = splitVCOTag(tag,&channel);
 	vco.processChanges(dTag,channel,diff);
+
 }
 
 void QUEG::processChanges(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDiffCount) {
@@ -165,18 +160,22 @@ void QUEG::bypass() {
 
 
 void QUEG::process() {
+
 	vco.processBuffer();
 	for(auto i=0;i<4;i++) {
 		std::fill_n(outs[i],BUFFER_SIZE,0);
 	}
 	for(Channel channel=0;channel<4;channel++) {
 		auto length = read(channel,ins);
-		auto source = sources[channel];
-		if(length > 0 && source != Source::Bypass) {
-			auto scales = ((source == Source::Manual) ? manualScales : vcoScales)[channel];
-			auto level = levels[channel];
+		auto info=infos[channel];
+		if(length > 0 && !info.isBypassed()) {
+			auto point = (info.isManual()) ? info.xy : vco(channel,0);
+			auto scales = Scaler(point);
+			auto level = info.level();
 			for(Channel outC=0;outC<4;outC++) {
-				auto scale = scales[outC]*level; //get<float32>(OUT_FRACTION[outC],channel)*level;
+				auto scl = scales[outC];
+				set<float32>(scl,OUT_BASE+outC,channel);
+				auto scale = scl*level; //get<float32>(OUT_FRACTION[outC],channel)*level;
 				auto out=outs[outC];
 				std::transform(ins,ins+length,out,out,[scale](float32 in,float32 out) { return out + scale*in; });
 			}

@@ -6,6 +6,9 @@ void* JBox_Export_CreateNativeObject(const char iOperation[], const TJBox_Value 
      if(std::strcmp(iOperation, "Instance") == 0){ //(3)
 		return new queg::QUEG(); //(4)
 	}
+ //    else if(std::strcmp(iOperation, "Patterns") == 0){ //(3)
+ //    		return new queg::QUEG(); //(4)
+ //    	}
 
 	return nullptr; //(5)
 }
