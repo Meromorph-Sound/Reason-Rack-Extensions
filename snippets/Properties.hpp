@@ -52,7 +52,7 @@ public:
 
 		bool vcoStepping() const { return get<bool>(VCO_ACTIVE) && !get<bool>(VCO_FROZEN); }
 		bool vcoReset() const { return get<bool>(VCO_RESET); }
-		//uint32 vcoStart(const uint32 channel) const { return get<int>(VCO_START(channel)); }
+		uint32 vcoStart(const uint32 channel) const { return get<int>(VCO_START(channel)); }
 		uint32 vcoPattern() const { return get<uint32>(VCO_PATTERN); }
 		float32 vcoFrequency() const { return get<float32>(VCO_FREQUENCY); }
 		float32 vcoWidth() const { return get<float32>(VCO_WIDTH); }

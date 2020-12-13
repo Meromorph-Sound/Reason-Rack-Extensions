@@ -6,14 +6,14 @@ namespace queg {
 
 
 Scaler::Scaler() {
-		for(auto i=0;i<4;i++) scales[i]=0.5;
-	}
+	for(auto i=0;i<4;i++) scales[i]=0.5;
+}
 Scaler::Scaler(float32 x,float32 y) {
-		scales[0]=(1-x)*(1-y);
-		scales[1]=x*(1-y);
-		scales[2]=(1-x)*y;
-		scales[3]=x*y;
-	}
+	scales[0]=(1-x)*(1-y);
+	scales[1]=x*(1-y);
+	scales[2]=(1-x)*y;
+	scales[3]=x*y;
+}
 
 
 
@@ -90,35 +90,32 @@ inline float32 toFloat(const value_t diff) {
 }
 
 void QUEG::processMixerChange(const Tag tag,const value_t diff) {
-	bool changed = false;
 	Channel inChannel=0;
-			Channel outChannel=0;
-			Tag dTag = splitMixerTag(tag,&inChannel,&outChannel);
+	Channel outChannel=0;
+	Tag dTag = splitMixerTag(tag,&inChannel,&outChannel);
 
 	switch(dTag) {
 	//		case OUT_BASE:
 	//			scales[inChannel][outChannel] = toFloat(diff);
 	//			break;
-			case CHANNEL_LEVEL:
-				infos[inChannel].level(toFloat(diff));
-				break;
-			case X:
-				infos[inChannel].x(toFloat(diff));
-				changed=true;
-				break;
-			case Y:
-				infos[inChannel].y(toFloat(diff));
-				changed=true;
-				break;
-			case CHANNEL_SOURCE: {
-					auto s = static_cast<int32>(toFloat(diff));
-					if(s>=0 && s < 3) infos[inChannel].setSource(static_cast<Source>(s));
-					else infos[inChannel].setSource(Source::Bypass);
-				}
-				break;
-			default:
-				break;
-			}
+	case CHANNEL_LEVEL:
+		infos[inChannel].level(toFloat(diff));
+		break;
+	case X:
+		infos[inChannel].x(toFloat(diff));
+		break;
+	case Y:
+		infos[inChannel].y(toFloat(diff));
+		break;
+	case CHANNEL_SOURCE: {
+		auto s = static_cast<int32>(toFloat(diff));
+		if(s>=0 && s < 3) infos[inChannel].setSource(static_cast<Source>(s));
+		else infos[inChannel].setSource(Source::Bypass);
+	}
+	break;
+	default:
+		break;
+	}
 }
 
 
@@ -161,7 +158,7 @@ void QUEG::bypass() {
 
 void QUEG::process() {
 
-	vco.processBuffer();
+	vco.processBuffer(BUFFER_SIZE);
 	for(auto i=0;i<4;i++) {
 		std::fill_n(outs[i],BUFFER_SIZE,0);
 	}
@@ -169,7 +166,7 @@ void QUEG::process() {
 		auto length = read(channel,ins);
 		auto info=infos[channel];
 		if(length > 0 && !info.isBypassed()) {
-			auto point = (info.isManual()) ? info.xy : vco(channel,0);
+			auto point = (info.isManual()) ? info.xy : vco(channel);
 			auto scales = Scaler(point);
 			auto level = info.level();
 			for(Channel outC=0;outC<4;outC++) {

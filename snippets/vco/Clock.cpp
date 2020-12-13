@@ -7,7 +7,7 @@
 
 #include "Clock.hpp"
 
-namespace queg {
+namespace ex {
 namespace vco {
 
 const float32 Clock::pulsesPerCrotchet = 15360.0;

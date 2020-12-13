@@ -9,9 +9,9 @@
 #define QUEG_CLOCK_HPP_
 
 #include "base.hpp"
-#include "tags.hpp"
 
-namespace queg {
+
+namespace ex {
 namespace vco {
 
 class Clock {

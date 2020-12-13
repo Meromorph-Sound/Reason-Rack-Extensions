@@ -14,7 +14,7 @@
 #include <algorithm>
 
 
-namespace queg {
+namespace ex {
 
 using int32 = TJBox_Int32;
 using uint32 = TJBox_UInt32;

@@ -32,6 +32,9 @@ enum Tags : Tag {
 	VCO_START_BASE = 61
 };
 
+	Tag OUT_FRACTION(const Channel c);
+	Tag VCO_START(const Channel c) ;
+
 	Tag splitMixerTag(const Tag t,Channel *inChannel,Channel *outChannel);
 	Tag splitVCOTag(const Tag t,Channel *channel);
 

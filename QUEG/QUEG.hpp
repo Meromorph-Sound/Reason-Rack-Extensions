@@ -22,16 +22,14 @@ struct Scaler {
 
 };
 
-
+/*
 struct BitSet {
 private:
 	uint64 field;
 	uint32 width;
 	uint32 height;
 
-	uint64 mark(const uint32 x, uint32 y) {
-		return 1<<(x+width*y);
-	}
+	uint64 mark(const uint32 x, uint32 y) { return 1<<(x+width*y); }
 
 public:
 	BitSet(const uint32 w,const uint32 h) : field(0), width(w), height(h) {
@@ -45,6 +43,7 @@ public:
 
 	void reset() { field=0; }
 };
+*/
 
 struct ChannelInfo {
 	Source source;
@@ -84,7 +83,7 @@ private:
 	float32 *outs[4];
 
 	ChannelInfo infos[4];
-	vco::VCO vco;
+	vco::SimpleVCO vco;
 
 	static const TJBox_Int64 BUFFER_SIZE;
 
@@ -134,7 +133,7 @@ private:
 public:
 	explicit QUEG();
 
-    void RenderBatch(const TJBox_PropertyDiff iPropertyDiffs[], TJBox_UInt32 iDiffCount);
+	void RenderBatch(const TJBox_PropertyDiff iPropertyDiffs[], TJBox_UInt32 iDiffCount);
 
 };
 }

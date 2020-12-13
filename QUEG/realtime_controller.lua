@@ -72,7 +72,7 @@ native = {
 -- })
 --}
 
-local notes1 = notifications({"x","y","level","VCOstart"})
+local notes1 = notifications({"x","y","level","source","VCOstart"})
 jbox.trace("Made notifications:")
   jbox.trace(table.concat(notes1,', '))
 local notes2 = simpleNotifications({"VCOactive","VCOfreeze","VCOzero","VCOfrequency","VCOwidth","VCOheight","VCOpattern"})

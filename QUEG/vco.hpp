@@ -10,7 +10,6 @@
 
 #include "base.hpp"
 #include "Properties.hpp"
-#include "Clock.hpp"
 #include "Pattern.hpp"
 #include <initializer_list>
 #include <vector>
@@ -21,56 +20,40 @@ namespace vco {
 
 
 
-
-
-
-struct VCOChannel {
-	uint32 startSide;
-	float32 width;
-	float32 height;
-
-	VCOChannel() : startSide(0), width(1), height(1) {};
-	VCOChannel(const VCOChannel &) = default;
-	VCOChannel & operator=(const VCOChannel &) = default;
-	virtual ~VCOChannel() = default;
-};
-
-class VCO {
+class SimpleVCO {
 private:
 	TJBox_ObjectRef xOutCV;
 	TJBox_ObjectRef yOutCV;
-
+	TJBox_ObjectRef env;
 
 	bool active;
 	bool holding;
-	bool shouldReset;
-	Clock clock;
+	float32 ticks;
+	float32 sampleRate;
 	float32 period;
+	float32 position;
 	float32 width, height;
 
 	std::vector<float> offsets;
-	std::vector<VCOChannel> channels;
 	Patterns patterns;
 	Pattern *pattern;
 
-	bool shouldTick() const { return active && !holding; }
+	float32 getEnvVariable(const Tag tag);
+	void loadSampleRate();
 	void writeCV(const Point &p = Point());
-	float clockPos(const uint32 offset) const;
 
 public:
 	static const int32 CV_OUT;
 	static const float PERIOD_BASE;
 	static const float PERIOD_DECADES;
-	explicit VCO();
+	explicit SimpleVCO();
 
 
-	Point operator()(const uint32 channel,const uint32 offset) const;
+	Point operator()(const uint32 channel) const;
 
 
-	void processBuffer();
+	void processBuffer(const uint32 length=64);
 	void processChanges(const Tag &tag,const Channel channel,const value_t value);
-
-
 
 };
 

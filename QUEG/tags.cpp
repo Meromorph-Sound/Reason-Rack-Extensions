@@ -17,8 +17,6 @@ char *append(char *buffer,const char *stem,const char base,const uint32 index) {
 	return buffer;
 }
 
-	Tag OUT_FRACTION(const Channel c) { return OUT_BASE + c; }
-	Tag VCO_START(const Channel c) { return VCO_START_BASE + c; }
 
 	Tag splitMixerTag(const Tag t,Channel *inChannel,Channel *outChannel) {
 		*inChannel = (t/10) % 4;
