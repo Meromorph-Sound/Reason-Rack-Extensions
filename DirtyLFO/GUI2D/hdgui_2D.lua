@@ -9,7 +9,19 @@ front = jbox.panel {
       graphics = { node = "onoffbypass" },
       handle_size = 0,
       value = "/custom_properties/builtin_onoffbypass",
-    }
+    },
+    jbox.analog_knob { 
+      graphics = { node = "growthrate" },
+      value = "/custom_properties/GrowthRate"
+     },
+     jbox.analog_knob { 
+      graphics = { node = "barrier" },
+      value = "/custom_properties/Barrier"
+     },
+     jbox.analog_knob { 
+      graphics = { node = "inputscale" },
+      value = "/custom_properties/InputScale"
+     }
   }
 }
 back = jbox.panel { 

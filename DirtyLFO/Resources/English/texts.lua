@@ -4,4 +4,8 @@ texts = {
   ["audioOutput"] = "Random Walk Audio Output",
   ["cvOutput"] = "Random Walk CV Output",
   ["cvInput"] = "Template CV Input",
+  
+  ["propertyname_GrowthRate"] = "Growth Rate",
+  ["propertyname_Barrier"] = "Barrier",
+  ["propertyname_InputScale"] = "Input Scale"
 }

@@ -9,4 +9,5 @@ gui:
 build:
 	python build45.py local45 Testing
 
+.PHONY: all
 all: gui build

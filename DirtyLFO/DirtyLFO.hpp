@@ -1,59 +1,38 @@
 #pragma once
 
 #include "base.hpp"
-#include <string>
+#include "Environment.hpp"
+#include "Properties.hpp"
+#include "IO.hpp"
 #include <vector>
+#include "Random.hpp"
 
+namespace meromorph {
 namespace lfo {
 
-void trace(const char *tmpl);
-void trace(const char *tmpl,const float32 value);
-void trace(const char *tmpl,const float32 value1,const float32 value2);
 
-class Environment {
-private:
-	static const float32 pulsesPerCrotchet;
 
-	float32 origin;
-	float32 currentPosition;
-	TJBox_ObjectRef env;
 
-	float32 getEnvVariable(const uint32) const;
-	float32 crotchetsPerBeat() const;
-	float32 bpm() const;
-	float32 playPosition() const;
-
-	void tick(const bool reset=false);
-
-public:
-	Environment();
-
-	void zero();
-	float32 offset();
-	float32 sampleRate() const;
-};
 
 class DLFO {
 private:
 	static const TJBox_Int64 BUFFER_SIZE;
 
+	Random randomiser;
+
 	std::vector<float32> buffer;
-	TJBox_ObjectRef props;
-	TJBox_ObjectRef cvIn;
-	TJBox_ObjectRef cvOut;
-	TJBox_ObjectRef aOut;
-
 	Environment env;
+	Properties props;
+	IO io;
 
+	float32 pos = 0;
+	float32 growthRate = 0.05;
+	float32 barrier = 1;
+	float32 inputScale = 1;
 
-	void writeAudio();
-	void writeCV(const float32 value);
-	float32 readCV();
-
-	bool audioOutConnected();
-	bool cvInConnected();
 
 	int32 getPlayPosition();
+	float32 step(const float32);
 
 	void processButtons(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDiffCount);
 	void process();
@@ -61,10 +40,10 @@ public:
 
 	explicit DLFO();
 //	~CFollower();
-
+	void reset();
 
     void RenderBatch(const TJBox_PropertyDiff iPropertyDiffs[], TJBox_UInt32 iDiffCount);
 
 };
 
-}
+}}
