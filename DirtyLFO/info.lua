@@ -12,7 +12,7 @@ medium_name = "Drunken LFO"
 short_name = "DrunkenLFO"
 
 product_id = "org.porternet.drunkenlfo"
-manufacturer = "Meromorph Sounds"
+manufacturer = "meromorph"
 version_number = "1.0.0"
 device_type = "creative_fx"
 supports_patches = false

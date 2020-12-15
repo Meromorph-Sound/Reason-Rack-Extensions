@@ -34,13 +34,17 @@ back = jbox.panel {
       graphics = { node = "audioOut" },
       socket = "/audio_outputs/audioOut",
     },
+    jbox.audio_input_socket {
+      graphics = { node = "audioIn" },
+      socket = "/audio_inputs/audioIn",
+    },
     jbox.cv_output_socket {
       graphics = { node = "cvOut" },
       socket = "/cv_outputs/cvOut",
     },
     jbox.cv_input_socket {
       graphics = { node = "cvIn" },
-      socket = "/cv_outputs/cvIn",
+      socket = "/cv_inputs/cvIn",
     },
     jbox.device_name {
       graphics = { node = "deviceName" },

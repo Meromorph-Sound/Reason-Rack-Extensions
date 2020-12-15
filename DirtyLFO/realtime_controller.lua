@@ -26,5 +26,8 @@ native = {
 
 rt_input_setup = { 
   notify = {
+  "/custom_properties/GrowthRate",
+  "/custom_properties/Barrier",
+  "/custom_properties/InputScale"
   }
 }

@@ -31,12 +31,14 @@ public:
 
 		template <typename T, class = typename std::enable_if<std::is_arithmetic<T>::value>::type>
 		T get(const Tag tag) const {
+			trace("Getting property ^0",tag);
 			const TJBox_Value& jboxValue = getRaw(tag);
 			const TJBox_Float64& valueFloat = JBox_GetNumber(jboxValue);
 			return static_cast<T>(valueFloat);
 		}
 		template <typename T, class = typename std::enable_if<std::is_arithmetic<T>::value>::type>
 		void set(const T value,const Tag tag) {
+			trace("Setting property ^0",tag);
 			TJBox_Value v = JBox_MakeNumber(static_cast<float64>(value));
 			JBox_StoreMOMPropertyByTag(props,tag,v);
 		}

@@ -16,7 +16,7 @@ namespace lfo {
 
 class DLFO {
 private:
-	static const TJBox_Int64 BUFFER_SIZE;
+
 
 	Random randomiser;
 
@@ -29,6 +29,7 @@ private:
 	float32 growthRate = 0.05;
 	float32 barrier = 1;
 	float32 inputScale = 1;
+	bool initialised = false;
 
 
 	int32 getPlayPosition();

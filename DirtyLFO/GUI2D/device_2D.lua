@@ -43,8 +43,12 @@ back = {
     offset = { 2200,100 },
     { path = "SharedCVJack", frames = 1 }
   },
-  audioOut = {
+  audioIn = {
     offset = { 2400,100 },
+    { path = "SharedAudioJack", frames = 1 }
+  },
+  audioOut = {
+    offset = { 2600,100 },
     { path = "SharedAudioJack", frames = 1 }
   },
 }

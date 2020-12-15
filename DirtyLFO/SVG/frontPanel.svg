@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="frontPanel.svg"
+   inkscape:version="1.0 (4035a4f, 2020-05-01)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 3770 345"
+   height="345px"
+   width="3770px">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     inkscape:window-maximized="0"
+     inkscape:window-y="271"
+     inkscape:window-x="2228"
+     inkscape:window-height="1035"
+     inkscape:window-width="2006"
+     inkscape:snap-global="false"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer3"
+     inkscape:document-units="mm"
+     inkscape:cy="402.85714"
+     inkscape:cx="1145.7143"
+     inkscape:zoom="0.35"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     sodipodi:insensitive="true"
+     inkscape:label="Background"
+     id="layer2"
+     inkscape:groupmode="layer">
+    <rect
+       y="0"
+       x="0"
+       height="345"
+       width="3770"
+       id="rect833"
+       style="fill:#41416c;fill-opacity:1;stroke-width:3.90425;stroke-linecap:round;stroke-miterlimit:3.7" />
+  </g>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Decorations" />
+  <g
+     inkscape:label="Controls"
+     id="layer3"
+     inkscape:groupmode="layer">
+    <rect
+       label="to-CV"
+       y="122.85715"
+       x="1174.2856"
+       height="45"
+       width="70"
+       id="rect872"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:3.90425;stroke-linecap:round;stroke-miterlimit:3.7" />
+    <rect
+       label="to-Audio"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:3.90425;stroke-linecap:round;stroke-miterlimit:3.7"
+       id="rect872-0"
+       width="70"
+       height="45"
+       x="1042.1428"
+       y="40.357147" />
+    <rect
+       label="from-Audio"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:3.90425;stroke-linecap:round;stroke-miterlimit:3.7"
+       id="rect872-7"
+       width="70"
+       height="45"
+       x="1333.5714"
+       y="77.500008" />
+    <rect
+       label="from-CV"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:3.90425;stroke-linecap:round;stroke-miterlimit:3.7"
+       id="rect872-3"
+       width="70"
+       height="45"
+       x="1653.5714"
+       y="57.500004" />
+    <rect
+       label="led-UP"
+       y="-357.14285"
+       x="1291.4286"
+       height="55"
+       width="55"
+       id="rect901"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:3.90425;stroke-linecap:round;stroke-miterlimit:3.7" />
+    <rect
+       label="led-DOWN"
+       inkscape:transform-center-y="-85.714286"
+       inkscape:transform-center-x="274.28571"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:3.90425;stroke-linecap:round;stroke-miterlimit:3.7"
+       id="rect901-7"
+       width="55"
+       height="55"
+       x="1472.5"
+       y="-221.78571" />
+    <rect
+       label="Reset Button"
+       y="-591.42859"
+       x="311.42856"
+       height="75"
+       width="65"
+       id="rect918"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:3.90425;stroke-linecap:round;stroke-miterlimit:3.7" />
+    <rect
+       style="fill:#ff0000;fill-opacity:1;stroke-width:3.90425;stroke-linecap:round;stroke-miterlimit:3.7"
+       id="rect918-2"
+       width="65"
+       height="75"
+       x="368.57141"
+       y="-445.71429"
+       label="Smoothing toggle" />
+    <rect
+       label="GrowthRate"
+       y="19.999987"
+       x="645.71429"
+       height="150.85699"
+       width="110"
+       id="rect837"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:2.98526;stroke-linecap:round;stroke-miterlimit:3.7" />
+    <rect
+       label="Barrier"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:2.98526;stroke-linecap:round;stroke-miterlimit:3.7"
+       id="rect837-1"
+       width="110"
+       height="150.85699"
+       x="1116.4286"
+       y="413.14294" />
+    <rect
+       label="InputScale"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:2.98526;stroke-linecap:round;stroke-miterlimit:3.7"
+       id="rect837-4"
+       width="110"
+       height="150.85699"
+       x="1293.5714"
+       y="370.2858" />
+    <rect
+       label="OutputGain"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:2.98526;stroke-linecap:round;stroke-miterlimit:3.7"
+       id="rect837-6"
+       width="110"
+       height="150.85699"
+       x="1493.5714"
+       y="450.2858" />
+    <rect
+       y="541.71436"
+       x="1647.8572"
+       height="150.85699"
+       width="110"
+       id="rect837-6-2"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:2.98526;stroke-linecap:round;stroke-miterlimit:3.7"
+       label="Smoothing" />
+  </g>
+</svg>

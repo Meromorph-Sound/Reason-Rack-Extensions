@@ -16,12 +16,23 @@ bool connected(TJBox_ObjectRef obj,TJBox_Tag tag) {
 	else return false;
 }
 
+const int64 IO::BUFFER_SIZE = 64;
+
 IO::IO() {
 	cvIn=JBox_GetMotherboardObjectRef("/cv_inputs/cvIn");
 	cvOut=JBox_GetMotherboardObjectRef("/cv_outputs/cvOut");
+	aIn=JBox_GetMotherboardObjectRef("/audio_inputs/audioIn");
 	aOut=JBox_GetMotherboardObjectRef("/audio_outputs/audioOut");
 }
 
+uint32 IO::readAudio(float32 *buffer) {
+	auto ref = JBox_LoadMOMPropertyByTag(aIn, kJBox_AudioInputBuffer);
+		auto length = std::min<int64>(JBox_GetDSPBufferInfo(ref).fSampleCount,BUFFER_SIZE);
+		if(length>0) {
+			JBox_GetDSPBufferData(ref, 0, length, buffer);
+		}
+		return static_cast<int32>(length);
+}
 void IO::writeAudio(const uint32 N,const float32 *buffer) {
 	auto ref = JBox_LoadMOMPropertyByTag(aOut, kJBox_AudioOutputBuffer);
 	if(N>0) JBox_SetDSPBufferData(ref, 0, N, buffer);
@@ -32,6 +43,9 @@ void IO::writeAudio(const std::vector<float32> &buffer) {
 void IO::writeCV(const float32 value) { JBox_StoreMOMPropertyAsNumber(cvOut,kJBox_CVOutputValue,value); }
 float32 IO::readCV() { return JBox_LoadMOMPropertyAsNumber(cvIn,kJBox_CVInputValue); }
 
+
+
+bool IO::audioInConnected(void)  { return connected(aIn,kJBox_AudioInputConnected); }
 bool IO::audioOutConnected() { return connected(aOut,kJBox_AudioOutputConnected); }
 bool IO::cvInConnected() { return connected(cvIn,kJBox_CVInputConnected); }
 

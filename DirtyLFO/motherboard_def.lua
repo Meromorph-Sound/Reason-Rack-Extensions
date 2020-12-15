@@ -51,7 +51,9 @@ cv_outputs = {
   cvOut = jbox.cv_output{ ui_name = jbox.ui_text("cvOutput") }
 }
 
-audio_inputs = {}
+audio_inputs = {
+  audioIn = jbox.audio_input{ ui_name = jbox.ui_text("audioInput") }
+}
 audio_outputs = {
 	audioOut = jbox.audio_output{ ui_name = jbox.ui_text("audioOutput") }
 }

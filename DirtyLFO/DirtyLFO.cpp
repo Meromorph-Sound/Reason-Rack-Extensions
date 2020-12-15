@@ -15,11 +15,10 @@ namespace meromorph { namespace lfo {
 
 
 
-const int64 DLFO::BUFFER_SIZE = 64;
 
-DLFO::DLFO() : randomiser(-1,1), buffer(BUFFER_SIZE,0), env(), props(), io() {
-	env.zero();
-	randomiser.init(env.uid());
+
+DLFO::DLFO() : randomiser(-1,1), buffer(IO::BUFFER_SIZE,0), env(), props(), io() {
+
 }
 
 
@@ -34,19 +33,23 @@ float32 DLFO::step(const float32 inData) {
 }
 
 void DLFO::process() {
-	auto inData = io.cvInConnected() ? io.readCV() : 0.f;
-
-	io.writeCV(pos);
-	if(io.audioOutConnected()) {
-		for(auto i=0;i<BUFFER_SIZE;i++) buffer[i]=step(inData);
+	if(io.audioInConnected()) {
+		io.readAudio(buffer.data());
+		for(auto i=0;i<IO::BUFFER_SIZE;i++) buffer[i]=step(buffer[i]);
 		io.writeAudio(buffer);
-		io.writeCV(pos);
 	}
 	else {
-		step(inData);
+		auto inData = io.cvInConnected() ? io.readCV() : 0.f;
+		if(io.audioOutConnected()) {
+			for(auto i=0;i<IO::BUFFER_SIZE;i++) buffer[i]=step(inData);
+			io.writeAudio(buffer);
+			io.writeCV(pos);
+		}
+		else {
+			step(inData);
+			io.writeCV(pos);
+		}
 	}
-
-
 }
 
 inline float32 toFloat(const TJBox_Value diff) {
@@ -57,6 +60,7 @@ void DLFO::processButtons(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDif
 	for(auto i=0;i<iDiffCount;i++) {
 		auto diff=iPropertyDiffs[i];
 		Tag tag = diff.fPropertyTag;
+		trace("Processing changed property ^0",tag);
 		switch(tag) {
 		case Tags::GrowthRate:
 			growthRate = toFloat(diff.fCurrentValue);
@@ -73,6 +77,10 @@ void DLFO::processButtons(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDif
 
 
 void DLFO::RenderBatch(const TJBox_PropertyDiff diffs[], TJBox_UInt32 nDiffs) {
+	if(!initialised) {
+			randomiser.init(env.uid());
+			initialised=true;
+	}
 	processButtons(diffs,nDiffs);
 	process();
 }

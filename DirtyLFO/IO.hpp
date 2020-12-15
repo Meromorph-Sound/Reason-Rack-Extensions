@@ -16,19 +16,25 @@ namespace lfo {
 
 class IO {
 private:
+
+
 	TJBox_ObjectRef cvIn;
 	TJBox_ObjectRef cvOut;
+	TJBox_ObjectRef aIn;
 	TJBox_ObjectRef aOut;
 
 public:
+	static const TJBox_Int64 BUFFER_SIZE;
 	IO();
 
 	void writeAudio(const uint32 n,const float32 *buffer);
 	void writeAudio(const std::vector<float32> &buffer);
+	uint32 readAudio(float32 *buffer);
 	void writeCV(const float32 value);
 	float32 readCV();
 
 	bool audioOutConnected();
+	bool audioInConnected();
 	bool cvInConnected();
 };
 
