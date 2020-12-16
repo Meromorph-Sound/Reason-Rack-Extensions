@@ -3,30 +3,58 @@ format_version = "2.0"
 
 
 front = {
-  Bg = { {path = "frontPanel"} },
+  Bg = { {path = "front1U"} },
   onoffbypass = {
-      offset = {185,45},
+      offset = {185,50},
       {path="Fader_Bypass_3frames", frames = 3 },
     },
   deviceName = {
-    offset = { 185, 215},
+    offset = { 3200, 250},
     { path = "TapeHorz", frames = 1 },
   },
+  inMode = {
+    offset = { 1000, 120 },
+    { path = "DoubleLamp_4frames", frames = 4 }  
+  },
+  outMode = {
+    offset = { 1200, 120 },
+    { path = "DoubleLamp_4frames", frames = 4 }  
+  },
+  outAudio = {
+    offset = { 1000, 180 },
+    { path = "Lamp_06_2frames", frames = 2 }  
+  },
+  zero = {
+    offset = { 1500, 85 },
+    { path = "Button_63_2frames", frames = 2 }
+  },
   growthrate = {
-    offset = { 600, 100 },
+    offset = { 1850, 50 },
     { path = "Knob_63frames", frames = 63 }
   },
   barrier = {
-    offset = { 800, 100 },
+    offset = { 2100, 50 },
     { path = "Knob_63frames", frames = 63 }
   },
   inputscale = {
-    offset = { 1000, 100 },
+    offset = { 2350, 50 },
     { path = "Knob_63frames", frames = 63 }
   },
+  amplitude = {
+    offset = { 2600, 50 },
+    { path = "Knob_63frames", frames = 63 }
+  },
+  smoothing = {
+    offset = { 2950, 50 },
+    { path = "Knob_63frames", frames = 63 }
+  },
+  smooth = {
+    offset = { 2850, 55 },
+    { path = "Button_53_2frames", frames = 2 }
+  }
 }
 back = {
-  Bg = { {path = "backPanel"} },
+  Bg = { {path = "Panel_Back_1U"} },
   Placeholder = {
     offset = { 100, 100 },
     { path = "Placeholder" },

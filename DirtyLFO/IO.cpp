@@ -45,11 +45,20 @@ float32 IO::readCV() { return JBox_LoadMOMPropertyAsNumber(cvIn,kJBox_CVInputVal
 
 
 
-bool IO::audioInConnected(void)  { return connected(aIn,kJBox_AudioInputConnected); }
+bool IO::audioInConnected()  { return connected(aIn,kJBox_AudioInputConnected); }
 bool IO::audioOutConnected() { return connected(aOut,kJBox_AudioOutputConnected); }
 bool IO::cvInConnected() { return connected(cvIn,kJBox_CVInputConnected); }
 
-
+IOMode IO::inputMode() {
+	if(audioInConnected()) return IOMode::Audio;
+	else if(cvInConnected()) return IOMode::CV;
+	else return IOMode::None;
+}
+IOMode IO::outputMode() {
+	if(audioInConnected()) return IOMode::Audio;
+	else if(audioOutConnected()) return IOMode::Both;
+	else return IOMode::CV;
+}
 
 } /* namespace lfo */
 } /* namespace meromorph */

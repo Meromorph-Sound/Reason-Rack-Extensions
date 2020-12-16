@@ -23,11 +23,51 @@ custom_properties = jbox.property_set{
         ui_name = jbox.ui_text("propertyname_InputScale"),
         ui_type = jbox.ui_linear ({min=0, max=1, units={{decimals=2}}})
       },
+      Amplitude = jbox.number {
+        property_tag = 24,
+        default = 1,
+        ui_name = jbox.ui_text("propertyname_Amplitude"),
+        ui_type = jbox.ui_linear ({min=0, max=1, units={{decimals=2}}})
+      },
+      Smoothing = jbox.number {
+        property_tag = 25,
+        default = 1,
+        ui_name = jbox.ui_text("propertyname_Smoothing"),
+        ui_type = jbox.ui_linear ({min=0, max=1, units={{decimals=2}}})
+      },
+      Smooth = jbox.number {
+        property_tag = 26,
+        default = 0,
+        steps = 2,
+        ui_name = jbox.ui_text("propertyname_Smooth"),
+        ui_type = jbox.ui_linear ({min=0, max=1, units={{decimals=0}}})
+      },
+      Zero = jbox.number {
+        property_tag = 27,
+        default = 0,
+        steps = 2,
+        ui_name = jbox.ui_text("propertyname_Zero"),
+        ui_type = jbox.ui_linear ({min=0, max=1, units={{decimals=0}}})
+      },
 		}
 	},
 	rtc_owner = {
 		properties = {
-			instance = jbox.native_object{}
+			instance = jbox.native_object{},
+			     InMode = jbox.number {
+        property_tag = 11,
+        default = 0,
+        steps = 4,
+        ui_name = jbox.ui_text("inMode"),
+        ui_type = jbox.ui_linear ({min=0, max=1, units={{decimals=0}}})
+      },
+      OutMode = jbox.number {
+        property_tag = 12,
+        default = 0,
+        steps = 4,
+        ui_name = jbox.ui_text("outMode"),
+        ui_type = jbox.ui_linear ({min=0, max=1, units={{decimals=0}}})
+      }
 		}
 	},
 	rt_owner = {

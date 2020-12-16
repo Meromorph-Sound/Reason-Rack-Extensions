@@ -33,14 +33,16 @@ float32 DLFO::step(const float32 inData) {
 }
 
 void DLFO::process() {
-	if(io.audioInConnected()) {
+	auto inMode = io.inputMode();
+	auto outMode = io.outputMode();
+	if(inMode==IOMode::Audio) {	// audio input mode : output must go to audio out
 		io.readAudio(buffer.data());
 		for(auto i=0;i<IO::BUFFER_SIZE;i++) buffer[i]=step(buffer[i]);
 		io.writeAudio(buffer);
 	}
 	else {
 		auto inData = io.cvInConnected() ? io.readCV() : 0.f;
-		if(io.audioOutConnected()) {
+		if(outMode==IOMode::Both) { // CV in or no in : output goes to audio out, if connected, else CV out
 			for(auto i=0;i<IO::BUFFER_SIZE;i++) buffer[i]=step(inData);
 			io.writeAudio(buffer);
 			io.writeCV(pos);
@@ -50,6 +52,7 @@ void DLFO::process() {
 			io.writeCV(pos);
 		}
 	}
+	props.setModes(inMode,outMode);
 }
 
 inline float32 toFloat(const TJBox_Value diff) {
@@ -70,6 +73,9 @@ void DLFO::processButtons(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDif
 			break;
 		case Tags::InputScale:
 			inputScale = toFloat(diff.fCurrentValue);
+			break;
+		case Tags::Zero:
+			pos=0;
 			break;
 		}
 	}

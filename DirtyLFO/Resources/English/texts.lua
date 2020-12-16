@@ -8,5 +8,11 @@ texts = {
   
   ["propertyname_GrowthRate"] = "Growth Rate",
   ["propertyname_Barrier"] = "Barrier",
-  ["propertyname_InputScale"] = "Input Scale"
+  ["propertyname_InputScale"] = "Input Scale",
+  ["propertyname_Amplitude"] = "Amplitude",
+  ["propertyname_Smoothing"] = "Smoothing",
+  ["propertyname_Smooth"] = "Smooth",
+  ["propertyname_Zero"] = "Zero",
+  ["inMode"] = "Input Mode",
+  ["outMode"] = "Output Mode"
 }

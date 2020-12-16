@@ -9,14 +9,21 @@
 #define DIRTYLFO_PROPERTIES_HPP_
 
 #include "base.hpp"
+#include "IO.hpp"
 
 namespace meromorph {
 namespace lfo {
 
 enum Tags : Tag {
+	InMode = 11,
+	OutMode = 12,
 	GrowthRate = 21,
 	Barrier = 22,
-	InputScale = 23
+	InputScale = 23,
+	Amplitude = 24,
+	Smoothing = 25,
+	Smooth = 26,
+	Zero = 27
 };
 
 class Properties {
@@ -47,6 +54,11 @@ public:
 		float32 growthRate() const { return get<float32>(Tags::GrowthRate); }
 		float32 barrier() const  { return get<float32>(Tags::Barrier); }
 		float32 inputScale() const   { return get<float32>(Tags::InputScale); }
+
+		void setModes(const IOMode inMode,const IOMode outMode) {
+			set((float32)inMode,Tags::InMode);
+			set((float32)outMode,Tags::OutMode);
+		}
 
 };
 

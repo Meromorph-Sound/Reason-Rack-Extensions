@@ -21,6 +21,30 @@ front = jbox.panel {
      jbox.analog_knob { 
       graphics = { node = "inputscale" },
       value = "/custom_properties/InputScale"
+     },
+     jbox.analog_knob { 
+      graphics = { node = "amplitude" },
+      value = "/custom_properties/Amplitude"
+     },
+     jbox.analog_knob { 
+      graphics = { node = "smoothing" },
+      value = "/custom_properties/Smoothing"
+     },
+     hbox.toggle_button {
+      graphics = { node = "smooth" },
+      value = "/custom_properties/Smooth"
+     },
+     hbox.momentary_button {
+      graphics = { node = "zero" },
+      value = "/custom_properties/Zero"
+     },
+     hbox.sequence_meter {
+      graphics = { node = "inMode" },
+      value = "/custom_properties/InMode"
+     },
+     hbox.sequence_meter {
+      graphics = { node = "outMode" },
+      value = "/custom_properties/OutMode"
      }
   }
 }

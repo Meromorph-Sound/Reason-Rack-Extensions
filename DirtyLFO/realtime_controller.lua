@@ -28,6 +28,10 @@ rt_input_setup = {
   notify = {
   "/custom_properties/GrowthRate",
   "/custom_properties/Barrier",
-  "/custom_properties/InputScale"
+  "/custom_properties/InputScale",
+  "/custom_properties/Amplitude",
+  "/custom_properties/Smoothing",
+  "/custom_properties/Smooth",
+  "/custom_properties/Zero"
   }
 }

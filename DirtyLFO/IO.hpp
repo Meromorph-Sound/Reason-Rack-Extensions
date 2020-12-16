@@ -14,6 +14,14 @@
 namespace meromorph {
 namespace lfo {
 
+enum IOMode : uint32 {
+	None = 0,
+	CV = 1,
+	Audio = 2,
+	Both = 3
+};
+
+
 class IO {
 private:
 
@@ -36,6 +44,9 @@ public:
 	bool audioOutConnected();
 	bool audioInConnected();
 	bool cvInConnected();
+
+	IOMode inputMode();
+	IOMode outputMode();
 };
 
 } /* namespace lfo */
