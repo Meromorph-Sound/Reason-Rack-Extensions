@@ -11,11 +11,6 @@ namespace meromorph {
 namespace lfo {
 
 
-enum IOMode : uint32 {
-	None = 0,
-	CV = 1,
-	Audio = 2
-};
 
 
 class DLFO {

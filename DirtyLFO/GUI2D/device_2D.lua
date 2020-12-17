@@ -20,10 +20,6 @@ front = {
     offset = { 1200, 120 },
     { path = "DoubleLamp_4frames", frames = 4 }  
   },
-  outAudio = {
-    offset = { 1000, 180 },
-    { path = "Lamp_06_2frames", frames = 2 }  
-  },
   zero = {
     offset = { 1500, 85 },
     { path = "Button_63_2frames", frames = 2 }
@@ -64,19 +60,19 @@ back = {
     { path = "TapeHorz", frames = 1 },
   },
   cvIn = {
-    offset = { 2000,100 },
+    offset = { 1000,50 },
     { path = "SharedCVJack", frames = 1 }
   },
   cvOut = {
-    offset = { 2200,100 },
+    offset = { 1200,50 },
     { path = "SharedCVJack", frames = 1 }
   },
   audioIn = {
-    offset = { 2400,100 },
+    offset = { 1400,20 },
     { path = "SharedAudioJack", frames = 1 }
   },
   audioOut = {
-    offset = { 2600,100 },
+    offset = { 1600,20 },
     { path = "SharedAudioJack", frames = 1 }
   },
 }

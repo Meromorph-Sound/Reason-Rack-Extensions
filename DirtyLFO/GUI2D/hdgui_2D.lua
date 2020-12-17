@@ -2,9 +2,7 @@ format_version = "2.0"
 front = jbox.panel { 
   graphics = { node = "Bg" },
   widgets = {
-    jbox.device_name {
-      graphics = { node = "deviceName" },
-    },
+    jbox.device_name { graphics = { node = "deviceName" } },
     jbox.sequence_fader{
       graphics = { node = "onoffbypass" },
       handle_size = 0,
@@ -13,8 +11,8 @@ front = jbox.panel {
     jbox.analog_knob { 
       graphics = { node = "growthrate" },
       value = "/custom_properties/GrowthRate"
-     },
-     jbox.analog_knob { 
+    },
+    jbox.analog_knob { 
       graphics = { node = "barrier" },
       value = "/custom_properties/Barrier"
      },
@@ -30,19 +28,19 @@ front = jbox.panel {
       graphics = { node = "smoothing" },
       value = "/custom_properties/Smoothing"
      },
-     hbox.toggle_button {
+     jbox.toggle_button {
       graphics = { node = "smooth" },
       value = "/custom_properties/Smooth"
      },
-     hbox.momentary_button {
+     jbox.momentary_button {
       graphics = { node = "zero" },
       value = "/custom_properties/Zero"
      },
-     hbox.sequence_meter {
+     jbox.sequence_meter {
       graphics = { node = "inMode" },
       value = "/custom_properties/InMode"
      },
-     hbox.sequence_meter {
+     jbox.sequence_meter {
       graphics = { node = "outMode" },
       value = "/custom_properties/OutMode"
      }

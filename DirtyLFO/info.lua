@@ -11,9 +11,9 @@ medium_name = "Drunken LFO"
 -- Max 10 chars
 short_name = "DrunkenLFO"
 
-product_id = "org.porternet.drunkenlfo"
+product_id = "org.meromorph.drunkenlfo"
 manufacturer = "meromorph"
-version_number = "1.0.0"
+version_number = "1.1.0"
 device_type = "creative_fx"
 supports_patches = false
 accepts_notes = false
