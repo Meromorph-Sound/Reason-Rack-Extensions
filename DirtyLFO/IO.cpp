@@ -50,14 +50,29 @@ bool IO::audioOutConnected() { return connected(aOut,kJBox_AudioOutputConnected)
 bool IO::cvInConnected() { return connected(cvIn,kJBox_CVInputConnected); }
 
 IOMode IO::inputMode() {
-	if(audioInConnected()) return IOMode::Audio;
-	else if(cvInConnected()) return IOMode::CV;
-	else return IOMode::None;
+	auto m = inputs;
+	if(audioInConnected()) inputs = IOMode::Audio;
+	else if(cvInConnected()) inputs = IOMode::CV;
+	else inputs = IOMode::None;
+	if(inputs != m) inputHasChanged = true;
+	return inputs;
 }
 IOMode IO::outputMode() {
-	if(audioInConnected()) return IOMode::Audio;
-	else if(audioOutConnected()) return IOMode::Both;
-	else return IOMode::CV;
+	auto m = outputs;
+	if(audioInConnected()) outputs = IOMode::Audio;
+	else if(audioOutConnected()) outputs = IOMode::Both;
+	else outputs = IOMode::CV;
+	if(outputs != m) outputHasChanged = true;
+	return outputs;
+}
+
+bool IO::hasInput() { return inputs!=IOMode::None; }
+
+bool IO::needsUpdate() {
+	auto flag = inputHasChanged || outputHasChanged;
+	inputHasChanged = false;
+	outputHasChanged = false;
+	return flag;
 }
 
 } /* namespace lfo */

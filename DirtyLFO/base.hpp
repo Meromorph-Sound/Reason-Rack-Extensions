@@ -26,7 +26,7 @@ using float32 = TJBox_AudioSample;
 using Tag = uint32;
 using Channel = uint32;
 
-enum class State : int32 {
+enum State : int32 {
 	Off = 0, On = 1, Bypassed = 2
 };
 

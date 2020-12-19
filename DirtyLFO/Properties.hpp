@@ -60,6 +60,8 @@ public:
 			set((float32)outMode,Tags::OutMode);
 		}
 
+
+
 };
 
 } /* namespace lfo */

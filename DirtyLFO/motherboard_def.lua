@@ -52,26 +52,26 @@ custom_properties = jbox.property_set{
 		}
 	},
 	rtc_owner = {
+		properties = { instance = jbox.native_object{} }
+	},
+	rt_owner = {
 		properties = {
-			instance = jbox.native_object{},
-			     InMode = jbox.number {
+		InMode = jbox.number {
         property_tag = 11,
         default = 0,
         steps = 4,
         ui_name = jbox.ui_text("inMode"),
         ui_type = jbox.ui_linear ({min=0, max=1, units={{decimals=0}}})
       },
-      OutMode = jbox.number {
+		OutMode = jbox.number {
         property_tag = 12,
         default = 0,
         steps = 4,
         ui_name = jbox.ui_text("outMode"),
         ui_type = jbox.ui_linear ({min=0, max=1, units={{decimals=0}}})
       }
-		}
-	},
-	rt_owner = {
-		properties = {}
+		},
+		
 	}
 }
 

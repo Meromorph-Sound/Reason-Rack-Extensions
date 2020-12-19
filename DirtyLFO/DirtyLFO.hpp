@@ -23,18 +23,25 @@ private:
 	Environment env;
 	Properties props;
 	IO io;
+	float32 filterParam = 1;
+	float32 filterFactor=1;
+	bool filterOn = false;
+
+	State state = State::On;
 
 	float32 pos = 0;
 	float32 growthRate = 0.05;
 	float32 barrier = 1;
 	float32 inputScale = 1;
 	bool initialised = false;
+	float32 amplitude = 1;
 
 
 	int32 getPlayPosition();
 	float32 step(const float32);
 
 	void processButtons(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDiffCount);
+	void bypass();
 	void process();
 public:
 

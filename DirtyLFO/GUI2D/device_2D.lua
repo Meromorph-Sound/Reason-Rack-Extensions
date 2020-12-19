@@ -28,11 +28,11 @@ front = {
     offset = { 1850, 50 },
     { path = "Knob_63frames", frames = 63 }
   },
-  barrier = {
+  inputscale = {
     offset = { 2100, 50 },
     { path = "Knob_63frames", frames = 63 }
   },
-  inputscale = {
+  barrier = {
     offset = { 2350, 50 },
     { path = "Knob_63frames", frames = 63 }
   },

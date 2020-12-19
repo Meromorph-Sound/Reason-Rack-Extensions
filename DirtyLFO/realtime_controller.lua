@@ -26,6 +26,7 @@ native = {
 
 rt_input_setup = { 
   notify = {
+  "/custom_properties/builtin_onoffbypass",
   "/custom_properties/GrowthRate",
   "/custom_properties/Barrier",
   "/custom_properties/InputScale",
