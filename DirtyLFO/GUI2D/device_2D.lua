@@ -50,30 +50,30 @@ front = {
   }
 }
 back = {
-  Bg = { {path = "Panel_Back_1U"} },
+  Bg = { {path = "backPanel"} },
   Placeholder = {
-    offset = { 100, 100 },
+    offset = { 2000, 100 },
     { path = "Placeholder" },
   },
   deviceName = {
-    offset = { 3280, 50},
+    offset = { 50, 220 },
     { path = "TapeHorz", frames = 1 },
   },
   cvIn = {
-    offset = { 1000,50 },
-    { path = "SharedCVJack", frames = 1 }
+    offset = { 1200,130 },
+    { path = "SharedCVJack", frames = 3 }
   },
   cvOut = {
-    offset = { 1200,50 },
-    { path = "SharedCVJack", frames = 1 }
+    offset = { 1800,130 },
+    { path = "SharedCVJack", frames = 3 }
   },
   audioIn = {
-    offset = { 1400,20 },
-    { path = "SharedAudioJack", frames = 1 }
+    offset = { 1000,120 },
+    { path = "SharedAudioJack", frames = 3 }
   },
   audioOut = {
-    offset = { 1600,20 },
-    { path = "SharedAudioJack", frames = 1 }
+    offset = { 1600,120 },
+    { path = "SharedAudioJack", frames = 3 }
   },
 }
 
