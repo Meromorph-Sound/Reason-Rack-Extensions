@@ -17,8 +17,8 @@
 namespace follower {
 
 using int32 = TJBox_Int32;
-using ruint32 = TJBox_UInt32;
-using rint64 = TJBox_Int64;
+using uint32 = TJBox_UInt32;
+using int64 = TJBox_Int64;
 using float64 = TJBox_Float64;
 using float32 = TJBox_AudioSample;
 

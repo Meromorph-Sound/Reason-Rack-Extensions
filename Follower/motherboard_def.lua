@@ -60,8 +60,7 @@ audio_outputs = {
 }
 
 cv_outputs = {
-  gate = jbox.cv_output{ ui_name = jbox.ui_text("gateOutput") },
-  env = jbox.cv_output{ ui_name = jbox.ui_text("envOutput") },
+  gate = jbox.cv_output{ ui_name = jbox.ui_text("gateOutput") }
 }
 
 

@@ -1,0 +1,218 @@
+RE2DRender 1.6.5d2
+
+OS says system has 24 logical cores
+Deleting Intermediate folder
+Deleting Output folder
+
+Reading device_2D.lua
+Validating image files
+Progress: [###############]
+          [###############] - Done.
+    "Fader_Bypass_3frames.png"
+    "Knob_63frames.png"
+    "DoubleLamp_4frames.png"
+    "front1U.png"
+    "Button_53_2frames.png"
+    "Button_63_2frames.png"
+    "TapeHorz.png"
+    "Panel_Folded_Front.png"
+    "SharedCVJack.png"
+    "SharedAudioJack.png"
+    "Placeholder.png"
+    "backPanel.png"
+    "Panel_Folded_Back.png"
+
+Panel 'front' uses background image 'front1U'
+Panel 'folded_front' uses background image 'Panel_Folded_Front'
+Panel 'back' uses background image 'backPanel'
+Panel 'folded_back' uses background image 'Panel_Folded_Back'
+
+Device is 1U rack units
+
+Panels in device scenegraph:
+
+---- Panel 'front':
+
+Node "Bg" is visual "front1U" at offset = { 0, 0 } 
+Node "amplitude" is visual "Knob_63frames" at offset = { 2600, 50 } 
+Node "barrier" is visual "Knob_63frames" at offset = { 2350, 50 } 
+Node "deviceName" is visual "TapeHorz" at offset = { 3200, 250 } 
+Node "growthrate" is visual "Knob_63frames" at offset = { 1850, 50 } 
+Node "inMode" is visual "DoubleLamp_4frames" at offset = { 1000, 120 } 
+Node "inputscale" is visual "Knob_63frames" at offset = { 2100, 50 } 
+Node "onoffbypass" is visual "Fader_Bypass_3frames" at offset = { 185, 50 } 
+Node "outMode" is visual "DoubleLamp_4frames" at offset = { 1200, 120 } 
+Node "smooth" is visual "Button_53_2frames" at offset = { 2850, 55 } 
+Node "smoothing" is visual "Knob_63frames" at offset = { 2950, 50 } 
+Node "zero" is visual "Button_63_2frames" at offset = { 1500, 85 } 
+
+---- Panel 'folded_front':
+
+Node "Bg" is visual "Panel_Folded_Front" at offset = { 0, 0 } 
+
+---- Panel 'back':
+
+Node "Bg" is visual "backPanel" at offset = { 0, 0 } 
+Node "Placeholder" is visual "Placeholder" at offset = { 2000, 100 } 
+Node "audioIn" is visual "SharedAudioJack" at offset = { 1000, 120 } 
+Node "audioOut" is visual "SharedAudioJack" at offset = { 1600, 120 } 
+Node "cvIn" is visual "SharedCVJack" at offset = { 1200, 130 } 
+Node "cvOut" is visual "SharedCVJack" at offset = { 1800, 130 } 
+Node "deviceName" is visual "TapeHorz" at offset = { 50, 220 } 
+
+---- Panel 'folded_back':
+
+Node "Bg" is visual "Panel_Folded_Back" at offset = { 0, 0 } 
+
+Node "CableOrigin" is invisible
+
+-----------------------------------------------------------------------------
+
+Reading hdgui_2D.lua
+Reading widgets for panel 'front'
+    Checking settings for device_name
+    Checking settings for sequence_fader
+        handle_size: OK!
+        value: OK!
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for analog_knob
+        value: OK!
+    Checking settings for toggle_button
+        value: OK!
+    Checking settings for momentary_button
+        value: OK!
+    Checking settings for sequence_meter
+        value: OK!
+    Checking settings for sequence_meter
+        value: OK!
+Reading widgets for panel 'folded_front'
+Reading widgets for panel 'back'
+    Checking settings for placeholder
+    Checking settings for audio_output_socket
+        socket: OK!
+    Checking settings for audio_input_socket
+        socket: OK!
+    Checking settings for cv_output_socket
+        socket: OK!
+    Checking settings for cv_input_socket
+        socket: OK!
+    Checking settings for device_name
+Reading widgets for panel 'folded_back'
+
+Processing GUI definition
+
+    Panel 'front'
+    Detecting unsupported overlaps if any...
+    It was fine.
+    Checking if all nodes are contained in the panel bounds...
+    It was fine.
+
+    Panel 'folded_front'
+    Detecting unsupported overlaps if any...
+    It was fine.
+    Checking if all nodes are contained in the panel bounds...
+    It was fine.
+
+    Panel 'back'
+    Detecting unsupported overlaps if any...
+    It was fine.
+    Checking if all nodes are contained in the panel bounds...
+    It was fine.
+
+    Panel 'folded_back'
+    Detecting unsupported overlaps if any...
+    It was fine.
+    Checking if all nodes are contained in the panel bounds...
+    It was fine.
+
+Validating any custom_display backgrounds...
+None found.
+
+-----------------------------------------------------------------------------
+
+Exporting gui.lua
+
+Compositing background image for each panel
+
+Scaling images and filmstrips to target resolution
+'Button_53_2frames.png'
+'DoubleLamp_4frames.png'
+'Knob_63frames.png'
+'Fader_Bypass_3frames.png'
+'Button_63_2frames.png'
+'front1U.png'
+'Panel_Folded_Front.png'
+'backPanel.png'
+'Panel_Folded_Back.png'
+Progress: [###############]
+          [###############] - Done.
+
+Gathering snapshots for navigator, icons, etc.
+No thumb snapshots supplied - generating...
+
+Generating full snapshot of panel 'front'
+cropping in first frame of filmstrip 'Fader_Bypass_3frames'
+cropping in first frame of filmstrip 'Knob_63frames'
+cropping in first frame of filmstrip 'DoubleLamp_4frames'
+cropping in first frame of filmstrip 'Button_53_2frames'
+cropping in first frame of filmstrip 'Button_63_2frames'
+Progress: [###############]
+          [###############] - Done.
+compositing image 'Fader_Bypass_3frames' onto background image 'front1U'
+compositing image 'Knob_63frames' onto background image 'front1U'
+compositing image 'DoubleLamp_4frames' onto background image 'front1U'
+compositing image 'DoubleLamp_4frames' onto background image 'front1U'
+compositing image 'Button_53_2frames' onto background image 'front1U'
+compositing image 'Button_63_2frames' onto background image 'front1U'
+compositing image 'Knob_63frames' onto background image 'front1U'
+compositing image 'Knob_63frames' onto background image 'front1U'
+compositing image 'TapeHorz' onto background image 'front1U'
+compositing image 'Knob_63frames' onto background image 'front1U'
+compositing image 'Knob_63frames' onto background image 'front1U'
+compositing, path is '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Intermediate/tmpz_y59r7b.png'
+
+Generating full snapshot of panel 'folded_front'
+path is '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI2D/Panel_Folded_Front.png'
+
+Copying GUI filmstrips from '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Intermediate/Filmstrips' to '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Output'
+Copying 'Reason_GUI_Button_63_2frames.png'
+Copying 'Reason_GUI_Knob_63frames.png'
+Copying 'Reason_GUI_Panel_Folded_Back.png'
+Copying 'Reason_GUI_backPanel.png'
+Copying 'Reason_GUI_DoubleLamp_4frames.png'
+Copying 'Reason_GUI_Button_53_2frames.png'
+Copying 'Reason_GUI_Fader_Bypass_3frames.png'
+Copying 'Reason_GUI_Panel_Folded_Front.png'
+Copying 'Reason_GUI_front1U.png'
+Done.
+
+Copying panel snapshots from '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Intermediate/Filmstrips' to '/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Output'
+Copying 'Reason_TrackListIcon_Snapshot_front1U.png' to 'DeviceTrackListThumbnail.png'
+Copying 'Reason_Navigator_Snapshot_front1U.png' to 'DeviceNavigator.png'
+Copying 'Reason_Navigator_Snapshot_Panel_Folded_Front.png' to 'DeviceNavigatorFolded.png'
+Copying 'Reason_Palette_Snapshot_front1U.png' to 'DevicePaletteImage.png'
+Done.
+
+Making DeviceIcon.png ...
+/Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/GraphicsMagick/Mac/gm conjure -source128 /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Intermediate/Filmstrips/Reason_Icon128x128_Snapshot_front1U.png /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/DeviceIcon.msl
+Done.
+
+Fitting Reason_GUI_front1U.png onto rack rails ...
+/Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/GraphicsMagick/Mac/gm conjure -backdrop /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Intermediate/Filmstrips/Reason_GUI_front1U.png -rail_L /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip01.png -rail_R /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip02.png -result /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Output/Reason_GUI_front1U.png /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/RackRails.msl
+Done.
+Fitting Reason_GUI_backPanel.png onto rack rails ...
+/Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/GraphicsMagick/Mac/gm conjure -backdrop /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Intermediate/Filmstrips/Reason_GUI_backPanel.png -rail_L /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip06.png -rail_R /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip07.png -result /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Output/Reason_GUI_backPanel.png /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/RackRails.msl
+Done.
+Fitting Reason_GUI_Panel_Folded_Front.png onto rack rails ...
+/Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/GraphicsMagick/Mac/gm conjure -backdrop /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Intermediate/Filmstrips/Reason_GUI_Panel_Folded_Front.png -rail_L /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip01.png -rail_R /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip02.png -result /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Output/Reason_GUI_Panel_Folded_Front.png /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/RackRails.msl
+Done.
+Fitting Reason_GUI_Panel_Folded_Back.png onto rack rails ...
+/Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/GraphicsMagick/Mac/gm conjure -backdrop /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Intermediate/Filmstrips/Reason_GUI_Panel_Folded_Back.png -rail_L /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip06.png -rail_R /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/ReasonBitmaps/RackGenRackStrip07.png -result /Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI/Output/Reason_GUI_Panel_Folded_Back.png /Users/julianporter/Reason/SDK/RE2DRender.app/Contents/Resources/PostProcess/RackRails.msl
+Done.

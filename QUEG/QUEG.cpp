@@ -41,9 +41,7 @@ QUEG::QUEG() : vco()  {
 	}
 }
 
-State QUEG::state() const {
-	return static_cast<State>(get<int32>(kJBox_CustomPropertiesOnOffBypass));
-}
+
 
 //uint32 QUEG::tag(const uint32 channel,const Tag parameter) const {
 //	return 10*channel+parameter;
@@ -118,11 +116,6 @@ void QUEG::processMixerChange(const Tag tag,const value_t diff) {
 	}
 }
 
-
-
-
-
-
 void QUEG::processVCOChange(const Tag tag,const value_t diff) {
 	Channel channel=0;
 	Tag dTag = splitVCOTag(tag,&channel);
@@ -134,7 +127,10 @@ void QUEG::processChanges(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDif
 	for(auto i=0;i<iDiffCount;i++) {
 		auto diff=iPropertyDiffs[i];
 		Tag tag = diff.fPropertyTag;
-		if(tag<VCO_RANGE_START) {
+		if(tag==kJBox_CustomPropertiesOnOffBypass) {
+			state = static_cast<State>(toFloat(diff.fCurrentValue));
+		}
+		else if(tag<VCO_RANGE_START) {
 			processMixerChange(tag,diff.fCurrentValue);
 		}
 		else {
@@ -185,8 +181,7 @@ void QUEG::process() {
 
 void QUEG::RenderBatch(const TJBox_PropertyDiff diffs[], uint32 nDiffs) {
 	processChanges(diffs,nDiffs);
-	auto s=state();
-	switch(s) {
+	switch(state) {
 	case State::Off:
 		break;
 	case State::Bypassed:

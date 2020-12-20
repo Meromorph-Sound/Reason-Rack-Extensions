@@ -43,15 +43,15 @@ void DLFO::bypass() {
 }
 
 void DLFO::process() {
-	auto inMode = io.inputMode();
-	auto outMode = io.outputMode();
+	auto inMode = iomodes.inputMode();
+	auto outMode = iomodes.outputMode();
 	if(inMode==IOMode::Audio) {	// audio input mode : output must go to audio out
 		io.readAudio(buffer.data());
 		for(auto i=0;i<IO::BUFFER_SIZE;i++) buffer[i]=amplitude*step(buffer[i]);
 		io.writeAudio(buffer);
 	}
 	else {
-		auto inData = io.cvInConnected() ? io.readCV() : 0.f;
+		auto inData = iomodes.cvInConnected() ? io.readCV() : 0.f;
 		if(outMode==IOMode::Both) { // CV in or no in : output goes to audio out, if connected, else CV out
 			for(auto i=0;i<IO::BUFFER_SIZE;i++) buffer[i]=amplitude*step(inData);
 			io.writeAudio(buffer);
@@ -62,7 +62,7 @@ void DLFO::process() {
 			io.writeCV(amplitude*pos);
 		}
 	}
-	if(io.needsUpdate()) props.setModes(inMode,outMode);
+	if(iomodes.needsUpdate()) props.setModes(inMode,outMode);
 }
 
 inline float32 toFloat(const TJBox_Value diff) {
@@ -75,12 +75,25 @@ inline int32 toInt(const TJBox_Value diff) {
 	return static_cast<int32>(static_cast<float32>(JBox_GetNumber(diff)));
 }
 
+
 void DLFO::processButtons(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDiffCount) {
 	for(auto i=0;i<iDiffCount;i++) {
 		auto diff=iPropertyDiffs[i];
 		Tag tag = diff.fPropertyTag;
 		trace("Processing changed property ^0",tag);
 		switch(tag) {
+		case kJBox_AudioInputConnected:
+			iomodes.setAudioIn(toBool(diff.fCurrentValue));
+			break;
+		case kJBox_AudioOutputConnected:
+			iomodes.setAudioOut(toBool(diff.fCurrentValue));
+			break;
+		case kJBox_CVInputConnected:
+			iomodes.setCVIn(toBool(diff.fCurrentValue));
+			break;
+		case kJBox_CVOutputConnected:
+			iomodes.setCVOut(toBool(diff.fCurrentValue));
+			break;
 		case kJBox_CustomPropertiesOnOffBypass:
 			state = static_cast<State>(toFloat(diff.fCurrentValue));
 			break;

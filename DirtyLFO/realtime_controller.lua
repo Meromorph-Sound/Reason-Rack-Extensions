@@ -33,6 +33,10 @@ rt_input_setup = {
   "/custom_properties/Amplitude",
   "/custom_properties/Smoothing",
   "/custom_properties/Smooth",
-  "/custom_properties/Zero"
+  "/custom_properties/Zero",
+  "/audio_inputs/audioIn/connected",
+  "/cv_inputs/cvIn/connected",
+  "/audio_outputs/audioOut/connected",
+  "/cv_outputs/cvOut/connected",
   }
 }

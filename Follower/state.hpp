@@ -21,7 +21,7 @@ float64 asNumber(const TJBox_Value value,const float64 def=0.0);
 class Data {
 private:
 
-	enum class Tags : ruint32 {
+	enum Tags : uint32 {
 		LR=1,
 		TH=2,
 		BUTTON=3,
@@ -29,10 +29,10 @@ private:
 		GATE=5
 	};
 
-//	static const ruint32 increment;
+//	static const uint32 increment;
 //	int32 index(const Tags tag) const;
 
-//	ruint32 n;
+//	uint32 n;
 	TJBox_ObjectRef props;
 
 
@@ -41,10 +41,10 @@ private:
 	template<typename T>
 	T get(const int32 idx) { return static_cast<T>(JBox_LoadMOMPropertyAsNumber(props,idx)); }
 	template<typename T>
-	T get(const Tags tag) { return get<T>(static_cast<ruint32>(tag)); }
+	T get(const Tags tag) { return get<T>(static_cast<uint32>(tag)); }
 	template<typename T>
 	void set(const Tags tag,const T value) {
-		JBox_StoreMOMPropertyByTag(props,static_cast<ruint32>(tag),JBox_MakeNumber(static_cast<float32>(value)));
+		JBox_StoreMOMPropertyByTag(props,static_cast<uint32>(tag),JBox_MakeNumber(static_cast<float32>(value)));
 	}
 
 public:
@@ -52,16 +52,16 @@ public:
 	float32 threshold;
 	float32 rho;
 	int32 mode;
+	State _state;
 
 	Data();
 
-	void load();
-	State state();
+	State state() const { return _state; }
 
 
 	void updateMode();
 	void setGate(const float32);
-	void hits(const TJBox_PropertyDiff [],ruint32);
+	void hits(const TJBox_PropertyDiff [],uint32);
 
 
 };

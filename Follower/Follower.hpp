@@ -16,12 +16,15 @@ class CFollower {
 private:
 
 
-	static const rint64 BUFFER_SIZE;
+	static const uint32 BUFFER_SIZE;
 
 	Data *data;
 	EnvelopeFollower *left, *right;
+	std::vector<float32> buffer;
+	Buffers io;
 
-	void processButtons(const TJBox_PropertyDiff iPropertyDiffs[], ruint32 iDiffCount);
+	void setGate(const float32 gate);
+	void processButtons(const TJBox_PropertyDiff iPropertyDiffs[], uint32 iDiffCount);
 	void process();
 
 public:

@@ -26,7 +26,10 @@ native = {
 
 rt_input_setup = { 
 	notify = {
+	"/custom_properties/builtin_onoffbypass",
 		"/custom_properties/rectification",
     "/custom_properties/thresholdLED",
+    "/audio_inputs/signal1/connected",
+    "/audio_inputs/signal2/connected"
 	}
 }

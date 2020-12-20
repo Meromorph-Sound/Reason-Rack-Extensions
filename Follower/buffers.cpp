@@ -15,26 +15,22 @@ bool asBoolean(const TJBox_Value value,const bool def=false) {
 	else return def;
 }
 
-const rint64 Buffers::BUFFER_SIZE = 64;
+const int64 Buffers::BUFFER_SIZE = 64;
 const int32 Buffers::DATA_IN = kJBox_AudioInputBuffer;
 const int32 Buffers::DATA_OUT = kJBox_AudioOutputBuffer;
 const int32 Buffers::CV_OUT = kJBox_CVOutputValue;
 const int32 Buffers::DATA_CONNECTED = kJBox_AudioInputConnected;
 
-const char *Buffers::LEFT="L";
-const char *Buffers::RIGHT="R";
 
-char *append(const char *name,const char *suffix) {
-	char buffer[80];
-	strcpy(buffer,name);
-	return strcat(buffer,suffix);
-}
 
-Buffers::Buffers(const char *side) {
-	input=JBox_GetMotherboardObjectRef(append("/audio_inputs/signal",side));
-	envelope=JBox_GetMotherboardObjectRef(append("/audio_outputs/envelope",side));
-	gate=JBox_GetMotherboardObjectRef(append("/cv_outputs/gate",side));
-	env=JBox_GetMotherboardObjectRef(append("/cv_outputs/env",side));
+
+
+Buffers::Buffers() {
+	signal1=JBox_GetMotherboardObjectRef("/audio_inputs/signal1");
+	signal2=JBox_GetMotherboardObjectRef("/audio_inputs/signal2");
+	envelope1=JBox_GetMotherboardObjectRef("/audio_outputs/envelope1");
+	envelope2=JBox_GetMotherboardObjectRef("/audio_outputs/envelope2");
+	gate=JBox_GetMotherboardObjectRef("/cv_outputs/gate");
 }
 
 int32 Buffers::readBuffer(const TJBox_ObjectRef object,float32 *buffer) {
@@ -45,30 +41,20 @@ int32 Buffers::readBuffer(const TJBox_ObjectRef object,float32 *buffer) {
 	}
 	return size;
 }
-void Buffers::writeBuffer(const TJBox_ObjectRef object,float32 *buffer,const int32 size) {
+void Buffers::writeBuffer(const TJBox_ObjectRef object,const std::vector<float32> &buffer) {
 	auto ref = JBox_LoadMOMPropertyByTag(object, DATA_OUT);
-	if(size>0) {
-		JBox_SetDSPBufferData(ref, 0, size, buffer);
-	}
+	if(buffer.size()>0) { JBox_SetDSPBufferData(ref, 0, buffer.size(), buffer.data()); }
 }
 void Buffers::writeCV(const TJBox_ObjectRef object,const float32 value) {
 	JBox_StoreMOMPropertyAsNumber(object,CV_OUT,value);
 }
 
-bool Buffers::isConnected() {
-	auto ref = JBox_LoadMOMPropertyByTag(input,kJBox_AudioInputConnected);
-	return asBoolean(ref);
-}
+//bool Buffers::isConnected() {
+//	auto ref = JBox_LoadMOMPropertyByTag(input,kJBox_AudioInputConnected);
+//	return asBoolean(ref);
+//}
 
 
-int32 Buffers::readInput(float32 *data) {
-	return readBuffer(input,data);
-}
-void Buffers::writeEnvelope(float32 *data,const int32 size) {
-	writeBuffer(envelope,data,size);
-}
-void Buffers::writeGate(const float32 value) { writeCV(gate,value); }
-void Buffers::writeEnv(const float32 value) { writeCV(env,value); }
 
 
 

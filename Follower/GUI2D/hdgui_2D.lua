@@ -31,14 +31,7 @@ front = jbox.panel {
       graphics = { node = "onoffbypass" },
       handle_size = 0,
       value = "/custom_properties/builtin_onoffbypass",
-    },
-    jbox.custom_display{
-      graphics = { node = "graph" },
-      values = { "/custom_properties/learningRate" },
-      display_width_pixels = 400,
-      display_height_pixels = 300,
-      draw_function = "draw_response",
-    },
+    }
 	},
 }
 back = jbox.panel { 
@@ -68,10 +61,6 @@ back = jbox.panel {
     jbox.audio_output_socket {
       graphics = { node = "EnvelopeOutputRight" },
       socket = "/audio_outputs/envelope2",
-    },
-    jbox.cv_output_socket {
-      graphics = { node = "EnvOutputCV" },
-      socket = "/cv_outputs/env",
     },
     jbox.device_name {
       graphics = { node = "deviceName" },

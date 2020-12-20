@@ -7,19 +7,22 @@ function append(list1,list2)
   return list1
 end  
 
+function propName(prop)
+  return "/custom_properties/"..prop
+end
 
-function notificationsFor(base) 
+function notificationsPerChannel(v) 
   local out={}
   for n = 1,4 do
-    table.insert(out,base..n)
+    table.insert(out,propName(v)..n)
   end
   return out
 end
 
-function notifications(bases) 
+function channelNotifications(bases) 
   local out={}
   for k,v in pairs(bases) do
-    append(out,notificationsFor("/custom_properties/"..v))
+    append(out,notificationsPerChannel(v))
   end
   return out
 end
@@ -27,11 +30,38 @@ end
 function simpleNotifications(bases)
   local out={}
   for k,v in pairs(bases) do
-    table.insert(out,"/custom_properties/"..v)
+    table.insert(out,propName(v))
   end
   return out
 end
 
+local notes1 = channelNotifications({
+  "x",
+  "y",
+  "level",
+  "source",
+  "VCOstart"
+})
+jbox.trace("Made chsnnel notifications:")
+jbox.trace(table.concat(notes1,', '))
+local notes2 = simpleNotifications({
+  "VCOactive",
+  "VCOfreeze",
+  "VCOzero",
+  "VCOfrequency",
+  "VCOwidth",
+  "VCOheight",
+  "VCOpattern",
+  "builtin_onoffbypass"
+})
+jbox.trace("Made simple notifications:")
+jbox.trace(table.concat(notes2,', '))
+append(notes1,notes2)
+jbox.trace("Made notifications:")
+jbox.trace(table.concat(notes1,', '))
+rt_input_setup = {
+  notify = notes1
+}
 
 
   
@@ -72,15 +102,4 @@ native = {
 -- })
 --}
 
-local notes1 = notifications({"x","y","level","source","VCOstart"})
-jbox.trace("Made notifications:")
-  jbox.trace(table.concat(notes1,', '))
-local notes2 = simpleNotifications({"VCOactive","VCOfreeze","VCOzero","VCOfrequency","VCOwidth","VCOheight","VCOpattern"})
-jbox.trace("Made simple notifications:")
-  jbox.trace(table.concat(notes2,', '))
-append(notes1,notes2)
-jbox.trace("Made notifications:")
-  jbox.trace(table.concat(notes1,', '))
-rt_input_setup = {
-  notify = notes1
-}
+

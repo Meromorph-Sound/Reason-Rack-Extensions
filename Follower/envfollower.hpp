@@ -16,21 +16,20 @@ namespace follower {
 
 class EnvelopeFollower {
 private:
-	Buffers buffers;
 
-	rint64 size;
 	float32 last;
-	float32 *audio;
 
-	bool getBuffer();
 
-	float32 rectify(Data *);
+
+
 
 public:
-	EnvelopeFollower(const char *);
-	virtual ~EnvelopeFollower();
 
-	float32 process(Data *);
+
+	EnvelopeFollower();
+	virtual ~EnvelopeFollower() = default;
+
+	float32 rectify(Data *,std::vector<float32> &);
 
 
 

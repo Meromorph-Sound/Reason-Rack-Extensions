@@ -111,7 +111,7 @@ private:
 
 	// Extension management methods
 
-	State state() const;
+	State state = State::On;
 	float32 scaleFactor(const Channel channel,const Channel output) const;
 
 	// IO management methods

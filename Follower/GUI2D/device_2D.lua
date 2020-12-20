@@ -46,15 +46,7 @@ front = {
     thresholdLED = {
       offset = { 1540, 20 },
       { path = "Bicolour_LED_3frames", frames = 3 }
-    },
-    envGraph = { 
-      offset = { 950, 20 },
-      { path = "EnvRectangle", frames = 1 }
     }
-  },
-  graph = {
-    offset = {3000, 20 },
-    { path="graphRegion", frames = 1},
   }
 }
 back = { 
@@ -81,10 +73,6 @@ back = {
     offset = {1100,100},
     { path = "SharedAudioJack", frames = 3},
   },
-	EnvOutputCV = {
-		offset = {1300,110},
-		{ path = "SharedCVJack", frames = 3},
-	},
   GateOutputCV = {
     offset = {1500,110},
     { path = "SharedCVJack", frames = 3},

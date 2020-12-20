@@ -11,31 +11,23 @@
 
 namespace follower {
 
-float32 accumulate(float32 *begin,float32 *end,const float32 init) {
+using it_t = std::vector<float32>::iterator;
+
+float32 accumulate(it_t &begin,it_t &end,const float32 init) {
 	auto sum=init;
 	for(auto ptr=begin;ptr<end;ptr++) sum+=*ptr;
 	return sum;
 }
 
-EnvelopeFollower::EnvelopeFollower(const char *side) : buffers(side), size(0),last(0) {
-	audio=new float32[Buffers::BUFFER_SIZE];
-}
-EnvelopeFollower::~EnvelopeFollower() {
-	if(audio) { delete[] audio; }
+EnvelopeFollower::EnvelopeFollower() : last(0) {
 }
 
-bool EnvelopeFollower::getBuffer() {
-	if(buffers.isConnected()) {
-		size=buffers.readInput(audio);
-		return size > 0;
-	}
-	else { return false; }
-}
 
-float32 EnvelopeFollower::rectify(Data *data) {
-	if(getBuffer()) {
-		auto start=audio;
-		auto end=audio+size;
+
+float32 EnvelopeFollower::rectify(Data *data,std::vector<float32> &audio) {
+
+		auto start=audio.begin();
+		auto end=audio.end();
 		switch(data->mode) {
 		case 0:
 		default:
@@ -56,47 +48,11 @@ float32 EnvelopeFollower::rectify(Data *data) {
 		});
 		last=ll;
 
-		float32 env = accumulate(audio,audio+size,0.f)/float32(size);
-
 		unsigned aboveThreshold=0;
-		for(auto i=0;i<size;i++) {
-			if (audio[i]>data->threshold) aboveThreshold+=2;
+		for(auto it=audio.begin();it!=audio.end();it++) {
+			if (*it>data->threshold) aboveThreshold+=2;
 		}
-		float64 gate = (aboveThreshold>size) ? 1.0 : -1.0;
-
-		buffers.writeEnvelope(audio,size);
-		buffers.writeEnv(env);
-		buffers.writeGate(gate);
-		return gate;
-	}
-	else {
-		buffers.writeGate(0);
-		return 0;
-	}
-
-}
-
-float32 EnvelopeFollower::process(Data *data) {
-	auto state = data->state();
-	switch(state) {
-	case State::Off:
-	default:
-		return 0;
-		break;
-	case State::Bypassed: {
-		if(getBuffer()) {
-			buffers.writeEnvelope(audio,size);
-		}
-		buffers.writeGate(0);
-		buffers.writeEnv(0);
-		return 0;
-		break;
-	}
-	case State::On: {
-		return rectify(data);
-		break;
-	}
-	}
+		return (aboveThreshold>audio.size()) ? 1.0 : -1.0;
 }
 
 
