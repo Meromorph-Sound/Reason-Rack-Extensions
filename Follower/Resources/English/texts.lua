@@ -19,5 +19,9 @@ texts = {
 	["envelopeOutput"] = "Audio envelope out",
 	["envOutput"] = "Envelope CV out",
 	["gateOutput"] = "Gate CV out",
-	["propertyname_GateDisplay"] = "Gate"
+	["propertyname_GateDisplay"] = "Gate",
+	["short_learningRate"] = "lRate",
+	["shortest_learningRate"] = "LrnR",
+	["short_threshold"] = "Thresh",
+  ["shortest_threshold"] = "Thr",
 }

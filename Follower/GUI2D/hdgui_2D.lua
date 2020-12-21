@@ -12,13 +12,18 @@ front = jbox.panel {
 			graphics = { node = "threshold" },
 			value = "/custom_properties/threshold",
 		},
-		jbox.toggle_button {
-			graphics = { node = "rectification" },
-			value = "/custom_properties/rectification",
+		jbox.step_button {
+		  graphics = { node = "rectification" },
+		  value = "/custom_properties/rectification",
+		  increasing = true
 		},
+		--jbox.toggle_button {
+		--	graphics = { node = "rectification" },
+		--	value = "/custom_properties/rectification",
+		--},
 		jbox.sequence_meter {
 			graphics = { node="rectificationDisplay" },
-			value = "/custom_properties/rectificationDisplay",
+			value = "/custom_properties/rectification",
 		},
 		jbox.sequence_meter {
 		  graphics = { node="thresholdLED" },

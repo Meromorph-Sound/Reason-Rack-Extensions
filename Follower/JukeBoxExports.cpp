@@ -4,7 +4,7 @@
 
 void* JBox_Export_CreateNativeObject(const char iOperation[], const TJBox_Value iParams[], TJBox_UInt32 iCount) {
      if(std::strcmp(iOperation, "Instance") == 0){ //(3)
-		return new follower::CFollower(); //(4)
+		return new meromorph::follower::CFollower(); //(4)
 	}
 
 	return nullptr; //(5)
@@ -15,6 +15,6 @@ void JBox_Export_RenderRealtime(void* privateState, const TJBox_PropertyDiff iPr
 		return;
 	}
 
-	follower::CFollower * pi = reinterpret_cast<follower::CFollower*>(privateState); //(2)
+	meromorph::follower::CFollower * pi = reinterpret_cast<meromorph::follower::CFollower*>(privateState); //(2)
 	pi->RenderBatch(iPropertyDiffs, iDiffCount); //(3)
 }

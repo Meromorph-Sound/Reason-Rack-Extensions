@@ -14,7 +14,7 @@
 #include <algorithm>
 
 
-namespace follower {
+namespace meromorph {
 
 using int32 = TJBox_Int32;
 using uint32 = TJBox_UInt32;
@@ -35,6 +35,10 @@ E fromRaw(const int32 r) { return static_cast<E>(r); }
 
 template<typename E, class = typename std::enable_if<std::is_enum<E>::value>::type>
 int32 toRaw(const E e) { return static_cast<int32>(e); }
+
+void trace(const char *tmpl);
+void trace(const char *tmpl,const float32 value);
+void trace(const char *tmpl,const float32 value1,const float32 value2);
 
 
 }
