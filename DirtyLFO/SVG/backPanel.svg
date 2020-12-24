@@ -9,6 +9,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:export-ydpi="96"
+   inkscape:export-xdpi="96"
+   inkscape:export-filename="/Users/julianporter/Reason/SDK/Reason-Rack-Extensions/DirtyLFO/GUI2D/backPanel.png"
    sodipodi:docname="backPanel.svg"
    inkscape:version="1.0 (4035a4f, 2020-05-01)"
    id="svg1463"
@@ -317,8 +320,8 @@
   </defs>
   <sodipodi:namedview
      inkscape:window-maximized="0"
-     inkscape:window-y="100"
-     inkscape:window-x="1920"
+     inkscape:window-y="130"
+     inkscape:window-x="1700"
      inkscape:window-height="1240"
      inkscape:window-width="2560"
      inkscape:snap-global="false"
@@ -326,8 +329,8 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="layer3"
      inkscape:document-units="mm"
-     inkscape:cy="1137.1429"
-     inkscape:cx="1908.5714"
+     inkscape:cy="1122.8571"
+     inkscape:cx="918.57143"
      inkscape:zoom="0.35"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -369,6 +372,7 @@
        style="fill:#41416c;fill-opacity:1;stroke:#41416c;stroke-width:5;stroke-linecap:round;stroke-miterlimit:3.70000005;stroke-dasharray:none;stroke-linejoin:round;filter:url(#filter3639)" />
   </g>
   <g
+     style="display:none"
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="controls">
@@ -392,7 +396,7 @@
     </g>
     <g
        id="g3672-1"
-       transform="translate(548.57143,20)">
+       transform="translate(600,20)">
       <rect
          y="100"
          x="1000"
@@ -457,32 +461,32 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:condensed;font-size:40px;line-height:1.25;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Medium Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
-       x="1562.0518"
+       x="1613.4803"
        y="265.14325"
        id="text3658-2"><tspan
          sodipodi:role="line"
          id="tspan3656-6"
-         x="1562.0518"
+         x="1613.4803"
          y="265.14325">Audio</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:condensed;font-size:40px;line-height:1.25;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Medium Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
-       x="1776.438"
+       x="1827.8666"
        y="265.14325"
        id="text3662-9"><tspan
          sodipodi:role="line"
          id="tspan3660-6"
-         x="1776.438"
+         x="1827.8666"
          y="265.14325">CV</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:53.33330000000000126px;line-height:1.25;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Bold Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
-       x="1611.8982"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:53.3333px;line-height:1.25;font-family:'Avenir Next Condensed';-inkscape-font-specification:'Avenir Next Condensed, Bold Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff"
+       x="1663.3268"
        y="91.428978"
        id="text3668-4"><tspan
          sodipodi:role="line"
          id="tspan3666-5"
-         x="1611.8982"
+         x="1663.3268"
          y="91.428978">Output</tspan></text>
     <text
        xml:space="preserve"
