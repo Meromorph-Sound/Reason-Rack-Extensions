@@ -1,0 +1,9 @@
+[submodule "Reason-NoiseSynth"]
+	path = Reason-NoiseSynth
+	url = https://github.com/Meromorph-Sound/Reason-NoiseSynth.git
+[submodule "Reason-Wavelet"]
+	path = Reason-Wavelet
+	url = https://github.com/Meromorph-Sound/Reason-Wavelet.git
+[submodule "Reason-Follower"]
+	path = Reason-Follower
+	url = https://github.com/Meromorph-Sound/Reason-Follower.git
