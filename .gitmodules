@@ -7,3 +7,9 @@
 [submodule "Reason-Follower"]
 	path = Reason-Follower
 	url = https://github.com/Meromorph-Sound/Reason-Follower.git
+[submodule "Reason-DirtyLFO"]
+	path = Reason-DirtyLFO
+	url = https://github.com/Meromorph-Sound/Reason-DirtyLFO
+[submodule "Reason-QUEG"]
+	path = Reason-QUEG
+	url = https://github.com/Meromorph-Sound/Reason-QUEG
