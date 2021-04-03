@@ -13,3 +13,6 @@
 [submodule "Reason-QUEG"]
 	path = Reason-QUEG
 	url = https://github.com/Meromorph-Sound/Reason-QUEG
+[submodule "Reason-Kontakte"]
+	path = Reason-Kontakte
+	url = https://github.com/Meromorph-Sound/Reason-Kontakte
